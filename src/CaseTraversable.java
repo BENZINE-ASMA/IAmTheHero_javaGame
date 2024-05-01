@@ -12,10 +12,10 @@ public class CaseTraversable extends Case {
 	public Entite getContenu() {
 		return this.contenu;
 	}
-	public void vide() {
+	public void vide() { //vider la case
 		contenu = null;
 	}
-	public void setContenu(Entite e) {
+	public void setContenu(Entite e) { //Remplir la case
 		contenu = e;
 	}
 	

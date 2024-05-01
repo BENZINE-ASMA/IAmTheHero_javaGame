@@ -1,12 +1,12 @@
 
-public class Joueur extends Entite{
+public class Joueur extends EntiteMobile{
 	protected Direction dir;
 	
 	public Joueur() {
-		this.dir = Direction.nord;
+		super(Direction.nord);
 	}
 	public Joueur(Direction dir) {
-		this.dir = dir;
+		super(dir);
 	}
 
 	@Override

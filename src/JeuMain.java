@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class JeuMain {
 	public static void main(String[] args) {
-		Terrain terrain = new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_java_game\\src\\terrain1.txt");
+		Terrain terrain = new Terrain("C:\\Users\\marie\\eclipse-workspace\\JavaGame_IAmTheHero\\src\\terrain1.txt");
 		Scanner sc = new Scanner(System.in);
 		while (true) {
 			terrain.affiche();

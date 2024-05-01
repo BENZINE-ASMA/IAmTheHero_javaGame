@@ -75,11 +75,11 @@ public class Terrain {
 				CaseTraversable destTraversable = (CaseTraversable) dest;
 				if (destTraversable.estLibre()) {
 					destTraversable.setContenu(joueur);
-					
+					((CaseTraversable)carte[yjoueur][xjoueur]).vide(); //vider la case du joueur
+					xjoueur= newX;
+					yjoueur= newY;
 				}
-				((CaseTraversable)carte[yjoueur][xjoueur]).vide();
-				xjoueur= newX;
-				yjoueur= newY;
+				
 			}
 			
 		}
