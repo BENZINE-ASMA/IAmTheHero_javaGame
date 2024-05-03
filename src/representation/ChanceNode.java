@@ -8,8 +8,8 @@ public class ChanceNode extends InnerNode {
 		super(nodesSuivant);
 	}
 	
-	public ChanceNode(String nom, String description, ArrayList<Node> nodesSuivant) {
-		super(nom, description, nodesSuivant);
+	public ChanceNode(String nom, String description) {
+		super(nom, description);
 	}
 
 	@Override

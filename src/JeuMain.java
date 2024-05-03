@@ -1,12 +1,40 @@
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
+
+import representation.InnerNode;
+import representation.Node;
+import representation.NodesTree;
 
 public class JeuMain {
 	public static void main(String[] args) {
 		
-		Terrain terrain = new Terrain("C:\\Users\\marie\\eclipse-workspace\\JavaGame_IAmTheHero\\src\\terrain1.txt");
+		Terrain terrain = new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain1.txt");
 		Scanner sc = new Scanner(System.in);
-		while (true) {
-			terrain.affiche();
+		
+		NodesTree tree = new NodesTree();
+		tree.addDecisionNode("intro", "hi tu chosisis");
+		tree.addDecisionNode("clanB", "te s dans le clan As");
+		tree.addDecisionNode("clanA", " tes dans le clan b");
+		tree.addChanceNode("death", "game over");
+		
+		tree.addArc("intro", "clanA");
+		tree.addArc("intro", "death");
+		tree.addArc("clanA", "death");
+		tree.addArc("clanA", "clanB");
+		
+		for (Entry<String, Node> entry : tree.getTree().entrySet()) {
+			if (entry.getValue() instanceof InnerNode) {
+				System.out.print(entry.getKey() + "   ");
+				((InnerNode)entry.getValue()).testDisplay();
+				System.out.println("//////////");
+				
+				
+			}
+		}
+		//while (true) {
+		//	terrain.affiche();
+			/*
 			String input = sc.nextLine().toLowerCase();
 			Direction direction = switch (input) {
 			case "n" -> Direction.nord;
@@ -19,9 +47,9 @@ public class JeuMain {
 			
 			if (direction != null) { terrain.movePlayer(direction);}
 	
+	*/
 	
-	
-	}
+	//}
 
 }
 }

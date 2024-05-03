@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class Terrain {
 
@@ -9,6 +11,7 @@ public class Terrain {
     public static int xjoueur ;
     public static int yjoueur ;
     public static Joueur joueur =  new Joueur();
+    
 
  
     public Terrain(String file) {
