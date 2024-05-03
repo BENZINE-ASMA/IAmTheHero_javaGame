@@ -2,6 +2,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import representation.ChanceNode;
+import representation.DecisionNode;
 import representation.InnerNode;
 import representation.Node;
 import representation.NodesTree;
@@ -14,8 +16,8 @@ public class JeuMain {
 		
 		NodesTree tree = new NodesTree();
 		tree.addDecisionNode("intro", "hi tu chosisis");
-		tree.addDecisionNode("clanB", "te s dans le clan As");
-		tree.addDecisionNode("clanA", " tes dans le clan b");
+		tree.addDecisionNode("clanB", "te s dans le clan B");
+		tree.addDecisionNode("clanA", " tes dans le clan A");
 		tree.addChanceNode("death", "game over");
 		
 		tree.addArc("intro", "clanA");
@@ -30,6 +32,22 @@ public class JeuMain {
 				System.out.println("//////////");
 				
 				
+			}
+		}
+		
+		InnerNode currentPlay =  (DecisionNode) tree.getTree().get("intro");
+		while (true) {
+			currentPlay.display();
+			InnerNode nextNode = (InnerNode) currentPlay.chooseNext();
+			if (nextNode instanceof DecisionNode) {
+				currentPlay =(DecisionNode) nextNode;
+				
+			}else if(nextNode instanceof ChanceNode) {
+				currentPlay =(ChanceNode) nextNode;
+				
+			}
+			else {
+				break;
 			}
 		}
 		//while (true) {
