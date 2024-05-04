@@ -2,28 +2,30 @@ package representation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public abstract class InnerNode extends Node{
-	protected ArrayList<Node> nodesSuivant;
+	protected HashMap<String,Node> nodesSuivant;
 	
-	public InnerNode(ArrayList<Node> nodesSuivant) {
+	public InnerNode(HashMap<String,Node> nodesSuivant) {
 		super();
 		this.nodesSuivant = nodesSuivant;
 	}
 	
 	public InnerNode(String nom, String description) {
 		super(nom, description);
-		this.nodesSuivant = new ArrayList<>();
+		this.nodesSuivant = new HashMap<>();
 	}
 	
-	public void  addToNodeSuivant(Node toAdd) {
-		this.nodesSuivant.add(toAdd);
+	public void  addToNodeSuivant(String replique ,Node toAdd) {
+		this.nodesSuivant.put(replique,toAdd);
 	}
 	
 	public void testDisplay() {
-		for (Node n : nodesSuivant) {
-			System.out.print(n.nom +"   ");
+		for (String entry : nodesSuivant.keySet()) {
+			System.out.print(entry + "   " );
 		}
 	}
-
+			
+	
 }

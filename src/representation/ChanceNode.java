@@ -1,10 +1,11 @@
 package representation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChanceNode extends InnerNode {
 	
-	public ChanceNode(ArrayList<Node> nodesSuivant) {
+	public ChanceNode(HashMap<String,Node> nodesSuivant) {
 		super(nodesSuivant);
 	}
 	

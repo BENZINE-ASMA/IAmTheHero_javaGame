@@ -1,10 +1,11 @@
 package representation;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DecisionNode extends InnerNode {
 
-	public DecisionNode(ArrayList<Node> nodesSuivant) {
+	public DecisionNode(HashMap<String,Node> nodesSuivant) {
 		super(nodesSuivant);
 		
 	}
@@ -16,13 +17,19 @@ public class DecisionNode extends InnerNode {
 	public void display() {
 		System.out.println(description);
 	}
+	@Override
+	public Node chooseNext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+	/*
 	@Override
 	
 	public Node chooseNext() {
         Scanner sc = new Scanner(System.in);
-        for (int i = 0; i < nodesSuivant.size(); i++) {
-            System.out.println((i + 1) + ": " + nodesSuivant.get(i).nom);
+        for (Node node : nodesSuivant.values()) {
+            System.out.println(node.nom);
         }
 
         int choix;
@@ -35,7 +42,8 @@ public class DecisionNode extends InnerNode {
                 System.out.println("Choix invalide, veuillez réessayer.");
             }
         }
-        return nodesSuivant.get(choix - 1);
+        //return nodesSuivant.values().;
     }
+    */
 
 }

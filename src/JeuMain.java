@@ -1,12 +1,15 @@
 import java.util.Map;
 import java.util.Map.Entry;
+
+import entities.Direction;
+
 import java.util.Scanner;
 
 import representation.ChanceNode;
 import representation.DecisionNode;
 import representation.InnerNode;
 import representation.Node;
-import representation.NodesTree;
+import representation.NodesGraph;
 
 public class JeuMain {
 	public static void main(String[] args) {
@@ -14,18 +17,21 @@ public class JeuMain {
 		Terrain terrain = new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain1.txt");
 		Scanner sc = new Scanner(System.in);
 		
-		NodesTree tree = new NodesTree();
-		tree.addDecisionNode("intro", "hi tu chosisis");
-		tree.addDecisionNode("clanB", "te s dans le clan B");
-		tree.addDecisionNode("clanA", " tes dans le clan A");
-		tree.addChanceNode("death", "game over");
+		NodesGraph graph = new NodesGraph();
 		
-		tree.addArc("intro", "clanA");
-		tree.addArc("intro", "death");
-		tree.addArc("clanA", "death");
-		tree.addArc("clanA", "clanB");
+		graph.addDecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?");
+		graph.addDecisionNode("clanB", "te s dans le clan B");
+		graph.addDecisionNode("clanA", " tes dans le clan A");
+		graph.addChanceNode("death", "game over");
 		
-		for (Entry<String, Node> entry : tree.getTree().entrySet()) {
+		//add sommet
+		//graph.addArc(null, null, null);
+		graph.addArc("introduction", "clanA","bonjour je veux caln A");
+		graph.addArc("introduction", "death","je veux mourrir");
+		graph.addArc("clanA", "death","je veux mourrir");
+		graph.addArc("clanA", "clanB","je change clan");
+		
+		for (Entry<String, Node> entry : graph.getGraph().entrySet()) {
 			if (entry.getValue() instanceof InnerNode) {
 				System.out.print(entry.getKey() + "   ");
 				((InnerNode)entry.getValue()).testDisplay();
@@ -34,11 +40,12 @@ public class JeuMain {
 				
 			}
 		}
-		
-		InnerNode currentPlay =  (DecisionNode) tree.getTree().get("intro");
-		/*while (true) {
+		/*
+		InnerNode currentPlay =  (DecisionNode) graph.getGraph().get("introduction");
+		while (true) {
 			currentPlay.display();
 			InnerNode nextNode = (InnerNode) currentPlay.chooseNext();
+			/*
 			if (nextNode instanceof DecisionNode) {
 				currentPlay =(DecisionNode) nextNode;
 				
@@ -48,8 +55,9 @@ public class JeuMain {
 			}
 			else {
 				break;
-			}
-		}*/
+			}*/
+
+		/*
 		while (true) {
 			terrain.affiche();
 			
@@ -65,7 +73,7 @@ public class JeuMain {
 			
 			if (direction != null) { terrain.movePlayer(direction);}
 	
-		}
+		}*/
 	
 
 

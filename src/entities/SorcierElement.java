@@ -1,3 +1,4 @@
+package entities;
 
 public class SorcierElement extends Sorcier {
 	protected String element; //j'imagine que c'est plus interessant de le faire en enum ou autre mais est ce que ça vaut la peine ?

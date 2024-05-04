@@ -1,3 +1,4 @@
+package entities;
 
 public class Sorcier extends Personnage {
 	protected Sort[] sortsConnus = new Sort[6];

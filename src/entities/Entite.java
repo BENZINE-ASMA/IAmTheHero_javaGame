@@ -1,3 +1,4 @@
+package entities;
 
 public abstract class Entite {
 	public String name;

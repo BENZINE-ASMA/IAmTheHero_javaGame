@@ -1,3 +1,4 @@
+import entities.Entite;
 
 public class CaseTraversable extends Case {
 	protected Entite contenu;

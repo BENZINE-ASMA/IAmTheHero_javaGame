@@ -1,3 +1,4 @@
+package entities;
 
 public class Humain extends Personnage {
 	protected Competence comp;

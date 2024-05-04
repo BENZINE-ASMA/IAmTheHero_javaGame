@@ -1,3 +1,4 @@
+import entities.Entite;
 
 public class CaseClanB extends CaseTraversable{
 

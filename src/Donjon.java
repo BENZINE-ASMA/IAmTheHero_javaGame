@@ -1,3 +1,4 @@
+import entities.Entite;
 
 public class Donjon extends CaseTraversable {
 	public Donjon(int l, int c, Entite e) {

@@ -1,3 +1,5 @@
+package entities;
+
 public class Personnage extends EntiteMobile{
 	protected Object[] sac;
 	protected int clan; // par exemple 0 -> no clan, 1 -> clan Element, 2 -> clan Spirituel(or or or enum?)
