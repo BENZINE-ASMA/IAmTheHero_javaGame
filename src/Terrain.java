@@ -10,7 +10,7 @@ public class Terrain {
     private Case[][] carte;
     public static int xjoueur ;
     public static int yjoueur ;
-    public static Joueur joueur =  new Joueur();
+    public static Personnage joueur =  new Personnage();
     
 
  
@@ -31,6 +31,10 @@ public class Terrain {
                     switch (ch) {
                         case '#' -> cc = new CaseIntraversable(h, l); 
                         case ' ' -> cc = new CaseTraversable(h, l);
+                        case '*' -> cc = new CaseCLanA(h, l);
+                        case '-' -> cc = new CaseClanB(h, l);
+                        case '@' -> cc = new Riviere(h, l);
+                        case '|' -> cc = new Donjon(h, l);
                         case 'J' -> {
                         xjoueur = l; yjoueur= h;cc = new CaseTraversable(h, l, joueur);
                         }

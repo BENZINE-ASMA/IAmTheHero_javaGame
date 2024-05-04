@@ -36,7 +36,7 @@ public class JeuMain {
 		}
 		
 		InnerNode currentPlay =  (DecisionNode) tree.getTree().get("intro");
-		while (true) {
+		/*while (true) {
 			currentPlay.display();
 			InnerNode nextNode = (InnerNode) currentPlay.chooseNext();
 			if (nextNode instanceof DecisionNode) {
@@ -49,10 +49,10 @@ public class JeuMain {
 			else {
 				break;
 			}
-		}
-		//while (true) {
-		//	terrain.affiche();
-			/*
+		}*/
+		while (true) {
+			terrain.affiche();
+			
 			String input = sc.nextLine().toLowerCase();
 			Direction direction = switch (input) {
 			case "n" -> Direction.nord;
@@ -65,9 +65,9 @@ public class JeuMain {
 			
 			if (direction != null) { terrain.movePlayer(direction);}
 	
-	*/
+		}
 	
-	//}
+
 
 }
 }
