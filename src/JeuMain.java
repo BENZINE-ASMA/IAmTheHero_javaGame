@@ -40,12 +40,12 @@ public class JeuMain {
 				
 			}
 		}
-		/*
+		
 		InnerNode currentPlay =  (DecisionNode) graph.getGraph().get("introduction");
 		while (true) {
 			currentPlay.display();
 			InnerNode nextNode = (InnerNode) currentPlay.chooseNext();
-			/*
+			
 			if (nextNode instanceof DecisionNode) {
 				currentPlay =(DecisionNode) nextNode;
 				
@@ -55,7 +55,7 @@ public class JeuMain {
 			}
 			else {
 				break;
-			}*/
+			}
 
 		/*
 		while (true) {
@@ -77,5 +77,6 @@ public class JeuMain {
 	
 
 
-}
+		}
+	}
 }

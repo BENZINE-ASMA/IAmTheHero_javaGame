@@ -17,33 +17,30 @@ public class DecisionNode extends InnerNode {
 	public void display() {
 		System.out.println(description);
 	}
-	@Override
-	public Node chooseNext() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/*
+
 	@Override
 	
 	public Node chooseNext() {
+		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
+		
         Scanner sc = new Scanner(System.in);
-        for (Node node : nodesSuivant.values()) {
-            System.out.println(node.nom);
+        for (int i = 0; i < nodeList.size(); i++) {
+            System.out.println((i + 1) + ": " + reliqueList.get(i));
         }
 
         int choix;
         while (true) {
             System.out.print("Choisissez une option : ");
             choix = sc.nextInt();
-            if (choix > 0 && choix <= nodesSuivant.size()) {
+            if (choix > 0 && choix <= nodeList.size()) {
                 break;
             } else {
                 System.out.println("Choix invalide, veuillez réessayer.");
             }
         }
-        //return nodesSuivant.values().;
+        return nodeList.get(choix - 1);
     }
-    */
+
 
 }
