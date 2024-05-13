@@ -17,9 +17,11 @@ public abstract class InnerNode extends Node{
 		this.nodesSuivant = new HashMap<>();
 	}
 	
-	public void  addToNodeSuivant(String replique ,Node toAdd) {
+	
+	public void addToNodeSuivant(String replique ,Node toAdd) {
 		this.nodesSuivant.put(replique,toAdd);
 	}
+	
 	
 	public void testDisplay() {
 		for (String entry : nodesSuivant.keySet()) {

@@ -16,10 +16,20 @@ public class NodesGraph {
 		this.graph.put(name,new ChanceNode(name,description));
 	}
 	
+	public void addTerminalNode(String name, String description) {
+		this.graph.put(name,new TerminalNode(name,description));
+	}
+	
 	public void addArc(String nameNodeFrom, String nameNodeTo,String repliqueNodeTo) {
-		((InnerNode)this.graph.get(nameNodeFrom)).addToNodeSuivant(repliqueNodeTo, this.graph.get(nameNodeTo));}
+		
+		((InnerNode)this.graph.get(nameNodeFrom)).addToNodeSuivant(repliqueNodeTo, this.graph.get(nameNodeTo));
+		}	
+	
+		
+			
+	}
 	
 
 
 /// add deleteARC
-}
+

@@ -18,6 +18,7 @@ public class Personnage extends EntiteMobile{
 		this.dir = dir;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return ("J");
@@ -29,6 +30,8 @@ public class Personnage extends EntiteMobile{
 	public void attaqueArmee() { // toujours aucune idée du type de la méthode et des variables
 		
 	}
-	
+	public  String afficheComp() {
+		return "this is a test";
+	}
 	
 }

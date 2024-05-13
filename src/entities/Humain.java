@@ -16,6 +16,12 @@ public class Humain extends Personnage {
 		sac = new Object[15];
 	}
 	
+	public Humain() {
+		super();
+		vitesse = 15;
+		sac = new Object[15];
+	}
+	
 	public Humain(Direction dir, Competence comp) {
 		if (comp.equals(Competence.combattant)) {
 			attaque = 20;

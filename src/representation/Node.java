@@ -21,6 +21,40 @@ public abstract class Node {
 		this.description = description;
 	}
 	
+	
+	
+	public static int getCpt() {
+		return cpt;
+	}
+
+	public static void setCpt(int cpt) {
+		Node.cpt = cpt;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public abstract void display();
 
 	

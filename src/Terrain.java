@@ -13,11 +13,12 @@ public class Terrain {
     private Case[][] carte;
     public static int xjoueur ;
     public static int yjoueur ;
-    public static Personnage joueur =  new Personnage();
+    public static Personnage joueur;
     
 
  
-    public Terrain(String file) {
+    public Terrain(String file,Personnage joueur ) {
+    	Terrain.joueur = joueur;
         try {
             Scanner sc = new Scanner(new FileInputStream(file));
             this.largeur = sc.nextInt(); 
