@@ -25,7 +25,16 @@ public class JeuMain {
         graph.addDecisionNode("humainAvecCompetence", "vous avez la compétence de '', vous voulez rejoindre quel clan");
         graph.addDecisionNode("humainAvecCompetenceSeul", "vous etes desormais seul ");
         
+        // New nodes
+        graph.addDecisionNode("shop", "Bienvenue au magasin! Vous pouvez acheter des armes, des potions, ou autre chose.");
+        graph.addDecisionNode("trainingGround", "Bienvenue au terrain d'entraînement! Vous pouvez améliorer vos compétences ici.");
+        graph.addDecisionNode("quest", "Le villageois vous donne une quête: Sauver la princesse!");
+        graph.addDecisionNode("mysteriousStranger", "Un étranger mystérieux vous propose un marché secret.");
+        graph.addDecisionNode("battle", "Vous entrez dans une bataille féroce!");
+        graph.addDecisionNode("treasureHunt", "Vous partez à la chasse au trésor.");
+        
         graph.addTerminalNode("death", "game over");
+        graph.addTerminalNode("victory", "Vous avez gagné!");
         
         graph.addArc("introduction", "explication", "Est-ce que vous pouvez m'expliquer en quoi consistent les clans?");
         graph.addArc("introduction", "rejoindre", "Je suis ici pour rejoindre un clan");
@@ -44,6 +53,40 @@ public class JeuMain {
         graph.addArc("humainAvecCompetence", "clanA", "je veux rejoindre clan A");
         graph.addArc("humainAvecCompetence", "clanB", "je veux rejoindre clan B");
         graph.addArc("humainAvecCompetence", "humainAvecCompetenceSeul", "je veux rester seul");
+        
+        
+     // New arcs after choosing a clan or being alone
+        graph.addArc("clanA", "shop", "Je veux aller au magasin");
+        graph.addArc("clanA", "trainingGround", "Je veux aller au terrain d'entraînement");
+        graph.addArc("clanA", "quest", "Je veux prendre une quête");
+        graph.addArc("clanA", "mysteriousStranger", "Je veux parler à l'étranger mystérieux");
+        
+        graph.addArc("clanB", "shop", "Je veux aller au magasin");
+        graph.addArc("clanB", "trainingGround", "Je veux aller au terrain d'entraînement");
+        graph.addArc("clanB", "quest", "Je veux prendre une quête");
+        graph.addArc("clanB", "mysteriousStranger", "Je veux parler à l'étranger mystérieux");
+        
+        graph.addArc("humainAvecCompetenceSeul", "shop", "Je veux aller au magasin");
+        graph.addArc("humainAvecCompetenceSeul", "trainingGround", "Je veux aller au terrain d'entraînement");
+        graph.addArc("humainAvecCompetenceSeul", "quest", "Je veux prendre une quête");
+        graph.addArc("humainAvecCompetenceSeul", "mysteriousStranger", "Je veux parler à l'étranger mystérieux");
+        
+        graph.addArc("shop", "trainingGround", "Je veux m'entraîner");
+        graph.addArc("shop", "quest", "Je veux prendre une quête");
+        graph.addArc("shop", "battle", "Je veux combattre");
+        graph.addArc("trainingGround", "shop", "Je veux acheter des équipements");
+        graph.addArc("trainingGround", "quest", "Je veux prendre une quête");
+        graph.addArc("quest", "battle", "Je veux combattre");
+        graph.addArc("quest", "treasureHunt", "Je veux chercher un trésor");
+        graph.addArc("mysteriousStranger", "quest", "Je veux prendre une quête");
+        graph.addArc("mysteriousStranger", "treasureHunt", "Je veux chercher un trésor");
+        graph.addArc("battle", "shop", "Je veux acheter des équipements");
+        graph.addArc("battle", "quest", "Je veux prendre une quête");
+        graph.addArc("battle", "treasureHunt", "Je veux chercher un trésor");
+        graph.addArc("treasureHunt", "shop", "Je veux acheter des équipements");
+        graph.addArc("treasureHunt", "trainingGround", "Je veux m'entraîner");
+        
+        
         
         for (Entry<String, Node> entry : graph.getGraph().entrySet()) {
             if (entry.getValue() instanceof InnerNode) {
