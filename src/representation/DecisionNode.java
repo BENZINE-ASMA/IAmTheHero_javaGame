@@ -39,8 +39,17 @@ public class DecisionNode extends InnerNode {
                 System.out.println("Choix invalide, veuillez réessayer.");
             }
         }
-        return nodeList.get(choix - 1);
+        String chosenKey = reliqueList.get(choix - 1);
+        Node chosenNode = nodeList.get(choix - 1);
+        
+        handleSpecialCases(chosenKey, chosenNode);
+        
+        return chosenNode;
     }
-
-
+    
+    private void handleSpecialCases(String chosenKey, Node chosenNode) {
+        if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
+            ((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(7) + ". vous voulez rejoindre quel clan?";
+        }
+    }
 }

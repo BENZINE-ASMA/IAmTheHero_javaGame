@@ -1,5 +1,5 @@
 package entities;
 public enum Competence {
-	combattant,persuasif,ingenieur;
+	combattant,persuasif,ingénieur;
 
 }
