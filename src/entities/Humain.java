@@ -7,6 +7,7 @@ public class Humain extends Personnage {
         super();
         setCompetence(comp);
         vitesse = 15;
+        this.name = "Humain";
         sac = new Object[15];
     }
 
@@ -36,8 +37,11 @@ public class Humain extends Personnage {
     public Competence getCompetence() {
         return comp;
     }
+         
+        @Override
+        public void afficherInfos() {
+            System.out.println("Vous êtes un humain avec la compétence de " + this.comp);
+        }
 
-    public String afficheComp() {
-        return "vous avez la compétence de " + comp.toString();
-    }
+    
 }

@@ -7,15 +7,17 @@ public class JeuMain {
     public static String test() {
         return "test";
     }
-    
+
     public static void main(String[] args) {
         Terrain terrain;
         Personnage p = null;  // Ensure this is initialized to null
-        
+
         Scanner sc = new Scanner(System.in);
-        
+
         NodesGraph graph = new NodesGraph();
-        
+
+     // Introduction à l'auberge
+     // Introduction à l'auberge
         graph.addDecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?");
         graph.addDecisionNode("explication", "[explications du lore] quel type de sorcier êtes vous ?");
         graph.addDecisionNode("rejoindre", "Quel type de sorcier êtes vous?");
@@ -24,127 +26,114 @@ public class JeuMain {
         graph.addDecisionNode("humain", "quelle est votre compétence?");
         graph.addDecisionNode("humainAvecCompetence", "vous avez la compétence de '', vous voulez rejoindre quel clan");
         graph.addDecisionNode("humainAvecCompetenceSeul", "vous etes desormais seul ");
-        
-        // New nodes
-        graph.addDecisionNode("shop", "Bienvenue au magasin! Vous pouvez acheter des armes, des potions, ou autre chose.");
-        graph.addDecisionNode("trainingGround", "Bienvenue au terrain d'entraînement! Vous pouvez améliorer vos compétences ici.");
-        graph.addDecisionNode("quest", "Le villageois vous donne une quête: Sauver la princesse!");
-        graph.addDecisionNode("mysteriousStranger", "Un étranger mystérieux vous propose un marché secret.");
-        graph.addDecisionNode("battle", "Vous entrez dans une bataille féroce!");
-        graph.addDecisionNode("treasureHunt", "Vous partez à la chasse au trésor.");
-        
-        graph.addTerminalNode("death", "game over");
-        graph.addTerminalNode("victory", "Vous avez gagné!");
-        
+
+        // Ajout des dialogues avec les maîtres des clans
+        graph.addDecisionNode("maitreClanA", "Bienvenue, jeune sorcier. Je suis le Maître de ce clan des Éléments. Nous avons besoin de sorciers talentueux comme toi pour retrouver la Pierre des Éléments.");
+        graph.addDecisionNode("maitreClanB", "Bienvenue, jeune sorcier. Je suis le Maître de ce clan Spirituel. Nous avons besoin de sorciers talentueux comme toi pour sécuriser les reliques spirituelles.");
+
+        // Ajout des missions pour chaque clan
+        graph.addDecisionNode("missionClanA", "Votre mission est de retrouver la Pierre des Éléments, une relique de grande puissance.");
+        graph.addDecisionNode("missionClanB", "Votre mission est de sécuriser les reliques spirituelles, qui sont cruciales pour notre pouvoir.");
+
+        graph.addDecisionNode("combatPierre", "Vous avez retrouvé la Pierre des Éléments, mais elle est gardée par un puissant gardien. Préparez-vous au combat.");
+        graph.addDecisionNode("combatReliques", "Vous avez trouvé les reliques spirituelles, mais elles sont protégées par des esprits puissants. Préparez-vous au combat.");
+
+        graph.addDecisionNode("victoirePierre", "Félicitations, vous avez vaincu le gardien et récupéré la Pierre des Éléments. Vous êtes acclamé par votre clan pour votre bravoure et votre compétence.");
+        graph.addDecisionNode("defaitePierre", "Vous avez été vaincu par le gardien. Retournez au clan pour vous préparer à nouveau et retenter votre chance.");
+
+        graph.addDecisionNode("victoireReliques", "Félicitations, vous avez vaincu les esprits et sécurisé les reliques spirituelles. Vous êtes acclamé par votre clan pour votre bravoure et votre compétence.");
+        graph.addDecisionNode("defaiteReliques", "Vous avez été vaincu par les esprits. Retournez au clan pour vous préparer à nouveau et retenter votre chance.");
+
+        // Interactions supplémentaires pour la mission
+        graph.addDecisionNode("introVieux", "En cherchant la pierre magique, vous rencontrez un vieux sage. Voulez-vous lui parler ?");
+        graph.addDecisionNode("parlerVieux", "Le vieux sage vous raconte des histoires sur la pierre magique et vous avertit qu'elle est gardée dans un donjon par un puissant monstre. Voulez-vous lui demander où se trouve le donjon ?");
+        graph.addDecisionNode("ignorerVieux", "Vous ignorez le vieux sage et continuez votre chemin.");
+        graph.addDecisionNode("deuxiemeCombat", "Vous avez trouvé la pierre magique dans le donjon, mais elle est gardée par un puissant monstre. Préparez-vous au combat. Vous ne pouvez pas fuir.");
+
+        graph.addDecisionNode("victoireFinale", "Félicitations, vous avez vaincu le monstre et récupéré la pierre magique. Vous êtes acclamé par votre clan pour votre bravoure et votre compétence.");
+        graph.addDecisionNode("defaiteFinale", "Vous avez été vaincu par le monstre. Retournez au clan pour vous préparer à nouveau et retenter votre chance.");
+        graph.addDecisionNode("mort", "Vous avez choisi de fuir et avez été rattrapé par le monstre. Vous êtes mort.");
+
+        // Enregistrement à l'auberge
         graph.addArc("introduction", "explication", "Est-ce que vous pouvez m'expliquer en quoi consistent les clans?");
         graph.addArc("introduction", "rejoindre", "Je suis ici pour rejoindre un clan");
+
+        // Explication des clans
         graph.addArc("explication", "clanA", "Je suis un sorcier des éléments");
         graph.addArc("explication", "clanB", "Je suis un sorcier spirituel");
         graph.addArc("explication", "humain", "Je suis juste un humain...");
+
+        // Choix de compétence pour les humains
         graph.addArc("rejoindre", "clanA", "Je suis un sorcier des éléments");
         graph.addArc("rejoindre", "clanB", "Je suis un sorcier spirituel");
         graph.addArc("rejoindre", "humain", "Je suis un simple humain.");
-        graph.addArc("clanA", "death", "Je veux finir");
-        graph.addArc("clanB", "death", "Je veux finir");
         graph.addArc("humain", "humainAvecCompetence", "je suis ingénieur");
         graph.addArc("humain", "humainAvecCompetence", "je suis combattant");
         graph.addArc("humain", "humainAvecCompetence", "je suis persuasif");
-        
+
         graph.addArc("humainAvecCompetence", "clanA", "je veux rejoindre clan A");
         graph.addArc("humainAvecCompetence", "clanB", "je veux rejoindre clan B");
         graph.addArc("humainAvecCompetence", "humainAvecCompetenceSeul", "je veux rester seul");
-        
-        
-     // New arcs after choosing a clan or being alone
-        graph.addArc("clanA", "shop", "Je veux aller au magasin");
-        graph.addArc("clanA", "trainingGround", "Je veux aller au terrain d'entraînement");
-        graph.addArc("clanA", "quest", "Je veux prendre une quête");
-        graph.addArc("clanA", "mysteriousStranger", "Je veux parler à l'étranger mystérieux");
-        
-        graph.addArc("clanB", "shop", "Je veux aller au magasin");
-        graph.addArc("clanB", "trainingGround", "Je veux aller au terrain d'entraînement");
-        graph.addArc("clanB", "quest", "Je veux prendre une quête");
-        graph.addArc("clanB", "mysteriousStranger", "Je veux parler à l'étranger mystérieux");
-        
-        graph.addArc("humainAvecCompetenceSeul", "shop", "Je veux aller au magasin");
-        graph.addArc("humainAvecCompetenceSeul", "trainingGround", "Je veux aller au terrain d'entraînement");
-        graph.addArc("humainAvecCompetenceSeul", "quest", "Je veux prendre une quête");
-        graph.addArc("humainAvecCompetenceSeul", "mysteriousStranger", "Je veux parler à l'étranger mystérieux");
-        
-        graph.addArc("shop", "trainingGround", "Je veux m'entraîner");
-        graph.addArc("shop", "quest", "Je veux prendre une quête");
-        graph.addArc("shop", "battle", "Je veux combattre");
-        graph.addArc("trainingGround", "shop", "Je veux acheter des équipements");
-        graph.addArc("trainingGround", "quest", "Je veux prendre une quête");
-        graph.addArc("quest", "battle", "Je veux combattre");
-        graph.addArc("quest", "treasureHunt", "Je veux chercher un trésor");
-        graph.addArc("mysteriousStranger", "quest", "Je veux prendre une quête");
-        graph.addArc("mysteriousStranger", "treasureHunt", "Je veux chercher un trésor");
-        graph.addArc("battle", "shop", "Je veux acheter des équipements");
-        graph.addArc("battle", "quest", "Je veux prendre une quête");
-        graph.addArc("battle", "treasureHunt", "Je veux chercher un trésor");
-        graph.addArc("treasureHunt", "shop", "Je veux acheter des équipements");
-        graph.addArc("treasureHunt", "trainingGround", "Je veux m'entraîner");
-        
-        
-        
-        for (Entry<String, Node> entry : graph.getGraph().entrySet()) {
-            if (entry.getValue() instanceof InnerNode) {
-                System.out.print(entry.getKey() + "   ");
-                ((InnerNode) entry.getValue()).testDisplay();
-                System.out.println("//////////");
-            }
-        }
-        
+
+        // Interaction avec le maître des clans
+        graph.addArc("clanA", "maitreClanA", "Continuer");
+        graph.addArc("clanB", "maitreClanB", "Continuer");
+
+        // Missions spécifiques des clans
+        graph.addArc("maitreClanA", "missionClanA", "Oui, je suis prêt à aider et à me préparer.");
+        graph.addArc("maitreClanB", "missionClanB", "Oui, je suis prêt à aider et à me préparer.");
+
+        // Missions et combats
+        graph.addArc("missionClanA", "combatPierre", "Continuer");
+        graph.addArc("missionClanB", "combatReliques", "Continuer");
+
+        graph.addArc("combatPierre", "victoirePierre", "Combattre et vaincre le gardien.");
+        graph.addArc("combatPierre", "defaitePierre", "Fuir le combat.");
+
+        graph.addArc("combatReliques", "victoireReliques", "Combattre et vaincre les esprits.");
+        graph.addArc("combatReliques", "defaiteReliques", "Fuir le combat.");
+
+        // Interaction avec le vieux sage
+        graph.addArc("victoirePierre", "introVieux", "Continuer");
+        graph.addArc("introVieux", "parlerVieux", "Parler au vieux sage");
+        graph.addArc("introVieux", "ignorerVieux", "Ignorer le vieux sage");
+
+        graph.addArc("parlerVieux", "deuxiemeCombat", "Demander où se trouve le donjon");
+        graph.addArc("ignorerVieux", "deuxiemeCombat", "Continuer");
+
+        //avoir un chance node -----------------------------------------------  cest là une stat
+        graph.addArc("deuxiemeCombat", "victoireFinale", "Combattre et vaincre le monstre");
+        graph.addArc("deuxiemeCombat", "defaiteFinale", "Perdre le combat");
+
+        // Si le joueur a fui le premier combat
+        graph.addArc("defaitePierre", "introVieux", "Continuer");
+        //graph.addArc("introVieux", "mort", "Parler au vieux sage");
+        graph.addArc("introVieux", "mort", "Ignorer le vieux sage");
+
         Node currentPlay = graph.getGraph().get("introduction");
-        currentPlay.display();
-        
-        Node nextNode = currentPlay.chooseNext();
-        System.out.println(nextNode.getNom());
-        currentPlay = nextNode;
-        currentPlay.display();
-        
-        if (currentPlay.getNom().equals("rejoindre") || currentPlay.getNom().equals("explication")) {
-            nextNode = currentPlay.chooseNext();
-            currentPlay = nextNode;
-            currentPlay.display();
-            
-            switch (currentPlay.getNom()) {
-                case "clanA": p = new SorcierElement(); break;
-                case "clanB": p = new SorcierSpirituel(); break;
-                case "humain": 
-                	
-                    nextNode = currentPlay.chooseNext();
-                    currentPlay = nextNode;
-                    //currentPlay.display()
-                    //System.out.println("this is what m testing "  +currentPlay.getDescription().split("\\.")[0].substring(28));
-                    String competence = currentPlay.getDescription().split("\\.")[0].substring(28); 
-                    //System.out.println("this is what m testing "  +currentPlay.getDescription() ); 
-                    //System.out.println("this is what m testing "  +competence ); 
-                    p = new Humain(Competence.valueOf(competence)); 
-                   //System.out.println(((Humain) p).getAttaque());
-                    break;
-                default: p = new Personnage();
-            }
-            
-            
-        }
-        
         while (true) {
-        	//System.out.println("hi");
             currentPlay.display();
-            
-            nextNode = currentPlay.chooseNext();
-            
-            if (nextNode instanceof DecisionNode) {
+            Node nextNode = currentPlay.chooseNext();
+            currentPlay = nextNode;
+
+            if (nextNode.getNom().equals("rejoindreClan") || nextNode.getNom().equals("queteClan")) {
                 currentPlay = nextNode;
-            } else if (nextNode instanceof ChanceNode) {
-                currentPlay = nextNode;
-            } else if (nextNode instanceof TerminalNode) {
-                currentPlay = nextNode;
+                nextNode.display();
+
+                switch (nextNode.getNom()) {
+                    case "missionPierre":
+                        p = new SorcierElement();
+                        break;
+                    case "defaitePierre":
+                        p = new SorcierElement();
+                        break;
+                    default:
+                        p = new Personnage();
+                }
+            }
+
+            if (currentPlay instanceof TerminalNode) {
                 currentPlay.display();
-                break;
-            } else {
                 break;
             }
         }

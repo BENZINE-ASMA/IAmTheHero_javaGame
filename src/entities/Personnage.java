@@ -38,4 +38,9 @@ public class Personnage extends EntiteMobile {
     public String afficheComp() {
         return "this is a test";
     }
+
+	public void afficherInfos() {
+		// TODO Auto-generated method stub
+		
+	}
 }

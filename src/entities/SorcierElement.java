@@ -1,14 +1,13 @@
 package entities;
 
-public class SorcierElement extends Sorcier {
-	protected String element; //j'imagine que c'est plus interessant de le faire en enum ou autre mais est ce que ça vaut la peine ?
-	
-	
-	
-	@Override
-	public void lancerSort(Sort sort) { // je ne sais définitivement pas le type de la méthode
-		//mais il faut la réécrire pour faire plus de dégats si le sort lancé est du bon type
-		
-	}
+public class SorcierElement extends Personnage {
+    public SorcierElement() {
+        super();
+        this.name = "Sorcier des Éléments";
+    }
 
+    @Override
+    public void afficherInfos() {
+        System.out.println("Vous êtes un Sorcier des Éléments avec des pouvoirs sur la terre, l'eau, le feu et l'air.");
+    }
 }
