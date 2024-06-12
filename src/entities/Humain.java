@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class Humain extends Personnage {
     protected Competence comp;
 
@@ -8,20 +10,32 @@ public class Humain extends Personnage {
         setCompetence(comp);
         vitesse = 15;
         this.name = "Humain";
-        sac = new Object[15];
+        sac = new ArrayList<Potion>();
+		capaciteMax = 10; 
+		arme = Arme.EPEE_BOIS;
+		pvBase = 70;
+		pvRestant = 70;
     }
 
     public Humain() {
         super();
         vitesse = 15;
-        sac = new Object[15];
+        sac = new ArrayList<Potion>();
+		capaciteMax = 10; 
+		arme = Arme.EPEE_BOIS;
+		pvBase = 70;
+		pvRestant = 70;
     }
 
     public Humain(Direction dir, Competence comp) {
         super(dir);
         setCompetence(comp);
         vitesse = 15;
-        sac = new Object[15];
+        sac = new ArrayList<Potion>();
+		capaciteMax = 10; 
+		arme = Arme.EPEE_BOIS;
+		pvBase = 70;
+		pvRestant = 70;
     }
 
     public void setCompetence(Competence comp) {

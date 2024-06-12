@@ -2,6 +2,9 @@ package representation;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import entities.EntiteMobile;
+import entities.Personnage;
 public class NodesGraph {
 	private HashMap<String,Node> graph = new HashMap<>();
 	
@@ -18,6 +21,11 @@ public class NodesGraph {
 	
 	public void addTerminalNode(String name, String description) {
 		this.graph.put(name,new TerminalNode(name,description));
+	}
+	
+	public void addCombatNode(String name, String description, String death, EntiteMobile monstre, Personnage joueur) {
+		TerminalNode end = (TerminalNode) this.graph.get(death);
+		this.graph.put(name,new CombatNode(name,description, end, monstre, joueur));
 	}
 	
 	public void addArc(String nameNodeFrom, String nameNodeTo,String repliqueNodeTo) {

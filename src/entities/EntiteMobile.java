@@ -11,6 +11,14 @@ public class EntiteMobile extends Entite{
 		this.dir = dir;
 	}
 	
+	public EntiteMobile(int pvBase, int pvRestant, int attaque, int vitesse) {
+		this.pvBase = pvBase;
+		this.pvRestant = pvRestant;
+		this.attaque = attaque;
+		this.vitesse = vitesse;
+		this.dir = Direction.nord;
+	}
+	
 	
 	public Direction getDir() {
 		return dir;
@@ -56,6 +64,19 @@ public class EntiteMobile extends Entite{
 	public void setVitesse(int vitesse) {
 		this.vitesse = vitesse;
 	}
+	
+	public void baisserPV(int valeur) {
+		this.pvRestant -= valeur;
+	}
+	
+	public void augmenterPVRestants(int valeur) {
+		if (this.pvRestant + valeur > this.pvBase){
+			this.pvRestant = this.pvBase;
+		}
+		else {
+			this.pvRestant += valeur;
+		}
+	}
 
 
 	@Override
@@ -66,7 +87,8 @@ public class EntiteMobile extends Entite{
 		return this.dir;
 	}
 	
-	public int attaquePhysique() {
-		return attaque; //faire une formule pour calculer les dégats causés (plus tard)
+	public void attaquePhysique(EntiteMobile cible) {
+		System.out.println(name + " attaque " + cible.getName() + " à mains nues.\nCela lui fait perdre " + this.attaque/2 + " PV.");
+		cible.baisserPV(attaque/2);
 	}
 }

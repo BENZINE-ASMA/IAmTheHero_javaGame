@@ -51,7 +51,13 @@ public class DecisionNode extends InnerNode {
     private void handleSpecialCases(String chosenKey, Node chosenNode, String nameOfCurrentNode) {
         //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
-            ((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(7) + ". vous voulez rejoindre quel clan?";
+        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(7) + ". vous voulez rejoindre quel clan?";
         }
+        //rajouter pour l'affinite du sorcier des éléments
+        	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("missionClanElement")) {
+        		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
+        	}
+        	
+        	
     }
 }
