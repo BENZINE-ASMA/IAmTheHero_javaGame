@@ -24,6 +24,12 @@ public class JeuMain {
         
         EntiteMobile gobelin1 = new EntiteMobile(50,50,10,14);
         gobelin1.setName("Geodfroy");
+        EntiteMobile gobelin2 = new EntiteMobile(50,50,10,14);
+        gobelin1.setName("Gontrant");
+        EntiteMobile slime1 = new EntiteMobile(30,30,5,8);
+        gobelin1.setName("Slime");
+        EntiteMobile chimere = new EntiteMobile(110,110,25,20);
+        gobelin1.setName("Chimère");
         
         
         //Noeud terminal de mort lors d'un combat
@@ -60,13 +66,44 @@ public class JeuMain {
         
   
         // Choix d'action post introduction
+        // Choix dans l'auberge
         graph.addDecisionNode("AubergePostIntroElem", "L'auberge n'a pas changé depuis votre venue tout à l'heure. L'aubergiste vous accueille : Vous voilà ! Que puis-je pour vous ?");
         graph.addDecisionNode("AubergePierreElem", "C'est une relique légendaire, censée renfermer la puissance brute des éléments. On dit qu'elle a été perdue il y a des siècles... Vous devriez parler à l'historien de la Bibliothèque des Anciens, il en sait sûrement plus.");
         graph.addDecisionNode("AubergeEmplacementBibliotheque", "La Bibliothèque des Anciens se trouve à l'Est de la ville, non loin d'ici. Vous devriez pouvoir voir l'emplacement de l'historien sur votre carte.");
         graph.addDecisionNode("AubergePersonnesUtiles", "L'historien est sans doute la personne qui s'y connait le mieux. Vous pourriez tout de même aller voir la guérisseuse au sud du village pour récupérer des potions spéciales pour vous protéger des dangers des donjons.");
   
+        // Choix dans la bibliotheque
         graph.addDecisionNode("Bibliothèque", "bibliothèque");
+        graph.addDecisionNode("BibliothequePostIntroElem", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite.");
+        graph.addDecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Elle pourrait être cachée dans les Grottes au Sud ou dans la Forêt à l'Est. ");
+        graph.addDecisionNode("BibliothequeLegende", "Historien: Le Grimoire Ancien contient des sorts puissants oubliés depuis longtemps. Il pourrait être cachée dans les Grottes au Sud ou dans la Forêt à l'Est.");
+        
         graph.addCombatNode("Donjon", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", "mortCombat", gobelin1, p);
+        
+        //Aller dans la forêt
+        graph.addDecisionNode("Foret", "En entrant dans la Forêt des Murmures, vous êtes enveloppé par une canopée dense et lumineuse. Les arbres chuchotent des secrets anciens à chaque souffle de vent. Par où aller?");
+        graph.addChanceNode("ForetChemin", ""); //Est ce que le chemin choisi sera le bon?
+        graph.addDecisionNode("ForetMauvaisChemin", "Vous vous perdez dans la forêt. Que voulez-vous faire?");
+        graph.addTerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent.");
+        graph.addDecisionNode("ForetBonChemin", "Vous trouvez votre chemin.");
+        graph.addChanceNode("ForetMonstre", ""); //Quel monstre va être choisi?
+        graph.addCombatNode("CombatSlime1", "Cependant vous tombez nez à nez avec un slime qui vous attaque!", "mortCombat", slime1, p);
+        graph.addCombatNode("CombatGobelin2", "Cependant vous tombez nez à nez avec un gobelin qui vous attaque!", "mortCombat", gobelin2, p);
+        graph.addCombatNode("CombatChimere", "Vous voyez la Pierre juste devant vos yeux. Une créature surgit alors, une chimère protégeant la pierre qui fonce sur vous!", "mortCombat", chimere, p);
+        graph.addDecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?");
+        graph.addDecisionNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. Qu'avez-vous fait...?\nVous quittez la forêt, qui semble plus sombre que lorsque vous êtes arrivé.e");
+        
+        //Ramener Pierre à son clan : fin de l'histoire
+        graph.addTerminalNode("PierrePourClan", "Vous ramenez la Pierre au clan des éléments. Le maitre du clan vous remercie. Il a un regard triomphant, et quelque peu sournois. Votre clan survivra, le destin de l'autre semble arriver à son terme.");
+        
+        
+        //Aller dans la grotte
+        graph.addDecisionNode("Grotte","La Grotte des Ombres, sombre et froide, résonne de murmures mystérieux. Que voulez-vous faire?");
+        graph.addChanceNode("Explorer", "Vous cherchez dans la grotte");
+        graph.addDecisionNode("ArmeMeilleure", "Vous trouvez une *version de l'arme améliorée*. Vous la gardez avec vous. Vous décidez d'avancer");
+        graph.addDecisionNode("GrotteRien", "Vous ne voyez rien d'intéressant pour l'instant...Autant continuer");
+        graph.addTerminalNode("GrotteHorde", "Vous vous avancez dans la grande salle. Malheureusement pour vous, c'est le campement des gobelins, et des dizaines vous attaquent d'un coup... Vous succombez rapidement de vos blessures");
+        graph.addDecisionNode("GrottePetitChemin", "Vous avancez dans un petit chemin sinueux");
         
         graph.addDecisionNode("combatPierre", "Vous avez retrouvé la Pierre des Éléments, mais elle est gardée par un puissant gardien. Préparez-vous au combat.");
         graph.addDecisionNode("combatReliques", "Vous avez trouvé les reliques spirituelles, mais elles sont protégées par des esprits puissants. Préparez-vous au combat.");
