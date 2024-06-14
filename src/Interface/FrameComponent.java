@@ -1,8 +1,6 @@
 package Interface;
 
 import javax.swing.*;
-
-import Interface.PanelComponent;
 import entities.Direction;
 import entities.Personnage;
 import representation.*;
@@ -131,8 +129,8 @@ public class FrameComponent extends JFrame implements KeyListener {
                 );
 
                 if (choice != null) {
-                    //currentPlay = currentPlay.chooseNext(choice);
-                   // displayCurrentNode();
+                    currentPlay = currentPlay.chooseNext(choice);
+                    displayCurrentNode();
                 }
             }
         }
