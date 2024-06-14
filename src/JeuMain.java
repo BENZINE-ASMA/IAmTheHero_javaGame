@@ -1,9 +1,21 @@
-import java.util.Map.Entry;
-import entities.*;
-import representation.*;
 import java.util.Scanner;
 
 import Interface.Terrain;
+import entities.Competence;
+import entities.EntiteMobile;
+import entities.Humain;
+import entities.Personnage;
+import entities.Potion;
+import entities.SorcierElement;
+import entities.SorcierSpirituel;
+import representation.ChanceNode;
+import representation.CombatNode;
+import representation.DecisionNode;
+import representation.Node;
+import representation.NodesGraph;
+import representation.TerminalNode;
+
+
 
 public class JeuMain {
     public static String test() {

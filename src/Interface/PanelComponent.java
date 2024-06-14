@@ -2,7 +2,10 @@ package Interface;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import Components.*;
+import entities.Competence;
+import entities.Humain;
 import entities.Personnage;
 
 import java.awt.*;
@@ -20,6 +23,9 @@ public class PanelComponent extends JPanel {
     private BufferedImage clanAImage;
     private BufferedImage clanBImage;
     private BufferedImage personnageImage;
+    private BufferedImage guerisseuseImage;
+    private BufferedImage historienImage;
+    private BufferedImage aubergisteImage;
     private String nodeText;
     ArrayList<String> nodeChoices;
     
@@ -42,6 +48,9 @@ public class PanelComponent extends JPanel {
           //  clanAImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\clanA.png"));
            // clanBImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\clanB.png"));
             personnageImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\personnage.png"));
+            guerisseuseImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\guerisseuse.png"));
+            historienImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\historien.png"));
+            aubergisteImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\aubergiste.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,6 +92,17 @@ public class PanelComponent extends JPanel {
                 if (c instanceof CaseTraversable) {
                     if (((CaseTraversable) c).getContenu() instanceof Personnage) {
                         g.drawImage(personnageImage, c.col * tailleCase, c.lig * tailleCase, tailleCase, tailleCase, this);
+                    }
+                    if (((CaseTraversable) c).getContenu() instanceof Humain) {
+                    	if (((Humain)(((CaseTraversable) c).getContenu())).getCompetence().equals(Competence.guerisseuse)){
+                    		g.drawImage(guerisseuseImage, c.col * tailleCase, c.lig * tailleCase, tailleCase, tailleCase, this);                    		
+                    	}
+                    	if (((Humain)(((CaseTraversable) c).getContenu())).getCompetence().equals(Competence.aubergiste)){
+                    		g.drawImage(aubergisteImage, c.col * tailleCase, c.lig * tailleCase, tailleCase, tailleCase, this);                    		
+                    	}
+                    	if (((Humain)(((CaseTraversable) c).getContenu())).getCompetence().equals(Competence.historien)){
+                    		g.drawImage(historienImage, c.col * tailleCase, c.lig * tailleCase, tailleCase, tailleCase, this);                    		
+                    	}
                     }
                 }
             }

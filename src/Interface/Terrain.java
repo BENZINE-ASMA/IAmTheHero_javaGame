@@ -1,4 +1,5 @@
 package Interface;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +12,10 @@ import Components.CaseIntraversable;
 import Components.CaseTraversable;
 import Components.Donjon;
 import Components.Riviere;
+import entities.Competence;
 import entities.Direction;
+import entities.Entite;
+import entities.Humain;
 import entities.Personnage;
 
 
@@ -46,6 +50,9 @@ public class Terrain {
                         case '*' -> cc = new CaseCLanA(h, l);
                         case '-' -> cc = new CaseClanB(h, l);
                         case '@' -> cc = new Riviere(h, l);
+                        case 'G' -> cc = new CaseTraversable(h,l,new Humain(Competence.guerisseuse));
+                        case 'A' -> cc = new CaseTraversable(h,l,new Humain(Competence.historien));
+                        case 'H' -> cc = new CaseTraversable(h,l,new Humain(Competence.aubergiste));
                         case '|' -> cc = new Donjon(h, l);
                         case 'J' -> {
                         xjoueur = l; yjoueur= h;cc = new CaseTraversable(h, l, joueur);
@@ -81,11 +88,12 @@ public class Terrain {
         return this.hauteur;
     }
     
+    
     public boolean isPlayerOnCase( Class<?extends Case> caseClass) {
         return caseClass.isInstance(carte[yjoueur][xjoueur]);
     }
-
-	public void movePlayer(Direction direction) {
+    
+    public void movePlayer(Direction direction) {
 		int newX = xjoueur, newY = yjoueur;
 		switch (direction) {
 		case nord -> newY -=1;
@@ -105,9 +113,12 @@ public class Terrain {
 					yjoueur= newY;
 				}
 				
-			}
+			//}
 			
 		}
 		
+	}
+
+	
 	}
 }
