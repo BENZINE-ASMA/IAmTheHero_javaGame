@@ -80,6 +80,10 @@ public class Terrain {
     public int getHauteur() {
         return this.hauteur;
     }
+    
+    public boolean isPlayerOnCase( Class<?extends Case> caseClass) {
+        return caseClass.isInstance(carte[yjoueur][xjoueur]);
+    }
 
 	public void movePlayer(Direction direction) {
 		int newX = xjoueur, newY = yjoueur;
@@ -96,7 +100,7 @@ public class Terrain {
 				CaseTraversable destTraversable = (CaseTraversable) dest;
 				if (destTraversable.estLibre()) {
 					destTraversable.setContenu(joueur);
-					((CaseTraversable)carte[yjoueur][xjoueur]).vide(); //vider la case du joueur
+					((CaseTraversable)carte[yjoueur][xjoueur]).vide(); 
 					xjoueur= newX;
 					yjoueur= newY;
 				}

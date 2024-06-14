@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PanelComponent extends JPanel {
 
@@ -19,13 +20,19 @@ public class PanelComponent extends JPanel {
     private BufferedImage clanAImage;
     private BufferedImage clanBImage;
     private BufferedImage personnageImage;
+    private String nodeText;
+    ArrayList<String> nodeChoices;
+    
 
-    public PanelComponent(Terrain terrain) {
+    public PanelComponent(Terrain terrain, FrameComponent fc) {
         this.terrain = terrain;
         setBackground(Color.white);
         setPreferredSize(new Dimension(terrain.getHauteur() * tailleCase, terrain.getLargeur() * tailleCase));
         loadImages();
-        setFocusable(true); // Make sure the panel can receive focus
+        this.nodeText = "";
+        this.nodeChoices = new ArrayList<>();
+        setFocusable(true); 
+        addKeyListener(fc);
     }
 
     private void loadImages() {
@@ -38,6 +45,15 @@ public class PanelComponent extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void setNodeText(String text) {
+        this.nodeText = text;
+        repaint();
+    }
+
+    public void setNodeChoices(ArrayList<String> choices) {
+        this.nodeChoices = choices;
+        repaint();
     }
 
     @Override
@@ -69,6 +85,18 @@ public class PanelComponent extends JPanel {
                         g.drawImage(personnageImage, c.col * tailleCase, c.lig * tailleCase, tailleCase, tailleCase, this);
                     }
                 }
+            }
+        }
+        
+        if (nodeText != null && !nodeText.isEmpty()) {
+            g.setColor(Color.BLACK);
+            g.drawString(nodeText, 10, terrain.getHauteur() * tailleCase + 20);
+        }
+
+        // Dessiner les choix du nœud
+        if (nodeChoices != null && !nodeChoices.isEmpty()) {
+            for (int i = 0; i < nodeChoices.size(); i++) {
+                g.drawString((i + 1) + ". " + nodeChoices.get(i), 10, terrain.getHauteur() * tailleCase + 40 + (i * 20));
             }
         }
     }
