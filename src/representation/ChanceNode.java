@@ -2,6 +2,7 @@ package representation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class ChanceNode extends InnerNode {
 	
@@ -21,8 +22,15 @@ public class ChanceNode extends InnerNode {
 
 	@Override
 	public Node chooseNext() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+		System.out.println(nodeList);
+		
+		Random random = new Random();
+		int indice = random.nextInt(nodeList.size());
+		System.out.println(nodeList.size());
+		System.out.println(indice);
+		Node chosenNode = nodeList.get(indice);
+		return chosenNode;
 	}
 
 	@Override
