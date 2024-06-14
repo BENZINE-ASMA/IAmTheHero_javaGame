@@ -1,8 +1,16 @@
+package Interface;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Components.Case;
+import Components.CaseCLanA;
+import Components.CaseClanB;
+import Components.CaseIntraversable;
+import Components.CaseTraversable;
+import Components.Donjon;
+import Components.Riviere;
 import entities.Direction;
 import entities.Personnage;
 
@@ -51,7 +59,9 @@ public class Terrain {
             e.printStackTrace(); 
         }
     }
-
+    public Case[][] getCarte(){
+    	return this.carte;
+    }
     public void affiche() {
         for (Case[] row : carte) {
             for (Case c : row) {

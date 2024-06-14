@@ -19,7 +19,6 @@ public class DecisionNode extends InnerNode {
 	}
 
 	@Override
-	
 	public Node chooseNext() {
 		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
@@ -60,4 +59,22 @@ public class DecisionNode extends InnerNode {
         	
         	
     }
+	@Override
+	public Node chooseNext(String choice) {
+		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
+		String chosenKey = null ;
+        Node chosenNode = null;
+        for (int i =0; i< reliqueList.size();i++) {
+        	if (reliqueList.get(i).equals(choice)) {
+        		chosenKey =  reliqueList.get(i);
+                chosenNode = nodeList.get(i);
+        	}
+        }
+        
+        
+        handleSpecialCases(chosenKey, chosenNode,this.getNom());
+        
+        return chosenNode;
+	}
 }

@@ -56,7 +56,7 @@ public abstract class Node {
 	}
 
 	public abstract void display();
-
 	
-	public abstract Node chooseNext();
+	 	public abstract Node chooseNext(String choice);
+	    public abstract Node chooseNext();
 }

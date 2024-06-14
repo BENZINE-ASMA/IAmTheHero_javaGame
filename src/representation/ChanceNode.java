@@ -25,4 +25,10 @@ public class ChanceNode extends InnerNode {
 		return null;
 	}
 
+	@Override
+	public Node chooseNext(String choice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -223,4 +223,10 @@ public class CombatNode extends InnerNode {
 		}
 	}
 
+	@Override
+	public Node chooseNext(String choice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,3 +1,4 @@
+package Components;
 import entities.Entite;
 
 public class CaseTraversable extends Case {

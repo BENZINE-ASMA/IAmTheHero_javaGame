@@ -1,4 +1,6 @@
 import java.util.Map.Entry;
+
+import Interface.Terrain;
 import entities.*;
 import representation.*;
 import java.util.Scanner;
