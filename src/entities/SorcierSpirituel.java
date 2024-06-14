@@ -1,5 +1,5 @@
 package entities;
-public class SorcierSpirituel extends Personnage {
+public class SorcierSpirituel extends Sorcier {
     public SorcierSpirituel() {
         super();
         this.name = "Sorcier Spirituel";

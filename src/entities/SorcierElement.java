@@ -1,6 +1,6 @@
 package entities;
 
-public class SorcierElement extends Personnage {
+public class SorcierElement extends Sorcier {
     public SorcierElement() {
         super();
         this.name = "Sorcier des Éléments";
