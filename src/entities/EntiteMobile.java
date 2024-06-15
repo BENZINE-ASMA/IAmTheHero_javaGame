@@ -77,6 +77,18 @@ public class EntiteMobile extends Entite{
 			this.pvRestant += valeur;
 		}
 	}
+	
+	public void augmenterPVBases(int valeur) {
+		this.pvBase += valeur;
+	}
+	
+	public void augmenterAttaque(int valeur) {
+		this.attaque += valeur;
+	}
+	
+	public void augmenterVitesse(int valeur) {
+		this.vitesse += valeur;
+	}
 
 
 	@Override

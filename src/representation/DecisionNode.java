@@ -50,7 +50,7 @@ public class DecisionNode extends InnerNode {
     private void handleSpecialCases(String chosenKey, Node chosenNode, String nameOfCurrentNode) {
         //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
-        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(7) + ". vous voulez rejoindre quel clan?";
+        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(7) + ", que voulez-vous faire?";
         }
         //rajouter pour l'affinite du sorcier des éléments
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("missionClanElement")) {

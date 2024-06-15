@@ -23,8 +23,7 @@ public class ChanceNode extends InnerNode {
 	@Override
 	public Node chooseNext() {
 		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
-		System.out.println(nodeList);
-		
+
 		Random random = new Random();
 		int indice = random.nextInt(nodeList.size());
 		System.out.println(nodeList.size());

@@ -96,7 +96,8 @@ public class Personnage extends EntiteMobile {
         System.out.println("Potions dans le sac :");
         int i=0;
         for (Potion potion : sac) {
-            System.out.println("- " + (i+1) + potion.getNom() + ": " + potion.getDescription());
+            System.out.println("- " + (i+1) + " "+ potion.getNom() + ": " + potion.getDescription());
+            i++;
         }
     }
 

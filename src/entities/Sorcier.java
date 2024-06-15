@@ -11,35 +11,31 @@ public class Sorcier extends Personnage {
 	
 	public Sorcier() {
 		super();
-		attaque = 8;
+		attaque = 108;
 		vitesse = 15;
-		magieBase = 30;
-		magieRestant = 30;
+		magieBase = 40;
+		magieRestant = 40;
 		sac = new ArrayList<Potion>();
 		capaciteMax = 5; 
 		arme = Arme.BATON_MAGIQUE_BOIS;
-		pvBase = 50;
-		pvRestant = 50;
+		pvBase = 60;
+		pvRestant = 60;
 	}
 	
 	public Sorcier(Direction dir) {
 		super(dir);
-		attaque = 8;
+		attaque = 108;
 		vitesse = 15;
-		magieBase = 30;
-		magieRestant = 30;
+		magieBase = 40;
+		magieRestant = 40;
 		sac = new ArrayList<Potion>();
 		capaciteMax = 5;
 		arme = Arme.BATON_MAGIQUE_BOIS;
-		pvBase = 50;
-		pvRestant = 50;
+		pvBase = 60;
+		pvRestant = 60;
 	}
 	
 	public void apprendreSort(Sort sort) {
-		if (nbSortsConnus >= sortsConnus.size()) {
-			System.out.println("Nombre de sorts connus maximal atteint. Impossible d'en rajouter");
-			return;
-		}
 		sortsConnus.add(sort);
 		nbSortsConnus++;
 	}
@@ -58,7 +54,8 @@ public class Sorcier extends Personnage {
         System.out.println("Sorts connus :");
         int i=0;
         for (Sort sort : sortsConnus) {
-            System.out.println("- " + (i+1) + sort.getNom() + ": coût mana :" + sort.getCoutMana() + ", dégats :" + sort.getDegats());
+            System.out.println("- " + (i+1) + " "+ sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégats : " + sort.getDegats());
+            i++;
         }
     }
 
@@ -98,9 +95,13 @@ public class Sorcier extends Personnage {
 			this.magieRestant += valeur;
 		}
 	}
+	
+	public void augmenterMPBase(int valeur) {
+		this.magieBase += valeur;
+	}
 
 	public void lancerSort(EntiteMobile cible, Sort sorc) { // je n'ai honnetement aucune idée du type de la méthode
-		System.out.println("Vous utilisez" + sorc.getNom() + "\n" + sorc.getDescription());
+		System.out.println("Vous utilisez " + sorc.getNom() + "\n" + sorc.getDescription());
 		baisserMP(sorc.getCoutMana());
 		cible.baisserPV(sorc.getDegats());
 	}

@@ -42,11 +42,9 @@ public class CombatNode extends InnerNode {
 
 	@Override
 	public Node chooseNext() {
-		System.out.println("Hello");
 		if (!winner) {
 			return death;
 		}
-		System.out.println("Hello");
 		
 		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
@@ -149,7 +147,8 @@ public class CombatNode extends InnerNode {
                     choix2 = sc.nextInt();
                     if (choix2 >= 0 && choix2 <= nbSorts) {
                         if (choix2 > 0) {
-                        	if (lsort.get(choix2-1).getCoutMana()>= ((Sorcier)joueur).getMagieRestant()) {
+                        	System.out.println(lsort.get(choix2-1).getCoutMana() + " " + ((Sorcier)joueur).getMagieRestant());
+                        	if (lsort.get(choix2-1).getCoutMana()<= ((Sorcier)joueur).getMagieRestant()) {
                         		break;
                         	}
                         	else {
@@ -177,6 +176,47 @@ public class CombatNode extends InnerNode {
         }
 		
         
+	}
+	
+	
+	public void chooseReward() {
+		Scanner sc = new Scanner(System.in);
+        int sizeChoice;
+		
+		if (joueur instanceof Sorcier) {
+			sizeChoice = 4;
+		}
+		else {
+			sizeChoice = 3;
+		}
+		
+		System.out.println("Vous gagnez 5 points de compétence, dans quoi voulez-vous les mettre ?");
+		System.out.println("1: Points de vie");
+		System.out.println("2: Attaque");
+		System.out.println("3: Vitesse");
+		if (joueur instanceof Sorcier){
+			System.out.println("4: Points de magie");
+		}
+    	
+    	int choix;
+        while (true) {
+            System.out.print("Choisissez une option : ");
+            choix = sc.nextInt();
+            if (choix > 0 && choix <= sizeChoice) {
+                break;
+            } else {
+                System.out.println("Choix invalide, veuillez réessayer.");
+            }
+        }
+        
+        switch(choix) {
+        case 1: joueur.augmenterPVBases(5); joueur.augmenterPVRestants(5); break;
+        case 2: joueur.augmenterAttaque(5); break;
+        case 3: joueur.augmenterVitesse(5); break;
+        case 4: ((Sorcier)joueur).augmenterMPBase(5); ((Sorcier)joueur).augmenterMPRestant(5); break;
+        }
+        
+        System.out.println("Modification effectuée.");
 	}
 
 	@Override
@@ -217,8 +257,11 @@ public class CombatNode extends InnerNode {
 		
 		if (joueur.getPvRestant() > 0) {
 			winner = true;
+			System.out.println(monstre.getName() + " est KO.");
+			chooseReward();
 		}
 		else {
+			System.out.println("Vous êtes KO.");
 			winner = false;
 		}
 	}
