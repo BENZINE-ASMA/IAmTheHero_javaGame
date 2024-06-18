@@ -12,6 +12,7 @@ import Components.CaseIntraversable;
 import Components.CaseTraversable;
 import Components.Donjon;
 import Components.Riviere;
+import Components.Village;
 import entities.Competence;
 import entities.Direction;
 import entities.Entite;
@@ -50,6 +51,7 @@ public class Terrain {
                         case '*' -> cc = new CaseCLanA(h, l);
                         case '-' -> cc = new CaseClanB(h, l);
                         case '@' -> cc = new Riviere(h, l);
+                        case '/' -> cc = new Village(h, l);
                         case 'G' -> cc = new CaseTraversable(h,l,new Humain(Competence.guerisseuse));
                         case 'A' -> cc = new CaseTraversable(h,l,new Humain(Competence.historien));
                         case 'H' -> cc = new CaseTraversable(h,l,new Humain(Competence.aubergiste));
@@ -90,8 +92,12 @@ public class Terrain {
     
     
     public boolean isPlayerOnCase( Class<?extends Case> caseClass) {
-        return caseClass.isInstance(carte[yjoueur][xjoueur]);
-    }
+    	
+    		return caseClass.isInstance(carte[yjoueur][xjoueur]);
+    	}
+   
+    
+    
     
     public void movePlayer(Direction direction) {
 		int newX = xjoueur, newY = yjoueur;
@@ -106,8 +112,9 @@ public class Terrain {
 			
 			if (dest instanceof CaseTraversable) {
 				CaseTraversable destTraversable = (CaseTraversable) dest;
-				if (destTraversable.estLibre()) {
+				if (destTraversable instanceof CaseTraversable && !( destTraversable.getContenu() instanceof Humain)) {
 					destTraversable.setContenu(joueur);
+					
 					((CaseTraversable)carte[yjoueur][xjoueur]).vide(); 
 					xjoueur= newX;
 					yjoueur= newY;
