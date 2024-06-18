@@ -33,7 +33,7 @@ public class SorcierElement extends Sorcier {
 			degatSort = (int) (sorc.getDegats() * 1.5);
 		}
 
-		if (sorc.getDegats() != 0)	{
+		if (degatSort != 0)	{
 			System.out.println(sorc.getNom() + " fait " + degatSort + " points de dégat à votre adversaire");
 		}
 		if (sorc.getSoin() != 0) {

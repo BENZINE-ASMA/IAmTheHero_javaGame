@@ -24,8 +24,8 @@ import representation.TerminalNode;
  * Faire des chemins qui ne sont accessibles que si le joueur est dans le clan des éléments ou dans celui des enchanteurs, là tous sont visibles pour tous
  * Un noeud à rajouter pour le clan des enchanteurs pour lui donner son pouvoir spécial
  * Faire plus de handleSpecialCase
+ * epee
  */
-
 
 
 public class JeuMain {
@@ -100,7 +100,11 @@ public class JeuMain {
   
         // Choix d'action post introduction
         // Choix dans l'auberge
-        graph.addDecisionNode("AubergePostIntro", "L'auberge n'a pas changé depuis votre venue tout à l'heure. L'aubergiste vous accueille : Vous voilà ! Que puis-je pour vous ?");
+        graph.addDecisionNode("AubergePostIntro", "L'auberge n'a pas changé depuis votre venue tout à l'heure. Alors que vous alliez voir l'aubergiste, un homme semblant assez alcoolisé vient vous parler. Il vous propose de vous offrir une récompense si vous le battez dans son domaine de prédilection, la pétanque");
+        graph.addChanceNode("PartiePetanque", "Vous jouez avec l'homme.");
+        graph.addDecisionNode("MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance. L'homme reconnait sa défaite, et vous offre un bâton magique qui semble en bien meilleur état que le votre.");
+        graph.addDecisionNode("PartiePerdue", "Vous faites tomber la boule sur vos pieds et criez de douleur. Vous ne gagnez pas ce match.");
+        graph.addDecisionNode("AubergisteParler", "L'aubergiste vous reconnait et vous demande ce que vous rechercher.");
         graph.addDecisionNode("AubergePierreElem", "C'est une relique légendaire, censée renfermer la puissance brute des éléments. On dit qu'elle a été perdue il y a des siècles... Vous devriez parler à l'historien de la Bibliothèque des Anciens, il en sait sûrement plus.");
         graph.addDecisionNode("AubergeEmplacementBibliotheque", "La Bibliothèque des Anciens se trouve à l'Est de la ville, non loin d'ici. Vous devriez pouvoir voir l'emplacement de l'historien sur votre carte.");
         graph.addDecisionNode("AubergePersonnesUtiles", "L'historien est sans doute la personne qui s'y connait le mieux. Vous pourriez tout de même aller voir la guérisseuse au sud du village pour récupérer des potions spéciales pour vous protéger des dangers des donjons.");
@@ -111,8 +115,8 @@ public class JeuMain {
         graph.addDecisionNode("BibliothequePostIntro", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite.");
         graph.addDecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Elle pourrait être cachée dans les Grottes au Sud ou dans la Forêt à l'Est. ");
         
-        graph.addCombatNode("CarteCombat1", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", "mortCombat", gobelin1, p);
-        graph.addCombatNode("CarteCombat2", "En voici un deuxième! Préparez-vous au combat.", "mortCombat", gobelin3, p);
+        graph.addCombatNode("CarteCombat1", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", "mortCombat", gobelin1);
+        graph.addCombatNode("CarteCombat2", "En voici un deuxième! Préparez-vous au combat.", "mortCombat", gobelin3);
         
         
         //Aller dans la forêt
@@ -122,9 +126,9 @@ public class JeuMain {
         graph.addTerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent.");
         graph.addDecisionNode("ForetBonChemin", "Vous trouvez votre chemin.");
         graph.addChanceNode("ForetMonstre", "Vous entendez du bruit."); //Quel monstre va être choisi?
-        graph.addCombatNode("CombatSlime1", "Vous tombez nez à nez avec un slime qui vous attaque!", "mortCombat", slime1, p);
-        graph.addCombatNode("CombatGobelin2", "Vous tombez nez à nez avec un gobelin qui vous attaque!", "mortCombat", gobelin2, p);
-        graph.addCombatNode("CombatChimere", "Vous voyez la Pierre juste devant vos yeux. Une créature surgit alors, une chimère protégeant la pierre qui fonce sur vous!", "mortCombat", chimere, p);
+        graph.addCombatNode("CombatSlime1", "Vous tombez nez à nez avec un slime qui vous attaque!", "mortCombat", slime1);
+        graph.addCombatNode("CombatGobelin2", "Vous tombez nez à nez avec un gobelin qui vous attaque!", "mortCombat", gobelin2);
+        graph.addCombatNode("CombatChimere", "Vous voyez la Pierre juste devant vos yeux. Une créature surgit alors, une chimère protégeant la pierre qui fonce sur vous!", "mortCombat", chimere);
         graph.addDecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?");
         graph.addChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. Qu'avez-vous fait...?\nVous quittez la forêt, qui semble plus sombre que lorsque vous êtes arrivé.e");
         
@@ -155,7 +159,7 @@ public class JeuMain {
         graph.addDecisionNode("Source", "Vous arrivez à la rivière. Plus que d'étranges énergies, l'apparence de l'eau est tout à fait étrange, légèrement verte.");
         graph.addChanceNode("SourceEauMagieElement", "Vous utilisez votre magie de l'eau pour la renouveller");
         graph.addChanceNode("SourceEauMagieEnchanteur", "Vous utilisez Lumière Curative pour purifier l'eau");
-        graph.addCombatNode("SlimeGeant", "C'était un slime gigantesque qui polluait l'eau et la rendait gluante! Il n'apprécie pas votre agitation et attaque.", "mortCombat", queenslime,p);;
+        graph.addCombatNode("SlimeGeant", "C'était un slime gigantesque qui polluait l'eau et la rendait gluante! Il n'apprécie pas votre agitation et attaque.", "mortCombat", queenslime);;
         graph.addDecisionNode("SourceProblemeResolu", "L'eau redevient d'un bleu azur digne des piscines les plus chlorées.");
 
   
@@ -217,7 +221,17 @@ public class JeuMain {
         graph.addArc("CarteCombat2", "BibliothequePostIntro", "Aller à la bibliothèque chercher l'historien.");
  
         // Auberge quête 
-        graph.addArc("AubergePostIntro", "AubergePersonnesUtiles", "Y a-t-il des personnes en ville qui s'y connaissent sur les légendes?");
+        graph.addArc("AubergePostIntro", "PartiePetanque", "Accepter de jouer.");
+        graph.addArc("AubergePostIntro", "AubergisteParler", "Refuser de jouer et aller voir l'aubergiste.");
+        graph.addArc("PartiePetanque", "MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance.");
+        graph.addArc("PartiePetanque", "PartiePerdue", "Vous perdez.");
+        
+        graph.addArc("PartiePerdue", "AubergisteParler", " Vous essayez d'oublier ce moment et allez voir l'aubergiste.");
+        graph.addArc("MeilleureArme", "AubergisteParler", "Vous vous dirigez vers l'aubergiste, fièr.e de votre victoire.");
+        
+        graph.addArc("AubergisteParler", "AubergePersonnesUtiles", "Y a-t-il des personnes en ville qui s'y connaissent sur les légendes?");
+        graph.addArc("AubergisteParler", "AubergePotions", "Où pourrais-je me préparer pour mon aventure?");
+        
         graph.addArc("AubergePersonnesUtiles", "AubergePierreElem", "Et vous, en savez vous plus sur la Pierrre Elementaire?");
         graph.addArc("AubergePierreElem", "AubergeEmplacementBibliotheque", "Où puis-je trouver la bibliothèque?");
         graph.addArc("AubergePierreElem", "BibliothequePostIntro", "Aller à la bibliothèque.");
@@ -225,9 +239,9 @@ public class JeuMain {
         graph.addArc("AubergeEmplacementBibliotheque", "BibliothequePostIntro", "Aller à la bibliothèque.");
         graph.addArc("AubergeEmplacementBibliotheque", "Guerisseuse", "Aller voir la guérisseuse.");
         
-        graph.addArc("AubergePostIntro", "AubergePotions", "Où pourrais-je me préparer pour mon aventure?");
         graph.addArc("AubergePotions", "AubergeEmplacementBibliotheque", "Sauriez-vous où se trouve l'historien?");
         graph.addArc("AubergePotions", "Guerisseuse", "Aller voir la guérisseuse.");
+        
         
         //Bibliothèque quête
         graph.addArc("BibliothequePostIntro", "BibliothequePierreElem", "Pourriez-vous me donner des informations sur la Pierre des éléments?");
@@ -328,23 +342,10 @@ public class JeuMain {
             //currentPlay.display();
 
             switch (currentPlay.getNom()) {
-                case "clanElement": p = new SorcierElement(); ((Sorcier)p).apprendreSort(Sort.BOULE_DE_FEU); ((Sorcier)p).apprendreSort(Sort.TREMBLEMENT_DE_TERRE); ((Sorcier)p).apprendreSort(Sort.TORNADO); ((Sorcier)p).apprendreSort(Sort.TORRENT_DEAU); break;
+                case "clanElement": p = new SorcierElement(); break;
                 case "clanEnchanteur": p = new SorcierSpirituel(); break;
                 case "humain": p = new Humain(); break;
-                	/*
-                    nextNode = currentPlay.chooseNext();
-                    currentPlay = nextNode;
-                    
-                    //currentPlay.display()
-                    //System.out.println("this is what m testing "  +currentPlay.getDescription().split("\\.")[0].substring(28));
-                    String competence = currentPlay.getDescription().split("\\.")[0].substring(28); 
-                    //System.out.println("this is what m testing "  +currentPlay.getDescription() ); 
-                    //System.out.println("this is what m testing "  +competence ); 
-                    p = new Humain(Competence.valueOf(competence)); 
-                   //System.out.println(((Humain) p).getAttaque());
-                    break;
-                default: p = new Personnage();
-                */
+                	
             }
 
 
@@ -356,13 +357,14 @@ public class JeuMain {
             node.setJoueur(p);
         }
         
+        /*
         majCombatNode(p, "CarteCombat1", graph);
         majCombatNode(p, "CarteCombat2", graph);
         majCombatNode(p, "CombatSlime1", graph);
         majCombatNode(p, "CombatGobelin2", graph);
         majCombatNode(p, "CombatChimere", graph);
         majCombatNode(p, "SlimeGeant", graph);
-        p.ajouterPotion(Potion.POTION_SANTE_STANDARD);
+        */
 
         while (true) {
             currentPlay.display();

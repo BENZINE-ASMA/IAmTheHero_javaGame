@@ -3,10 +3,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import entities.Arme;
 import entities.Competence;
 import entities.Humain;
 import entities.Personnage;
+import entities.Potion;
+import entities.Sorcier;
 import entities.SorcierElement;
+import entities.Sort;
 
 public class DecisionNode extends InnerNode {
 
@@ -80,8 +84,56 @@ public class DecisionNode extends InnerNode {
         	
         	}
         	
+        	if (nameOfCurrentNode.equals("GuerisseusePotionAider")) {
+        		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
+        		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
+        		joueur.ajouterPotion(Potion.FRUIT_DE_SAGESSE);
+        	}
         	
+        	if (nameOfCurrentNode.equals("GuerisseusePotionInfo")) {
+        		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
+        		joueur.ajouterPotion(Potion.POTION_SANTE_MINEURE);
+        	}
+        	
+        	if (nameOfCurrentNode.equals("MeilleureArme")) {
+        		if (joueur instanceof Sorcier) {
+        			joueur.setArme(Arme.BATON_MAGIQUE_AMELIORE);
+        		}
+        		else {
+        			joueur.setArme(Arme.EPEE_LONGUE);
+        		}
+        	}
+        	
+        	
+        	if (nameOfCurrentNode.equals("maitreClanElementIntro3")) {
+        		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
+        		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
+        		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
+        	}
+        	
+        	if (nameOfCurrentNode.equals("maitreClanEnchanteurIntro2")) {
+        		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
+        		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
+        		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
+        	}
+        	
+        	
+        	if (nameOfCurrentNode.equals("clanElement")) {
+        		((Sorcier)joueur).apprendreSort(Sort.BOULE_DE_FEU); 
+        		((Sorcier)joueur).apprendreSort(Sort.TREMBLEMENT_DE_TERRE); 
+        		((Sorcier)joueur).apprendreSort(Sort.TORNADO); 
+        		((Sorcier)joueur).apprendreSort(Sort.TORRENT_DEAU);
+        	}
+        	
+        	if (nameOfCurrentNode.equals("clanEnchanteur")) {
+        		((Sorcier)joueur).apprendreSort(Sort.DRAIN_SPIRITUEL); 
+        		((Sorcier)joueur).apprendreSort(Sort.ECLAT_DE_CRISTAL); 
+        		((Sorcier)joueur).apprendreSort(Sort.EXPLOSION_D_AME); 
+        		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
+        	}
+        		
     }
+    
 	@Override
 	public Node chooseNext(String choice) {
 		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());

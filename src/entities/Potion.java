@@ -39,9 +39,11 @@ public enum Potion {
             personnage.augmenterPVRestants(pvRestores);
             System.out.println(personnage.getName() + " utilise " + getNom() + " et restaure " + pvRestores + " PV.");
         }
-        if (mpRestores > 0) {
-            personnage.augmenterPVRestants(mpRestores);
-            System.out.println(personnage.getName() + " utilise " + getNom() + " et restaure " + mpRestores + " MP.");
+        if (personnage instanceof Sorcier) {
+        	if (mpRestores > 0) {
+                ((Sorcier)personnage).augmenterMPRestant(mpRestores);
+                System.out.println(personnage.getName() + " utilise " + getNom() + " et restaure " + mpRestores + " MP.");
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import entities.EntiteMobile;
 import entities.Personnage;
 import entities.Sorcier;
+import entities.SorcierSpirituel;
 import entities.Sort;
 
 public class CombatNode extends InnerNode {
@@ -16,22 +17,22 @@ public class CombatNode extends InnerNode {
 	private TerminalNode death; //noeud spécifique terminal pour la mort au combat
 	
 	
-	public CombatNode(HashMap<String, Node> nodesSuivant, TerminalNode death, EntiteMobile monstre, Personnage joueur) {
+	public CombatNode(HashMap<String, Node> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
 		super(nodesSuivant);
 		this.death = death;
 		this.monstre = monstre;
-		this.joueur = joueur;
+		//this.joueur = joueur;
 	}
 	
-	public CombatNode(String nom, String description, TerminalNode death, EntiteMobile monstre, Personnage joueur) {
+	public CombatNode(String nom, String description, TerminalNode death, EntiteMobile monstre) {
 		super(nom, description);
 		this.death = death;
 		this.monstre = monstre;
-		this.joueur = joueur;
+		//this.joueur = joueur;
 	}
 	
 	
-	
+	/*
 	public Personnage getJoueur() {
 		return joueur;
 	}
@@ -39,6 +40,7 @@ public class CombatNode extends InnerNode {
 	public void setJoueur(Personnage joueur) {
 		this.joueur = joueur;
 	}
+	*/
 
 	@Override
 	public Node chooseNext() {
@@ -139,11 +141,12 @@ public class CombatNode extends InnerNode {
             	//choisir le sort à utiliser ; ne pas l'utiliser si pas assez de mana
             	List<Sort> lsort = ((Sorcier)joueur).getSortsConnus();
             	int nbSorts = ((Sorcier)joueur).getNbSortsConnus();
-            	System.out.println("0 : choisir une autre action");
-            	((Sorcier)joueur).afficherSortsConnus();
+            	
             	
             	while (true) {
-                    System.out.print("Choisissez une option : ");
+                    System.out.println("0 : choisir une autre action");
+                	((Sorcier)joueur).afficherSortsConnus();
+                	System.out.print("Choisissez une option : ");
                     choix2 = sc.nextInt();
                     if (choix2 >= 0 && choix2 <= nbSorts) {
                         if (choix2 > 0) {
@@ -259,6 +262,10 @@ public class CombatNode extends InnerNode {
 			winner = true;
 			System.out.println(monstre.getName() + " est KO.");
 			chooseReward();
+			if (joueur instanceof SorcierSpirituel) {
+				((SorcierSpirituel) joueur).addSouls(1);
+			}
+			
 		}
 		else {
 			System.out.println("Vous êtes KO.");

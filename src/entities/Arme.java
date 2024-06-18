@@ -4,8 +4,7 @@ public enum Arme {
     BATON_MAGIQUE_BOIS("Bâton Magique en Bois", "Un bâton magique rudimentaire taillé dans du bois.", 5),
     BATON_MAGIQUE_AMELIORE("Bâton Magique Amélioré", "Un bâton magique renforcé avec des runes mystiques.", 10),
     EPEE_BOIS("Épée en Bois", "Une épée simple faite de bois.", 10),
-    EPEE_LONGUE("Épée Longue", "Une épée à deux mains forgée avec soin.", 20),
-    MASSE_D_ARME("Masse d'Arme", "Une arme lourde et puissante.", 25);
+    EPEE_LONGUE("Épée Longue", "Une épée à deux mains forgée avec soin.", 20);
 
     private final String nom;
     private final String description;

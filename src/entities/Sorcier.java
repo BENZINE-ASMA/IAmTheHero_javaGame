@@ -54,7 +54,7 @@ public class Sorcier extends Personnage {
         System.out.println("Sorts connus :");
         int i=0;
         for (Sort sort : sortsConnus) {
-            System.out.println("- " + (i+1) + " "+ sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégats : " + sort.getDegats());
+            System.out.println((i+1) + " "+ sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégats de base : " + sort.getDegats());
             i++;
         }
     }
@@ -100,7 +100,7 @@ public class Sorcier extends Personnage {
 		this.magieBase += valeur;
 	}
 
-	public void lancerSort(EntiteMobile cible, Sort sorc) { // je n'ai honnetement aucune idée du type de la méthode
+	public void lancerSort(EntiteMobile cible, Sort sorc) { 
 		System.out.println("Vous utilisez " + sorc.getNom() + "\n" + sorc.getDescription());
 		if (sorc.getDegats() != 0)	{
 			System.out.println(sorc.getNom() + " fait " + sorc.getDegats() + " points de dégat à votre adversaire");

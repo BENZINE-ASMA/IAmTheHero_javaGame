@@ -23,9 +23,9 @@ public class NodesGraph {
 		this.graph.put(name,new TerminalNode(name,description));
 	}
 	
-	public void addCombatNode(String name, String description, String death, EntiteMobile monstre, Personnage joueur) {
+	public void addCombatNode(String name, String description, String death, EntiteMobile monstre) {
 		TerminalNode end = (TerminalNode) this.graph.get(death);
-		this.graph.put(name,new CombatNode(name,description, end, monstre, joueur));
+		this.graph.put(name,new CombatNode(name,description, end, monstre));
 	}
 	
 	public void addArc(String nameNodeFrom, String nameNodeTo,String repliqueNodeTo) {
