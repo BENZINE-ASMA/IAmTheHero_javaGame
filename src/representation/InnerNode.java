@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import entities.Personnage;
+
 public abstract class InnerNode extends Node{
 	protected HashMap<String,Node> nodesSuivant;
 	

@@ -1,10 +1,13 @@
 package representation;
 
+import entities.Personnage;
+
 public abstract class Node {
 	protected static int cpt = 0;
 	protected int id;
 	protected String nom;
 	protected String description;
+	protected Personnage joueur;
 	
 	
 	public Node() {
@@ -21,7 +24,13 @@ public abstract class Node {
 		this.description = description;
 	}
 	
+	public Personnage getJoueur() {
+		return joueur;
+	}
 	
+	public void setJoueur(Personnage joueur) {
+		this.joueur = joueur;
+	}
 	
 	public static int getCpt() {
 		return cpt;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import entities.Personnage;
+
 public class ChanceNode extends InnerNode {
 	
 	public ChanceNode(HashMap<String,Node> nodesSuivant) {

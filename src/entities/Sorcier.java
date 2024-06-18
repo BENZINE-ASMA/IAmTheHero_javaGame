@@ -11,7 +11,7 @@ public class Sorcier extends Personnage {
 	
 	public Sorcier() {
 		super();
-		attaque = 108;
+		attaque = 20;
 		vitesse = 15;
 		magieBase = 40;
 		magieRestant = 40;
@@ -24,7 +24,7 @@ public class Sorcier extends Personnage {
 	
 	public Sorcier(Direction dir) {
 		super(dir);
-		attaque = 108;
+		attaque = 20;
 		vitesse = 15;
 		magieBase = 40;
 		magieRestant = 40;
@@ -102,8 +102,16 @@ public class Sorcier extends Personnage {
 
 	public void lancerSort(EntiteMobile cible, Sort sorc) { // je n'ai honnetement aucune idée du type de la méthode
 		System.out.println("Vous utilisez " + sorc.getNom() + "\n" + sorc.getDescription());
+		if (sorc.getDegats() != 0)	{
+			System.out.println(sorc.getNom() + " fait " + sorc.getDegats() + " points de dégat à votre adversaire");
+		}
+		if (sorc.getSoin() != 0) {
+			System.out.println("Vous regagnez " + sorc.getSoin() + " points de vie.");
+		}
+		
 		baisserMP(sorc.getCoutMana());
 		cible.baisserPV(sorc.getDegats());
+		augmenterPVRestants(sorc.getSoin());
 	}
 
 }

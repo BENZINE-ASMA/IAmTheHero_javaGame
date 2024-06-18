@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import entities.Competence;
+import entities.Humain;
+import entities.Personnage;
+import entities.SorcierElement;
+
 public class DecisionNode extends InnerNode {
 
 	public DecisionNode(HashMap<String,Node> nodesSuivant) {
@@ -50,11 +55,29 @@ public class DecisionNode extends InnerNode {
     private void handleSpecialCases(String chosenKey, Node chosenNode, String nameOfCurrentNode) {
         //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
-        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(7) + ", que voulez-vous faire?";
+        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
+        		try {
+                    Competence competence = Competence.valueOf(chosenKey.substring(8));
+                    ((Humain)joueur).setCompetence(competence);
+                    System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("La compétence " + chosenKey.substring(8) + " n'existe pas.");
+                }
+        	
         }
         //rajouter pour l'affinite du sorcier des éléments
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("missionClanElement")) {
         		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
+        	
+        		try {
+                    String element = chosenKey.substring(37);
+                    ((SorcierElement)joueur).setElement(element);
+                    System.out.println("Element " + chosenKey.substring(37) + " ajoutée au joueur.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Element " + chosenKey.substring(37) + " n'existe pas.");
+                }
+        	
+        	
         	}
         	
         	

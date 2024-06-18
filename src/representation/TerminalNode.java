@@ -1,5 +1,7 @@
 package representation;
 
+import entities.Personnage;
+
 public class TerminalNode extends Node {
 	
 	public TerminalNode(String nom, String description) {

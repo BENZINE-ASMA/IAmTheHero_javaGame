@@ -51,6 +51,12 @@ public class Humain extends Personnage {
     public Competence getCompetence() {
         return comp;
     }
+    
+
+    // Pour afficher les compétences du joueur
+    public void afficherCompetences() {
+        System.out.println("Compétence du joueur : " + comp);
+    }
          
         @Override
         public void afficherInfos() {

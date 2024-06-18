@@ -54,7 +54,7 @@ public class JeuMain {
         EntiteMobile gobelin3 = new EntiteMobile(50,50,10,14);
         gobelin3.setName("Zappy");
         EntiteMobile slime1 = new EntiteMobile(30,30,5,8);
-        slime1.setName("Slime");
+        slime1.setName("Sundae");
         EntiteMobile chimere = new EntiteMobile(110,110,25,20);
         chimere.setName("Chimère");
         EntiteMobile queenslime = new EntiteMobile(90,90,6,6);
@@ -348,6 +348,12 @@ public class JeuMain {
             }
 
 
+        }
+        
+        
+     // Mise à jour des nœuds avec le joueur choisi
+        for (Node node : graph.getGraph().values()) {
+            node.setJoueur(p);
         }
         
         majCombatNode(p, "CarteCombat1", graph);

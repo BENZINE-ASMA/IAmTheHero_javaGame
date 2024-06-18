@@ -10,7 +10,6 @@ import entities.Sorcier;
 import entities.Sort;
 
 public class CombatNode extends InnerNode {
-	private Personnage joueur;
 	private EntiteMobile monstre;
 	private boolean finished = false;
 	private boolean winner;
@@ -30,6 +29,7 @@ public class CombatNode extends InnerNode {
 		this.monstre = monstre;
 		this.joueur = joueur;
 	}
+	
 	
 	
 	public Personnage getJoueur() {

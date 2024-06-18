@@ -12,7 +12,7 @@ public class NodesGraph {
 		return this.graph;
 	}
 	
-	public void addDecisionNode(String name, String description) {
+	public void addDecisionNode(String name, String description ) {
 		this.graph.put(name,new DecisionNode(name,description));
 	}
 	public void addChanceNode(String name, String description) {
