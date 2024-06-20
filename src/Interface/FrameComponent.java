@@ -12,7 +12,10 @@ import Components.Village;
 import Interface.PanelComponent;
 import entities.Direction;
 import entities.EntiteMobile;
+import entities.Humain;
 import entities.Personnage;
+import entities.SorcierElement;
+import entities.SorcierSpirituel;
 import representation.*;
 
 import java.awt.*;
@@ -47,6 +50,8 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
         // Initialize graph and currentPlay
         graph = createGraph();
         currentPlay = graph.getGraph().get("introduction");
+
+            
 
         // Configure the main window
         setTitle("Jeu d'aventure");
@@ -149,11 +154,13 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
         cn.setJoueur(p);
     }
 
-    private void displayCurrentNode() {
+    private void displayCurrentNode() {       
+
+    	
         if (currentPlay != null) {
             // Mettre à jour le panel avec le texte du nœud courant et les choix
             panel.setNodeText(currentPlay.getDescription());
-
+            
             if (currentPlay instanceof InnerNode) {
                 Map<String, Node> nodesSuivant = ((InnerNode) currentPlay).getNodesSuivant();
                 ArrayList<String> options = new ArrayList<>(nodesSuivant.keySet());
@@ -462,7 +469,11 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
 	                int choiceIndex = e.getKeyCode() - KeyEvent.VK_1;
 	                if (choiceIndex >= 0 && choiceIndex < panel.nodeChoices.size()) {
 	                    String choice = panel.nodeChoices.get(choiceIndex);
+	                    //System.out.println(choice);
 	                    currentPlay = currentPlay.chooseNext2(choice);
+	                    
+	                    
+	                    
 
 	                    // Check the description and set waitForPlayerMove and targetCaseClass accordingly
 	                    if (

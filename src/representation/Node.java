@@ -67,12 +67,7 @@ public abstract class Node implements Serializable {
 		this.description = description;
 	}
 	
-	 public Node chooseNext2(String choice) {
-	        if (this instanceof InnerNode) {
-	            return ((InnerNode) this).getNodesSuivant().get(choice);
-	        }
-	        return null;
-	    }
+	 public abstract Node chooseNext2(String choice);
 	
 
 	public abstract void display();

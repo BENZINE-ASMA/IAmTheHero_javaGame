@@ -278,5 +278,12 @@ public class CombatNode extends InnerNode {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	 public Node chooseNext2(String choice) {
+	        if (this instanceof InnerNode) {
+	            return ((InnerNode) this).getNodesSuivant().get(choice);
+	            
+	        }
+	        return null;
+	    }
 
 }

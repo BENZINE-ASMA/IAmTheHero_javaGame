@@ -25,4 +25,11 @@ public class TerminalNode extends Node {
 		return null;
 	}
 
+	@Override
+	public Node chooseNext2(String choice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }
