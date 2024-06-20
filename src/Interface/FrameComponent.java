@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class FrameComponent extends JFrame implements Serializable,KeyListener {
+public class FrameComponent extends JFrame implements Serializable, KeyListener {
     private static final long serialVersionUID = 1L;
     private Personnage p = new Personnage();
     PanelComponent panel;
@@ -50,8 +50,6 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
         // Initialize graph and currentPlay
         graph = createGraph();
         currentPlay = graph.getGraph().get("introduction");
-
-            
 
         // Configure the main window
         setTitle("Jeu d'aventure");
@@ -154,13 +152,11 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
         cn.setJoueur(p);
     }
 
-    private void displayCurrentNode() {       
-
-    	
+    private void displayCurrentNode() {
         if (currentPlay != null) {
             // Mettre à jour le panel avec le texte du nœud courant et les choix
             panel.setNodeText(currentPlay.getDescription());
-            
+
             if (currentPlay instanceof InnerNode) {
                 Map<String, Node> nodesSuivant = ((InnerNode) currentPlay).getNodesSuivant();
                 ArrayList<String> options = new ArrayList<>(nodesSuivant.keySet());
@@ -172,7 +168,6 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
             panel.repaint();
         }
     }
-
 
 	private NodesGraph createGraph() {
 		
@@ -424,16 +419,6 @@ public class FrameComponent extends JFrame implements Serializable,KeyListener {
         
        
 		return graph;
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				FrameComponent interfaceGraphique = new FrameComponent();
-				interfaceGraphique.setVisible(true);
-			}
-		});
 	}
 
 	@Override
