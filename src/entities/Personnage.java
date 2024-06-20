@@ -1,8 +1,9 @@
 package entities;
+import java.io.Serializable;
 
 import java.util.List;
 
-public class Personnage extends EntiteMobile {
+public class Personnage extends EntiteMobile  {
     protected List<Potion> sac;
     protected int capaciteMax;
 	protected int clan; // 0 -> no clan, 1 -> clan Element, 2 -> clan Spirituel

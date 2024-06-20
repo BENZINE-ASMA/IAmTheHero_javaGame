@@ -20,127 +20,151 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class FrameComponent extends JFrame implements KeyListener {
-	private Personnage p = new Personnage();
-	PanelComponent panel;
-	private JTextField nameField;
-	private JButton startButton;
-	private JButton quitButton;
-	private NodesGraph graph;
-	private Node currentPlay;
-	private boolean waitForPlayerMove = false;
-	private Class<?extends Case> targetCaseClass = null;
+public class FrameComponent extends JFrame implements Serializable,KeyListener {
+    private static final long serialVersionUID = 1L;
+    private Personnage p = new Personnage();
+    PanelComponent panel;
+    JTextField nameField;
+    private JButton startButton;
+    private JButton quitButton;
+    private JButton loadButton;
+    private NodesGraph graph;
+    private Node currentPlay;
+    private boolean waitForPlayerMove = false;
+    private Class<? extends Case> targetCaseClass = null;
 
+    public FrameComponent() {
+        // Initialize graph and currentPlay
+        graph = createGraph();
+        currentPlay = graph.getGraph().get("introduction");
 
-	public FrameComponent() {
-		// Initialize graph and currentPlay
-		graph = createGraph();
-		currentPlay = graph.getGraph().get("introduction");
+        // Configure the main window
+        setTitle("Jeu d'aventure");
+        setSize(800, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-		// Configure the main window
-		setTitle("Jeu d'aventure");
-		setSize(400, 200);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+        // Create components
+        JLabel nameLabel = new JLabel("Enter Name:");
+        nameField = new JTextField(20);
 
-		// Create components
-		JLabel nameLabel = new JLabel("Enter Name:");
-		nameField = new JTextField(20);
+        startButton = new JButton("Commencer");
+        quitButton = new JButton("Quitter");
 
-		startButton = new JButton("Commencer");
-		quitButton = new JButton("Quitter");
+        loadButton = new JButton("Load Game");
 
-		// Add listeners for the buttons
-		startButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handleStart();
-			}
-		});
+        // Add listeners for the buttons
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleStart();
+            }
+        });
 
-		quitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handleQuit();
-			}
-		});
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleQuit();
+            }
+        });
 
-		// Organize components into panels
-		JPanel inputPanel = new JPanel();
-		inputPanel.add(nameLabel);
-		inputPanel.add(nameField);
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String playerName = nameField.getText();
+                if (!playerName.isEmpty()) {
+                    loadGame(playerName);
+                } else {
+                    JOptionPane.showMessageDialog(FrameComponent.this, "Please enter your name to load the game.");
+                }
+            }
+        });
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(startButton);
-		buttonPanel.add(quitButton);
+        // Organize components into panels
+        JPanel inputPanel = new JPanel();
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameField);
 
-		// Add panels to the main window
-		getContentPane().add(inputPanel, BorderLayout.CENTER);
-		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(startButton);
+        buttonPanel.add(quitButton);
 
-		addKeyListener(this);
-		setFocusable(true);
-		setFocusTraversalKeysEnabled(false);
-	}
+        JPanel loadPanel = new JPanel();
+        loadPanel.add(loadButton);
 
-	private void handleStart() {
-		String name = nameField.getText();
-		if (!name.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Bienvenue " + name + "! Le jeu va commencer.");
-			showGameInterface();
-		} else {
-			JOptionPane.showMessageDialog(this, "Veuillez entrer un nom.");
-		}
-	}
+        // Add panels to the main window
+        getContentPane().add(inputPanel, BorderLayout.CENTER);
+        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        getContentPane().add(loadPanel, BorderLayout.NORTH);
 
-	private void handleQuit() {
-		System.exit(0);
-	}
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+    }
 
-	private void showGameInterface() {
-		// Clear the current content
-		getContentPane().removeAll();
-		repaint();
-		revalidate();
+    private void handleStart() {
+        String name = nameField.getText();
+        if (!name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Bienvenue " + name + "! Le jeu va commencer.");
+            showGameInterface();
+        } else {
+            JOptionPane.showMessageDialog(this, "Veuillez entrer un nom.");
+        }
+    }
 
-		// Create the terrain and panel
-		panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p),this);
+    private void handleQuit() {
+        System.exit(0);
+    }
 
-		// Set up the new game interface
-		getContentPane().add(panel, BorderLayout.CENTER);
-		revalidate();
-		repaint();
+    private void showGameInterface() {
+        // Clear the current content
+        getContentPane().removeAll();
+        repaint();
+        revalidate();
 
-		// Display the first choice
-		displayCurrentNode();
-	}
-	
-	   public static void majCombatNode(Personnage p, String nodeName, NodesGraph graph) {
-	    	CombatNode cn = (CombatNode)((graph.getGraph()).get(nodeName));
-	    	cn.setJoueur(p);
-	    }
+        // Create the terrain and panel
+        panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
 
+        // Set up the new game interface
+        getContentPane().add(panel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
 
-	private void displayCurrentNode() {
-		if (currentPlay != null) {
-			// Mettre à jour le panel avec le texte du nœud courant et les choix
-			panel.setNodeText(currentPlay.getDescription());
+        // Display the first choice
+        displayCurrentNode();
+    }
 
-			if (currentPlay instanceof InnerNode) {
-				Map<String, Node> nodesSuivant = ((InnerNode) currentPlay).getNodesSuivant();
-				ArrayList<String> options = new ArrayList<>(nodesSuivant.keySet());
-				panel.setNodeChoices(options);
-			} else {
-				panel.setNodeChoices(new ArrayList<>());
-			}
+    public static void majCombatNode(Personnage p, String nodeName, NodesGraph graph) {
+        CombatNode cn = (CombatNode) ((graph.getGraph()).get(nodeName));
+        cn.setJoueur(p);
+    }
 
-			panel.repaint();
-		}
-	}
+    private void displayCurrentNode() {
+        if (currentPlay != null) {
+            // Mettre à jour le panel avec le texte du nœud courant et les choix
+            panel.setNodeText(currentPlay.getDescription());
+
+            if (currentPlay instanceof InnerNode) {
+                Map<String, Node> nodesSuivant = ((InnerNode) currentPlay).getNodesSuivant();
+                ArrayList<String> options = new ArrayList<>(nodesSuivant.keySet());
+                panel.setNodeChoices(options);
+            } else {
+                panel.setNodeChoices(new ArrayList<>());
+            }
+
+            panel.repaint();
+        }
+    }
 
 
 	private NodesGraph createGraph() {
@@ -503,4 +527,35 @@ public class FrameComponent extends JFrame implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// Not used
 	}
+	
+	public void saveGame(String playerName) {
+	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
+	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
+	        GameSaver gamesaver = new GameSaver(this.p, this.currentPlay, this.panel.terrain);
+	        out.writeObject(gamesaver);
+	        JOptionPane.showMessageDialog(this, "Game saved successfully as " + playerName + ".dat");
+	    } catch (IOException e) {
+	        JOptionPane.showMessageDialog(this, "Error saving game: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
+
+	public  void loadGame(String playerName) {
+	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
+	    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
+	        GameSaver gamesaver = (GameSaver) in.readObject();
+	        this.p = gamesaver.getPersonnage();
+	        this.currentPlay = gamesaver.getCurrentPlay();
+	        if (panel == null) {
+	            panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
+	        }
+	        this.panel.terrain = gamesaver.getTerrain();
+	        JOptionPane.showMessageDialog(this, "Game loaded successfully from " + playerName + ".dat");
+	        showGameInterface();
+	    } catch (IOException | ClassNotFoundException e) {
+	        JOptionPane.showMessageDialog(this, "Error loading game: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
+	
 }

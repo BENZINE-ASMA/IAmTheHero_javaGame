@@ -2,6 +2,7 @@ package Interface;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,7 +21,8 @@ import entities.Humain;
 import entities.Personnage;
 
 
-public class Terrain {
+public class Terrain implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private int largeur, hauteur;
     private Case[][] carte;
@@ -41,7 +43,7 @@ public class Terrain {
 
         
             for (int h = 0;h < hauteur; h++) {
-                String line = sc.nextLine(); 
+                String line = sc.nextLine();
                 for (int l = 0; l < largeur; l++) {
                     Case cc = null;
                     char ch = line.charAt(l); 

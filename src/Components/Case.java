@@ -1,6 +1,9 @@
 package Components;
 
-public abstract class Case {
+import java.io.Serializable;
+
+public abstract class Case implements Serializable {
+    private static final long serialVersionUID = 1L;
 	public  final int lig, col;
 	public Case(int l, int c) {
 		this.lig = l;

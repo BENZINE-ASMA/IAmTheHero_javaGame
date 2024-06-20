@@ -1,6 +1,9 @@
 package entities;
 
-public class EntiteMobile extends Entite{
+import java.io.Serializable;
+
+public class EntiteMobile extends Entite implements Serializable  {
+	private static final long serialVersionUID = 1L;
 	protected Direction dir;
 	protected int pvBase;
 	protected int pvRestant;

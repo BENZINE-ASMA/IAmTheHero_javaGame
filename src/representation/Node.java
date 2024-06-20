@@ -1,8 +1,11 @@
 package representation;
 
+import java.io.Serializable;
+
 import entities.Personnage;
 
-public abstract class Node {
+public abstract class Node implements Serializable {
+    private static final long serialVersionUID = 1L;
 	protected static int cpt = 0;
 	protected int id;
 	protected String nom;
