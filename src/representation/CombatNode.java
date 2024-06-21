@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import Interface.FrameComponent;
 import entities.EntiteMobile;
 import entities.Personnage;
 import entities.Sorcier;
@@ -69,7 +73,7 @@ public class CombatNode extends InnerNode {
         
         String chosenKey = reliqueList.get(choix - 1);
         Node chosenNode = nodeList.get(choix - 1);
-        
+        sc.close();
         return chosenNode;
 
 	}
@@ -272,14 +276,69 @@ public class CombatNode extends InnerNode {
 			winner = false;
 		}
 	}
+	
+	public void display2(JFrame frame) {
+		
+		JOptionPane.showMessageDialog(frame,description);
+		
+		System.out.println(description);
+		
+		while (monstre.getPvRestant() > 0 && joueur.getPvRestant() > 0) {
+			System.out.println("PV de " + monstre.getName() + ": " + monstre.getPvRestant() + "\nVos PV : " + joueur.getPvRestant());
+			if (joueur instanceof Sorcier) {
+				System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant());
+			}
+			
+			if (monstre.getVitesse()>joueur.getVitesse()) {
+				System.out.println(monstre.getName() + " vous attaque.");
+				monstre.attaquePhysique(joueur);
+				if (joueur.getPvRestant() > 0) {
+					System.out.println("Que voulez vous faire ?");
+					choixAction();
+				}
+				else {
+					finished = true;
+				}
+			}
+			else {
+				System.out.println("Que voulez vous faire ? ");
+				choixAction();
+				if (monstre.getPvRestant() > 0) {
+					System.out.println(monstre.getName() + " vous attaque.");
+					monstre.attaquePhysique(joueur);
+				}
+				else {
+					finished = true;
+				}
+			}
+		
+	
+		}
+		
+		if (joueur.getPvRestant() > 0) {
+			winner = true;
+			System.out.println(monstre.getName() + " est KO.");
+			chooseReward();
+			if (joueur instanceof SorcierSpirituel) {
+				((SorcierSpirituel) joueur).addSouls(1);
+			}
+			
+		}
+		else {
+			System.out.println("Vous êtes KO.");
+			winner = false;
+		}
+	}
 
 	@Override
 	public Node chooseNext(String choice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	 public Node chooseNext2(String choice) {
 	        if (this instanceof InnerNode) {
+	        	
 	            return ((InnerNode) this).getNodesSuivant().get(choice);
 	            
 	        }

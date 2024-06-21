@@ -5,7 +5,7 @@ import javax.swing.*;
 import Components.Case;
 import Components.CaseCLanA;
 import Components.CaseClanB;
-import Components.CaseTraversable;
+
 import Components.Donjon;
 import Components.Riviere;
 import Components.Village;
@@ -457,6 +457,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    String choice = panel.nodeChoices.get(choiceIndex);
 	                    //System.out.println(choice);
 	                    currentPlay = currentPlay.chooseNext2(choice);
+	                    if (currentPlay instanceof CombatNode) {
+	                    	System.out.println(" it issss a combatt");
+	                    
+	                    	((CombatNode) currentPlay).display2(this);
+	                    }
 	                    
 	                    
 	                    
