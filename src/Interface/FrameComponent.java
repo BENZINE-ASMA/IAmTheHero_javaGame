@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class FrameComponent extends JFrame implements Serializable, KeyListener {
+public class FrameComponent extends JFrame implements GameInterface,Serializable, KeyListener {
     private static final long serialVersionUID = 1L;
     private Personnage p = new Personnage();
     PanelComponent panel;
@@ -151,8 +151,9 @@ public class FrameComponent extends JFrame implements Serializable, KeyListener 
         CombatNode cn = (CombatNode) ((graph.getGraph()).get(nodeName));
         cn.setJoueur(p);
     }
+    
 
-    private void displayCurrentNode() {
+    public void displayCurrentNode() {
         if (currentPlay != null) {
             // Mettre à jour le panel avec le texte du nœud courant et les choix
             panel.setNodeText(currentPlay.getDescription());
@@ -524,6 +525,7 @@ public class FrameComponent extends JFrame implements Serializable, KeyListener 
 		// Not used
 	}
 	
+	@Override
 	public void saveGame(String playerName) {
 	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
@@ -535,7 +537,7 @@ public class FrameComponent extends JFrame implements Serializable, KeyListener 
 	        e.printStackTrace();
 	    }
 	}
-
+	@Override
 	public  void loadGame(String playerName) {
 	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
@@ -552,6 +554,23 @@ public class FrameComponent extends JFrame implements Serializable, KeyListener 
 	        JOptionPane.showMessageDialog(this, "Error loading game: " + e.getMessage());
 	        e.printStackTrace();
 	    }
+	}
+
+	@Override
+	public Node chooseNextNode(String choice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Personnage getPlayer() {
+		return this.p;
+	}
+
+	@Override
+	public void setPlayer(Personnage player) {
+		this.p = player;
+		
 	}
 	
 }
