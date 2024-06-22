@@ -13,6 +13,7 @@ import Components.CaseIntraversable;
 import Components.CaseTraversable;
 import Components.Donjon;
 import Components.Riviere;
+import Components.Sanctuaire;
 import Components.Village;
 import entities.Competence;
 import entities.Direction;
@@ -58,6 +59,7 @@ public class Terrain implements Serializable {
                         case 'A' -> cc = new CaseTraversable(h,l,new Humain(Competence.historien));
                         case 'H' -> cc = new CaseTraversable(h,l,new Humain(Competence.aubergiste));
                         case '|' -> cc = new Donjon(h, l);
+                        case '+' -> cc = new Sanctuaire(h,l);
                         case 'J' -> {
                         xjoueur = l; yjoueur= h;cc = new CaseTraversable(h, l, joueur);
                         }

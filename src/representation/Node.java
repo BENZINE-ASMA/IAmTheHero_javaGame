@@ -1,10 +1,11 @@
 package representation;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import entities.Personnage;
 
-public abstract class Node implements Serializable {
+public abstract class Node implements Serializable, Event {
     private static final long serialVersionUID = 1L;
 	protected static int cpt = 0;
 	protected int id;
@@ -26,6 +27,15 @@ public abstract class Node implements Serializable {
 		this.nom = nom;
 		this.description = description;
 	}
+	
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return Objects.equals(nom, node.nom);
+    }
 	
 	public Personnage getJoueur() {
 		return joueur;
@@ -67,11 +77,11 @@ public abstract class Node implements Serializable {
 		this.description = description;
 	}
 	
-	 public abstract Node chooseNext2(String choice);
+	public abstract Node chooseNext2(String choice);
 	
 
 	public abstract void display();
 	
-	 	public abstract Node chooseNext(String choice);
-	    public abstract Node chooseNext();
+	public abstract Node chooseNext(String choice);
+	public abstract Node chooseNext();
 }

@@ -15,6 +15,8 @@ public class NodesGraph {
 	public void addDecisionNode(String name, String description ) {
 		this.graph.put(name,new DecisionNode(name,description));
 	}
+	
+	
 	public void addChanceNode(String name, String description) {
 		this.graph.put(name,new ChanceNode(name,description));
 	}

@@ -54,7 +54,7 @@ public class Sorcier extends Personnage {
         System.out.println("Sorts connus :");
         int i=0;
         for (Sort sort : sortsConnus) {
-            System.out.println((i+1) + " "+ sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégats de base : " + sort.getDegats());
+            System.out.println((i+1) + " "+ sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégats de base : " + sort.getDegats() + ", soin de points de vie: " + sort.getSoin());
             i++;
         }
     }
@@ -79,10 +79,6 @@ public class Sorcier extends Personnage {
 		return nbSortsConnus;
 	}
 
-	public void setNbSortsConnus(int nbSortsConnus) {
-		this.nbSortsConnus = nbSortsConnus;
-	}
-	
 	public void baisserMP(int valeur) {
 		this.magieRestant -= valeur;
 	}

@@ -279,7 +279,7 @@ public class CombatNode extends InnerNode {
 	
 	public void display2(JFrame frame) {
 		
-		JOptionPane.showMessageDialog(frame,description);
+		//JOptionPane.showMessageDialog(frame,description);
 		
 		System.out.println(description);
 		

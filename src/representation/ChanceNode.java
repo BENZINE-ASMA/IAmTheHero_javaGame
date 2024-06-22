@@ -41,7 +41,12 @@ public class ChanceNode extends InnerNode {
 	}
 	 public Node chooseNext2(String choice) {
 	        if (this instanceof InnerNode) {
-	            return ((InnerNode) this).getNodesSuivant().get(choice);
+	        	ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+
+	    		Random random = new Random();
+	    		int indice = random.nextInt(nodeList.size());
+	    		Node chosenNode = nodeList.get(indice);
+	    		return chosenNode;
 	            
 	        }
 	        return null;

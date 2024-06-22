@@ -18,6 +18,13 @@ public abstract class InnerNode extends Node{
 		super(nom, description);
 		this.nodesSuivant = new HashMap<>();
 	}
+	
+	public InnerNode(String nom, String description, HashMap<String,Node> nodesSuivant) {
+		super(nom, description);
+		this.nodesSuivant = nodesSuivant;
+	}
+	
+	
 	public HashMap<String,Node>  getNodesSuivant() {
 		return this.nodesSuivant;
 	}

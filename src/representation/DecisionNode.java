@@ -23,6 +23,12 @@ public class DecisionNode extends InnerNode {
 		super(nom, description);
 		
 	}
+	public DecisionNode(String nom, String description, HashMap<String,Node> nodesSuivant) {
+		super(nom, description, nodesSuivant);
+		
+	}
+	
+	
 	@Override
 	public void display() {
 		System.out.println(description);
@@ -172,7 +178,7 @@ public class DecisionNode extends InnerNode {
      	if (chosenNode instanceof DecisionNode && this.nom.equals("humain")) {
      		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
      		try {
-     			this.joueur= new Humain();
+     			//this.joueur= new Humain();
                  Competence competence = Competence.valueOf(chosenKey.substring(8));
                  ((Humain)joueur).setCompetence(competence);
                  System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
@@ -183,7 +189,7 @@ public class DecisionNode extends InnerNode {
      }
      //rajouter pour l'affinite du sorcier des éléments
      	if (chosenNode instanceof DecisionNode && this.nom.equals("missionClanElement")) {
-     		this.joueur =new SorcierElement();
+     		//this.joueur =new SorcierElement();
      		
      		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
      	
@@ -199,20 +205,17 @@ public class DecisionNode extends InnerNode {
      	}
      	
      	if (this.nom.equals("GuerisseusePotionAider")) {
-     		this.joueur =new Sorcier();
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      		joueur.ajouterPotion(Potion.FRUIT_DE_SAGESSE);
      	}
      	
      	if (this.nom.equals("GuerisseusePotionInfo")) {
-     		this.joueur =new Sorcier();
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_MINEURE);
      	}
      	
      	if (this.nom.equals("MeilleureArme")) {
-     		this.joueur =new Sorcier();
      		if (joueur instanceof Sorcier) {
      			joueur.setArme(Arme.BATON_MAGIQUE_AMELIORE);
      		}
@@ -223,14 +226,12 @@ public class DecisionNode extends InnerNode {
      	
      	
      	if (this.nom.equals("maitreClanElementIntro3")) {
-     		this.joueur =new Sorcier();
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      	}
      	
      	if (this.nom.equals("maitreClanEnchanteurIntro2")) {
-     		this.joueur =new Sorcier();
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
@@ -238,7 +239,6 @@ public class DecisionNode extends InnerNode {
      	
      	
      	if (this.nom.equals("clanElement")) {
-     		this.joueur =new SorcierElement();
      		((Sorcier)joueur).apprendreSort(Sort.BOULE_DE_FEU); 
      		((Sorcier)joueur).apprendreSort(Sort.TREMBLEMENT_DE_TERRE); 
      		((Sorcier)joueur).apprendreSort(Sort.TORNADO); 
@@ -246,7 +246,6 @@ public class DecisionNode extends InnerNode {
      	}
      	
      	if (this.nom.equals("clanEnchanteur")) {
-     		this.joueur =new SorcierSpirituel();
      		((Sorcier)joueur).apprendreSort(Sort.DRAIN_SPIRITUEL); 
      		((Sorcier)joueur).apprendreSort(Sort.ECLAT_DE_CRISTAL); 
      		((Sorcier)joueur).apprendreSort(Sort.EXPLOSION_D_AME); 

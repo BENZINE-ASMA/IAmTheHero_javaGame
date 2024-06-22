@@ -8,6 +8,7 @@ import Components.CaseClanB;
 
 import Components.Donjon;
 import Components.Riviere;
+import Components.Sanctuaire;
 import Components.Village;
 import Interface.PanelComponent;
 import entities.Direction;
@@ -17,6 +18,7 @@ import entities.Personnage;
 import entities.SorcierElement;
 import entities.SorcierSpirituel;
 import representation.*;
+import representation.Event;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -114,6 +116,8 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
     }
+    
+    
 
     private void handleStart() {
         String name = nameField.getText();
@@ -136,7 +140,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         revalidate();
 
         // Create the terrain and panel
-        panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
+        panel = new PanelComponent(new Terrain("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
 
         // Set up the new game interface
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -186,7 +190,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         EntiteMobile queenslime = new EntiteMobile(90,90,6,6);
         queenslime.setName("Reine des Slimes");
         
+        
+        //graph.addSoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.mp3"));
+        
         graph.addTerminalNode("mortCombat", "Vous êtes mort bravement au combat.");
+        
 		graph.addDecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?");
         graph.addDecisionNode("explication", "Bien sûr! Dans notre région, il y a deux puissants clans qui se disputent depuis des années : les sorciers des éléments et les sorciers Enchanteurs. Les sorciers des éléments manipulent les forces naturelles telles que le feu, l'eau ou la terre, tandis que les sorciers Enchanteurs se concentrent sur la manipulation de l'énergie Enchanteurle et des âmes. Ces deux clans sont engagés dans une lutte de pouvoir perpétuelle, chacun cherchant à étendre son influence et affirmer sa supprématie. C'est une période de tension constante, et beaucoup craignent que cela ne conduise à un conflit ouvert un jour. Dis moi, quel sorcier es tu?");
         graph.addDecisionNode("rejoindre", "Bien sûr! Vous pouvez rejoindre le clan des sorciers Enchanteurs et celui des éléments. Quel type de sorcier êtes vous?");
@@ -236,8 +244,8 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         graph.addDecisionNode("BibliothequePostIntro", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite.");
         graph.addDecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Elle pourrait être cachée dans les Grottes au Sud ou dans la Forêt à l'Est. ");
         
-        graph.addCombatNode("CarteCombat1", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", "mortCombat", gobelin1);
-        graph.addCombatNode("CarteCombat2", "En voici un deuxième! Préparez-vous au combat.", "mortCombat", gobelin3);
+        graph.addCombatNode("CarteCombat1", "Vous vous baladez pour trouver un monstre à combattre.", "mortCombat", gobelin1);
+        graph.addCombatNode("CarteCombat2", "Vous cherchez un deuxième monstre.", "mortCombat", gobelin3);
         
         
         //Aller dans la forêt
@@ -445,11 +453,30 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	        waitForPlayerMove = false;
 	       
 	        targetCaseClass = null;  // Reset the target case
+	        
+	        if (currentPlay instanceof CombatNode) {
+            	System.out.println(" it issss a combatt");
+            
+            	((CombatNode) currentPlay).display2(this);
+            }
 	        displayCurrentNode();
 	    }
 
 	    // Handle choice keys only if we are not waiting for player move
 	    if (!waitForPlayerMove) {
+	    	switch (currentPlay.getNom()) {
+            case "clanElement": p = new SorcierElement(); break;
+            case "clanEnchanteur": p = new SorcierSpirituel(); break;
+            case "humain": p = new Humain(); break;
+            	
+	    	}
+
+	    	// Mise à jour des nœuds avec le joueur choisi
+	        for (Node node : graph.getGraph().values()) {
+	            node.setJoueur(p);
+	        }
+    
+	    	
 	        switch (e.getKeyCode()) {
 	            case KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5 -> {
 	                int choiceIndex = e.getKeyCode() - KeyEvent.VK_1;
@@ -457,11 +484,6 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    String choice = panel.nodeChoices.get(choiceIndex);
 	                    //System.out.println(choice);
 	                    currentPlay = currentPlay.chooseNext2(choice);
-	                    if (currentPlay instanceof CombatNode) {
-	                    	System.out.println(" it issss a combatt");
-	                    
-	                    	((CombatNode) currentPlay).display2(this);
-	                    }
 	                    
 	                    
 	                    
@@ -488,7 +510,8 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    } else if (
 	                    		(currentPlay.getDescription().startsWith("L'auberge n'a pas changé depuis votre venue tout à l'heure")) ||
 	                    		(currentPlay.getDescription().startsWith("Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux.")) ||
-	                    		(currentPlay.getDescription().startsWith("Vous voyez une maison et voyez la guerisseusse s'occuper de son jardin"))
+	                    		(currentPlay.getDescription().startsWith("Vous voyez une maison et voyez la guerisseusse s'occuper de son jardin")) ||
+	                    		(currentPlay.getDescription().startsWith("Je sens que l'eau s'est purifiée."))
 	                    		
 	                    		){
 	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers Le village");
@@ -498,24 +521,38 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                        
 	                        
 	                    } else if (
-	                    		(currentPlay.getDescription().startsWith("En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque"))
-	                    		|| (currentPlay.getDescription().startsWith("En voici un deuxième! Préparez-vous au combat"))
+	                    		(currentPlay.getDescription().startsWith("Vous vous baladez pour trouver un monstre à combattre."))
+	                    		|| (currentPlay.getDescription().startsWith("Vous cherchez un deuxième monstre."))
 	                    		
 	                    		)
 	                    {
-	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers le monstre");
+	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers le monstre présent sur une case grise.");
 	                        waitForPlayerMove = true;
-	                        targetCaseClass = Donjon.class;  
+	                        targetCaseClass = Donjon.class; 
 	                       
 	                    } else if (currentPlay.getDescription().startsWith("Vous arrivez à la rivière. Plus que d'étranges énergies,")) {
 	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers la rivière");
 	                        waitForPlayerMove = true;
 	                        targetCaseClass = Riviere.class;  
 	                       
-	                    }else {
-	                        displayCurrentNode();
+	                    } else if (currentPlay.getDescription().startsWith("En entrant dans la Forêt des Murmure")) {
+	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers le Sanctuaire");
+	                        waitForPlayerMove = true;
+	                        targetCaseClass = Sanctuaire.class;  
+	                       
 	                    }
-	                }
+	                    
+	                    else {
+	                    	if (currentPlay instanceof CombatNode) {
+		                    	System.out.println(" it issss a combatt");
+		                    
+		                    	((CombatNode) currentPlay).display2(this);
+		                    }
+	                    	displayCurrentNode();
+		                   
+	                    }
+	                    
+	                  } 
 	            }
 	        }
 	    }
@@ -532,7 +569,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	
 	@Override
 	public void saveGame(String playerName) {
-	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
+	    String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
 	        GameSaver gamesaver = new GameSaver(this.p, this.currentPlay, this.panel.terrain);
 	        out.writeObject(gamesaver);
@@ -544,13 +581,13 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	}
 	@Override
 	public  void loadGame(String playerName) {
-	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
+	    String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
 	        GameSaver gamesaver = (GameSaver) in.readObject();
 	        this.p = gamesaver.getPersonnage();
 	        this.currentPlay = gamesaver.getCurrentPlay();
 	        if (panel == null) {
-	            panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
+	            panel = new PanelComponent(new Terrain("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
 	        }
 	        this.panel.terrain = gamesaver.getTerrain();
 	        JOptionPane.showMessageDialog(this, "Game loaded successfully from " + playerName + ".dat");
