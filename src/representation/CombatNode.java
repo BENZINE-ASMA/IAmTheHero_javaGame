@@ -25,26 +25,13 @@ public class CombatNode extends InnerNode {
 		super(nodesSuivant);
 		this.death = death;
 		this.monstre = monstre;
-		//this.joueur = joueur;
 	}
 	
 	public CombatNode(String nom, String description, TerminalNode death, EntiteMobile monstre) {
 		super(nom, description);
 		this.death = death;
 		this.monstre = monstre;
-		//this.joueur = joueur;
 	}
-	
-	
-	/*
-	public Personnage getJoueur() {
-		return joueur;
-	}
-
-	public void setJoueur(Personnage joueur) {
-		this.joueur = joueur;
-	}
-	*/
 
 	@Override
 	public Node chooseNext() {
@@ -229,16 +216,25 @@ public class CombatNode extends InnerNode {
 	@Override
 	public void display() {
 		System.out.println(description);
+		System.out.println("Vos statistiques :");
+		if (joueur instanceof Sorcier) {
+			System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant() + "/" + ((Sorcier)joueur).getMagieBase());
+		}
+		System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
+		System.out.println("Votre attaque avec " + joueur.getArme() + " : " + (joueur.getAttaque()/2 + joueur.getArme().getPointsDegats()));
+		System.out.println("Votre vitesse : " + joueur.getVitesse());
+		
 		
 		while (monstre.getPvRestant() > 0 && joueur.getPvRestant() > 0) {
-			System.out.println("PV de " + monstre.getName() + ": " + monstre.getPvRestant() + "\nVos PV : " + joueur.getPvRestant());
+			System.out.println("PV de " + monstre.getName() + ": " + monstre.getPvRestant() + "/" + monstre.getPvBase()+ "\nVos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
 			if (joueur instanceof Sorcier) {
-				System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant());
+				System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant() + "/" + ((Sorcier)joueur).getMagieBase());
 			}
 			
 			if (monstre.getVitesse()>joueur.getVitesse()) {
 				System.out.println(monstre.getName() + " vous attaque.");
 				monstre.attaquePhysique(joueur);
+				System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
 				if (joueur.getPvRestant() > 0) {
 					System.out.println("Que voulez vous faire ?");
 					choixAction();
@@ -253,6 +249,8 @@ public class CombatNode extends InnerNode {
 				if (monstre.getPvRestant() > 0) {
 					System.out.println(monstre.getName() + " vous attaque.");
 					monstre.attaquePhysique(joueur);
+					System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
+					
 				}
 				else {
 					finished = true;

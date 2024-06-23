@@ -87,9 +87,9 @@ public class DecisionNode extends InnerNode {
                 } catch (IllegalArgumentException e) {
                     System.out.println("Element " + chosenKey.substring(37) + " n'existe pas.");
                 }
-        	
-        	
+        
         	}
+        	
         	
         	if (nameOfCurrentNode.equals("GuerisseusePotionAider")) {
         		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);

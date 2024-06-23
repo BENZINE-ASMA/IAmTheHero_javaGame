@@ -7,8 +7,6 @@ public class Personnage extends EntiteMobile  {
     protected List<Potion> sac;
     protected int capaciteMax;
 	protected int clan; // 0 -> no clan, 1 -> clan Element, 2 -> clan Spirituel
-    protected int attaque;
-    protected int vitesse;
     protected Arme arme = null;
 
     public Personnage() {

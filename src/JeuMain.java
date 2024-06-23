@@ -18,14 +18,8 @@ import representation.NodesGraph;
 import representation.TerminalNode;
 
 /* Divers soucis/améliorations
- * Le ChanceNode ne fonctionne pas bien, notamment au moment de briser la pierre
- * Je crois que le combat commence toujours par le tour de l'adversaire alors que cela devrait dépendre de la vitesse
- * Je dois changer le sort qui soigne pour qu'il soigne + dans les attaques
- * Faire des chemins qui ne sont accessibles que si le joueur est dans le clan des éléments ou dans celui des enchanteurs, là tous sont visibles pour tous
- * Un noeud à rajouter pour le clan des enchanteurs pour lui donner son pouvoir spécial
- * Faire plus de handleSpecialCase
- * epee
- */
+ * Le ChanceNode ne fonctionne pas bien 
+*/
 
 
 public class JeuMain {
@@ -113,14 +107,14 @@ public class JeuMain {
         
         // Choix dans la bibliotheque
         graph.addDecisionNode("BibliothequePostIntro", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite.");
-        graph.addDecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Elle pourrait être cachée dans les Grottes au Sud ou dans la Forêt à l'Est. ");
+        graph.addDecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Après avoir effectué mes recherches, je pense qu'elle se trouve dans le Sanctuaire au nord est du village. Cependant il est rempli de créatures dangereuses, et je n'ai pas la force nécessaire pour m'y aventurer. Peut-être y parviendrez-vous?");
         
         graph.addCombatNode("CarteCombat1", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", "mortCombat", gobelin1);
         graph.addCombatNode("CarteCombat2", "En voici un deuxième! Préparez-vous au combat.", "mortCombat", gobelin3);
         
         
         //Aller dans la forêt
-        graph.addDecisionNode("Foret", "En entrant dans la Forêt des Murmures, vous êtes enveloppé par une canopée dense et lumineuse. Les arbres chuchotent des secrets anciens à chaque souffle de vent. Par où aller?");
+        graph.addDecisionNode("Foret", "En entrant dans le Sanctuaire, vous sentez l'atmosphère s'alourdir. En inspectant autour de vous, vous voyez une étendue d'arbres à perte de vue, qui semblent chuchoter des secrets anciens à chaque souffle de vent.");
         graph.addChanceNode("ForetChemin", ""); //Est ce que le chemin choisi sera le bon?
         graph.addDecisionNode("ForetMauvaisChemin", "Vous vous perdez dans la forêt. Que voulez-vous faire?");
         graph.addTerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent.");
@@ -130,20 +124,17 @@ public class JeuMain {
         graph.addCombatNode("CombatGobelin2", "Vous tombez nez à nez avec un gobelin qui vous attaque!", "mortCombat", gobelin2);
         graph.addCombatNode("CombatChimere", "Vous voyez la Pierre juste devant vos yeux. Une créature surgit alors, une chimère protégeant la pierre qui fonce sur vous!", "mortCombat", chimere);
         graph.addDecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?");
-        graph.addChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. Qu'avez-vous fait...?\nVous quittez la forêt, qui semble plus sombre que lorsque vous êtes arrivé.e");
+        graph.addChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. La forêt elle même semble vous reprocher votre action, semblant plus sombre et menaçante qu'à votre arrivée. Vous quittez la forêt.");
         
         
         
-        //Ramener Pierre à son clan : fin de l'histoire
-        graph.addTerminalNode("PierrePourClanElement", "Vous ramenez la Pierre au clan des éléments. Le maitre du clan vous remercie. Il a un regard triomphant, et quelque peu sournois. Votre clan survivra, le destin de l'autre semble arriver à son terme.");
-        graph.addTerminalNode("PierrePourClanEnchanteur", "Vous ramenez la Pierre au clan des enchanteurs. Le maitre du clan vous remercie. Il a un regard triomphant, et quelque peu sournois. Le clan des enchanteurs survivra, et s'il est clément le clan des éléments survivra.");
+        //Ramener Pierre à son clan ou à l'autre : fin de l'histoire
+        graph.addTerminalNode("PierrePourClanElement", "A écrire selon la classe du joueur.");
+        graph.addTerminalNode("PierrePourClanEnchanteur", "A écrire selon la classe du joueur.");
         
         //Pierre Detruite : fin de l'histoire
-        graph.addTerminalNode("FinPaixElement", "Maitre du clan : Comment avez vous pu détruire la Pierre! On la recherche depuis tout ce temps ! Nous ne pourrons jamais battre les Enchanteurs sans... J'imagine que nous n'avons pas le choix et devons essayer de trouver la paix avec eux. Je ne te remercie pas, mais ce qui est fait est fait. Bon vent, pars, et que je ne te revois jamais.\nVous partez en exil, mais peut être que votre action aura permis la paix");
-        graph.addTerminalNode("FinConflitElement", "Maitre du clan : Comment avez vous pu détruire la Pierre! On la recherche depuis tout ce temps ! Nous ne pourrons jamais battre les Enchanteurs sans! Vous n'êtes qu'un traitre et méritez de mourir en traitre. Sachez que nous ne ferons jamais la paix avec les enchanteurs. Meurs, traitre.\nLe maitre du clan lance le sort Immolation. Vous mourrez dans d'atroces souffrances.");
-
-        graph.addTerminalNode("FinPaixEnchanteur", "Maitre du clan : Comment avez vous pu détruire la Pierre, une relique aussi précieuse! Au moins le clan des Elements ne l'aura pas, eux qui étaient obsédés par l'idée de la trouver. Je n'aime pas ton choix mais ne te tuerai pas pour autant ne t'en fait pas. Tu nettoiras nos lattrines durant les deux prochaines années. Nous essayerons de discuter avec le clan des éléments pour parvenir à un semblant de paix.\nVotre vie ne va pas être glorieuse, mais le destin de ces terres semble s'illuminer.");
-        graph.addTerminalNode("FinConflitEnchanteur", "Maitre du clan : Comment avez vous pu détruire la Pierre! On la recherche depuis tout ce temps ! Tant de pouvoir contenu dedans que nous aurions pu récupérer... Sachez que nous ne ferons jamais la paix avec les enchanteurs. Meurs.\nLe maitre du clan lance le sort j'ai oublié le nom. Vous avez la sensation horrible de vous faire transpercer par un coup d'épée. Le monde autour de vous s'assombrit, et vous tombez au sol.");
+        graph.addTerminalNode("FinPaix", "A écrire selon la classe du joueur.");
+        graph.addTerminalNode("FinConflit", "A écrire selon la classe du joueur.");
 
 
         // Choix avec guerisseuse
@@ -157,8 +148,7 @@ public class JeuMain {
 
         // Quête de la rivière
         graph.addDecisionNode("Source", "Vous arrivez à la rivière. Plus que d'étranges énergies, l'apparence de l'eau est tout à fait étrange, légèrement verte.");
-        graph.addChanceNode("SourceEauMagieElement", "Vous utilisez votre magie de l'eau pour la renouveller");
-        graph.addChanceNode("SourceEauMagieEnchanteur", "Vous utilisez Lumière Curative pour purifier l'eau");
+        graph.addChanceNode("SourceEauMagie", "Vous utilisez votre magie pour purifier l'eau.");
         graph.addCombatNode("SlimeGeant", "C'était un slime gigantesque qui polluait l'eau et la rendait gluante! Il n'apprécie pas votre agitation et attaque.", "mortCombat", queenslime);;
         graph.addDecisionNode("SourceProblemeResolu", "L'eau redevient d'un bleu azur digne des piscines les plus chlorées.");
 
@@ -261,11 +251,9 @@ public class JeuMain {
         //Aider la guerisseuse
         graph.addArc("GuerisseuseAider", "Source", "Partir à la rivière.");
         graph.addArc("Source", "BibliothequePostIntro", "Rebrousser chemin et aller à la bibliothèque.");
-        graph.addArc("Source", "SourceEauMagieElement", "Lancer sort magie element.");
-        graph.addArc("Source", "SourceEauMagieEnchanteur", "Lancer sort magie enchanteur.");
+        graph.addArc("Source", "SourceEauMagie", "Utiliser sa magie pour purifier l'eau.");
         graph.addArc("Source", "SlimeGeant", "Donner un coup dans l'eau.");
-        graph.addArc("SourceEauMagieElement", "SlimeGeant", "Gros Slime.");
-        graph.addArc("SourceEauMagieEnchanteur", "SlimeGeant", "Gros Slime.");
+        graph.addArc("SourceEauMagie", "SlimeGeant", "Gros Slime.");
         graph.addArc("SlimeGeant", "SourceProblemeResolu", "Inspecter l'eau.");
         graph.addArc("SourceProblemeResolu", "GuerisseusePotionAider", "Aller voir la guérisseuse pour avoir sa récompense.");
         graph.addArc("SourceProblemeResolu", "BibliothequePostIntro", "Plus de temps à perdre, aller à la bibliothèque.");
@@ -287,47 +275,15 @@ public class JeuMain {
         graph.addArc("CombatGobelin2", "CombatChimere", "Vous êtes fatigué.e après votre combat mais continuez à avancer.");
         graph.addArc("CombatChimere", "CombatChimereGagne", "S'approcher de la Pierre.");
         
-        graph.addArc("CombatChimereGagne", "PierrePourClanElement", "Apporter la Pierre au maitre du clan des éléments.");
+        graph.addArc("CombatChimereGagne", "PierrePourClanElement", "Apporter la Pierre au maitre du clan des Sorciers des éléments.");
         graph.addArc("CombatChimereGagne", "DetruirePierre", "Briser la Pierre.");
-        graph.addArc("DetruirePierre", "FinPaixElement", "Vous expliquez au maitre du clan que vous avez détruit la Pierre.");
-        graph.addArc("DetruirePierre", "FinConflitElement", "Vous expliquez au maitre du clan que vous avez détruit la Pierre.");
-        
-        graph.addArc("CombatChimereGagne", "PierrePourClanEnchanteur", "Apporter la Pierre au maitre du clan des enchanteurs.");
+ 
+        graph.addArc("CombatChimereGagne", "PierrePourClanEnchanteur", "Apporter la Pierre au maitre du clan des Enchanteurs.");
         graph.addArc("CombatChimereGagne", "DetruirePierre", "Briser la Pierre.");
-        graph.addArc("DetruirePierre", "FinPaixEnchanteur", "Vous expliquez au maitre du clan que vous avez détruit la Pierre.");
-        graph.addArc("DetruirePierre", "FinConflitEnchanteur", "Vous expliquez au maitre du clan que vous avez détruit la Pierre.");
+        graph.addArc("DetruirePierre", "FinPaix", "Vous expliquez au maitre du clan que vous avez détruit la Pierre.");
+        graph.addArc("DetruirePierre", "FinConflit", "Vous expliquez au maitre du clan que vous avez détruit la Pierre.");
         
-       
-
-        /*Node currentPlay = graph.getGraph().get("introduction");
-        while (true) {
-            currentPlay.display();
-            Node nextNode = currentPlay.chooseNext();
-            currentPlay = nextNode;
-
-            if (nextNode.getNom().equals("rejoindreClan") || nextNode.getNom().equals("queteClan")) {
-                currentPlay = nextNode;
-                nextNode.display();
-
-                switch (nextNode.getNom()) {
-                    case "missionPierre":
-                        p = new SorcierElement();
-                        break;
-                    case "defaitePierre":
-                        p = new SorcierElement();
-                        break;
-                    default:
-                        p = new Personnage();
-                }
-            }
-
-            if (currentPlay instanceof TerminalNode) {
-                currentPlay.display();
-                break;
-            }
-        }
-        */
-        
+      
          
         Node currentPlay = graph.getGraph().get("introduction");
         currentPlay.display();
@@ -356,15 +312,6 @@ public class JeuMain {
         for (Node node : graph.getGraph().values()) {
             node.setJoueur(p);
         }
-        
-        /*
-        majCombatNode(p, "CarteCombat1", graph);
-        majCombatNode(p, "CarteCombat2", graph);
-        majCombatNode(p, "CombatSlime1", graph);
-        majCombatNode(p, "CombatGobelin2", graph);
-        majCombatNode(p, "CombatChimere", graph);
-        majCombatNode(p, "SlimeGeant", graph);
-        */
 
         while (true) {
             currentPlay.display();

@@ -7,7 +7,7 @@ public enum Sort {
     TORNADO("Tornade", 20, 30, 0, "Le sorcier invoque une violente tornade qui souffle les ennemis.", "air"),
     TREMBLEMENT_DE_TERRE("Mur de Terre", 15, 25, 0, "Le sorcier crée un tremblement de terre sous le sol de ses ennemis.", "terre"),
     EXPLOSION_D_AME("Explosion d'âme", 20, 0, 0, "Le sorcier libère une explosion d'énergie spirituelle qui blesse les ennemis autour de lui. Dépend du nombre d'ennemis vaincus.", null),
-    DRAIN_SPIRITUEL("Drain Spirituel", 10, 15, 15, "Le sorcier lance une attaque spirituelle qui draine les points de vie de l'ennemi.", null),
+    DRAIN_SPIRITUEL("Drain Spirituel", 10, 15, 5, "Le sorcier lance une attaque spirituelle qui draine les points de vie de l'ennemi.", null),
     LUMIERE_CURATIVE("Lumière Curative", 20, 0, 40, "Le sort restaure les points de vie des alliés.", null),
     ECLAT_DE_CRISTAL("Eclat de Cristal", 12, 20, 0, "Le sorcier lance des éclats de crital sur ses ennemis.", null);
 
