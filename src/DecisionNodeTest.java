@@ -4,6 +4,7 @@
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -42,33 +43,18 @@ class DecisionNodeTest {
     }
 
 	
-	//problème avec le test car on veut un int et on lis un String je crois
     @Test
     void testChooseNextValidOption() {
-    	String input = "1"; // Simule la sélection de la première option
-        System.setIn(new java.io.ByteArrayInputStream(input.getBytes()));
-        Node chosenNode = decisionNode1.chooseNext();
+    	String input = "Noeud2"; // Simule la sélection de la première option
+        Node chosenNode = decisionNode1.chooseNext(input);
         assertEquals(nodesSuivant.get("Noeud2"), chosenNode);
     }
 
     @Test
     void testChooseNextInvalidOption() {
-        String input = "3\n1"; // Simule une entrée invalide 
-        System.setIn(new java.io.ByteArrayInputStream(input.getBytes()));
-        
-        Node chosenNode = decisionNode1.chooseNext();
-        assertEquals(nodesSuivant.get("Noeud2"), chosenNode);
-    }
-
-    @Test
-    void testHandleSpecialCases() {
-        // Faire un test plus précis
-    }
-
-    @Test
-    void testChooseNextWithChoice() {
-        Node chosenNode = decisionNode1.chooseNext("Noeud3");
-        assertEquals(nodesSuivant.get("Noeud3"), chosenNode);
+        String input = "Noeud4"; // Simule une entrée invalide 
+        Node chosenNode = decisionNode1.chooseNext(input);
+        assertNull(chosenNode);
     }
 
 
