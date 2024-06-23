@@ -65,12 +65,12 @@ public class PanelComponent extends JPanel implements Serializable,KeyListener {
     private void loadImages() {
     	
         try {
-            wallImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\wall.png"));
-            riverImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\river.png"));
-            personnageImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\personnage.png"));
-            guerisseuseImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\guerisseuse.png"));
-            historienImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\historien.png"));
-            aubergisteImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\aubergiste.png"));
+            wallImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\wall.png"));
+            riverImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\river.png"));
+            personnageImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\personnage.png"));
+            guerisseuseImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\guerisseuse.png"));
+            historienImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\historien.png"));
+            aubergisteImage = ImageIO.read(new File("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\aubergiste.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

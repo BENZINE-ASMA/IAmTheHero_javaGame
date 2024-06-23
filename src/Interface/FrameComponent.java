@@ -140,7 +140,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         revalidate();
 
         // Create the terrain and panel
-        panel = new PanelComponent(new Terrain("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
+        panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
 
         // Set up the new game interface
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -158,9 +158,19 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     
 
     public void displayCurrentNode() {
+    	
         if (currentPlay != null) {
+        	 if (currentPlay instanceof ChanceNode) {
+        		 JOptionPane.showMessageDialog(this,	" c'est un Chance Node.... Patientez!");
+        		 System.out.println("say hello");
+         		panel.repaint();
+         		return;
+         	}
+        	
             // Mettre à jour le panel avec le texte du nœud courant et les choix
             panel.setNodeText(currentPlay.getDescription());
+            
+           
 
             if (currentPlay instanceof InnerNode) {
                 Map<String, Node> nodesSuivant = ((InnerNode) currentPlay).getNodesSuivant();
@@ -249,7 +259,9 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         
         //Aller dans la forêt
         graph.addDecisionNode("Foret", "En entrant dans le Sanctuaire, vous sentez l'atmosphère s'alourdir. En inspectant autour de vous, vous voyez une étendue d'arbres à perte de vue, qui semblent chuchoter des secrets anciens à chaque souffle de vent.");
+       
         graph.addChanceNode("ForetChemin", ""); //Est ce que le chemin choisi sera le bon?
+        
         graph.addDecisionNode("ForetMauvaisChemin", "Vous vous perdez dans la forêt. Que voulez-vous faire?");
         graph.addTerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent.");
         graph.addDecisionNode("ForetBonChemin", "Vous trouvez votre chemin.");
@@ -427,6 +439,14 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if (currentPlay instanceof ChanceNode) {
+        	currentPlay = ((ChanceNode)currentPlay).chooseNext3();
+        	displayCurrentNode();
+        	
+        	System.out.println("test  " +currentPlay.getDescription());
+        	return;
+        }
+		
 		if (panel != null) {
 			
 		
@@ -465,7 +485,8 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	        for (Node node : graph.getGraph().values()) {
 	            node.setJoueur(p);
 	        }
-    
+	        
+	        
 	    	
 	        switch (e.getKeyCode()) {
 	            case KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5 -> {
@@ -473,6 +494,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                if (choiceIndex >= 0 && choiceIndex < panel.nodeChoices.size()) {
 	                    String choice = panel.nodeChoices.get(choiceIndex);
 	                    //System.out.println(choice);
+	                    
 	                    currentPlay = currentPlay.chooseNext2(choice);
 	                    
 	                    
@@ -559,7 +581,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	
 	@Override
 	public void saveGame(String playerName) {
-	    String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
+	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
 	        GameSaver gamesaver = new GameSaver(this.p, this.currentPlay, this.panel.terrain);
 	        out.writeObject(gamesaver);
@@ -571,13 +593,13 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	}
 	@Override
 	public  void loadGame(String playerName) {
-	    String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
+	    String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
 	        GameSaver gamesaver = (GameSaver) in.readObject();
 	        this.p = gamesaver.getPersonnage();
 	        this.currentPlay = gamesaver.getCurrentPlay();
 	        if (panel == null) {
-	            panel = new PanelComponent(new Terrain("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
+	            panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
 	        }
 	        this.panel.terrain = gamesaver.getTerrain();
 	        JOptionPane.showMessageDialog(this, "Game loaded successfully from " + playerName + ".dat");

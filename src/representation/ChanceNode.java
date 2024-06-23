@@ -10,6 +10,9 @@ import entities.SorcierSpirituel;
 
 public class ChanceNode extends InnerNode {
 	
+	private static final long serialVersionUID = 1L;
+
+
 	public ChanceNode(HashMap<String,Node> nodesSuivant) {
 		super(nodesSuivant);
 	}
@@ -44,7 +47,7 @@ public class ChanceNode extends InnerNode {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	 public Node chooseNext2(String choice) {
+	 public Node chooseNext3() {
 	        if (this instanceof InnerNode) {
 	        	ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
 	        	ArrayList<String> repliqueList = new ArrayList<>(nodesSuivant.keySet());
@@ -55,7 +58,7 @@ public class ChanceNode extends InnerNode {
 	    		String chosenKey = repliqueList.get(indice);
 	            
 	            handleSpecialCases(chosenKey, chosenNode,this.getNom());
-	    		
+	    		System.out.println(" the chosen isss "+ chosenNode + "   " + chosenNode.description + " ++++ " + chosenNode.nom );
 	    		return chosenNode;
 	            
 	        }
@@ -74,6 +77,12 @@ public class ChanceNode extends InnerNode {
 			}
 	
 		}
+	}
+
+	@Override
+	public Node chooseNext2(String choice) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
