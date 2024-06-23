@@ -16,6 +16,8 @@ import representation.DecisionNode;
 import representation.Node;
 import representation.NodesGraph;
 import representation.TerminalNode;
+import representation.Event;
+import representation.SoundNode;
 
 /* Divers soucis/améliorations
  * Le ChanceNode ne fonctionne pas bien 
@@ -57,6 +59,14 @@ public class JeuMain {
         
         //Noeud terminal de mort lors d'un combat
         graph.addTerminalNode("mortCombat", "Vous êtes mort bravement au combat.");
+        
+/*
+        Event introNode = new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?");
+        introNode = new SoundNode(introNode, "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.mp3");
+
+        graph.addDecisionNode("introduction", (Node)introNode);
+
+*/
 
      // Introduction à l'auberge
      // Introduction à l'auberge

@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class SoundNode extends NodeDecorator {
 	private String musicPath;
-	protected InnerNode node;
 	
 	public SoundNode(Event musicNode, String musicPath) {
 		super(musicNode);
