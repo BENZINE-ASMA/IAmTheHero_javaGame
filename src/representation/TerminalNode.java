@@ -15,21 +15,20 @@ public class TerminalNode extends Node {
 	}
 
 	@Override
-	public Node chooseNext() {
+	public Event chooseNext() {
 		return this;
 	}
 
 	@Override
-	public Node chooseNext(String choice) {
-		// TODO Auto-generated method stub
+	public Event chooseNext(String choice) {
 		return null;
 	}
 
 	@Override
-	public Node chooseNext2(String choice) {
-		// TODO Auto-generated method stub
+	public Event chooseNext2(String choice) {
 		return null;
 	}
+	
 	
 
 }

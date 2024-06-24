@@ -57,111 +57,97 @@ public class JeuMain {
         queenslime.setName("Reine des Slimes");
         
         
+        TerminalNode death =  new TerminalNode ("mortCombat", "Vous êtes mort bravement au combat.");
         //Noeud terminal de mort lors d'un combat
-        graph.addTerminalNode("mortCombat", "Vous êtes mort bravement au combat.");
-        
-/*
-        Event introNode = new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?");
-        introNode = new SoundNode(introNode, "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.mp3");
-
-        graph.addDecisionNode("introduction", (Node)introNode);
-
-*/
-
-     // Introduction à l'auberge
-     // Introduction à l'auberge
-        graph.addDecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?");
-        graph.addDecisionNode("explication", "Bien sûr! Dans notre région, il y a deux puissants clans qui se disputent depuis des années : les sorciers des éléments et les sorciers Enchanteurs. Les sorciers des éléments manipulent les forces naturelles telles que le feu, l'eau ou la terre, tandis que les sorciers Enchanteurs se concentrent sur la manipulation de l'énergie Enchanteurle et des âmes. Ces deux clans sont engagés dans une lutte de pouvoir perpétuelle, chacun cherchant à étendre son influence et affirmer sa supprématie. C'est une période de tension constante, et beaucoup craignent que cela ne conduise à un conflit ouvert un jour. Dis moi, quel sorcier es tu?");
-        graph.addDecisionNode("rejoindre", "Bien sûr! Vous pouvez rejoindre le clan des sorciers Enchanteurs et celui des éléments. Quel type de sorcier êtes vous?");
-        graph.addDecisionNode("clanEnchanteur", "[Vous signez des documents obscurs]. Très bien, vous êtes désormais dans le clan Enchanteur! Vous allez y être téléporté, au plaisir de vous revoir !");
-        graph.addDecisionNode("clanElement", "[Vous signez des documents obscurs]. Très bien, vous êtes désormais dans le clan des éléments! Vous allez y être emmené directement. Merci d'être passé par chez nous et bonne chance!");
-        graph.addDecisionNode("humain", "quelle est votre compétence?");
-        graph.addDecisionNode("humainAvecCompetence", "vous avez la compétence de '', que voulez-vous faire?");
-        graph.addTerminalNode("finHumain", "Vous ne pouvez pas rejoindre de clan, mais vous allez très bien vous entendre avec les membres du village ! L'aventure est réservée aux sorciers mais notre vie est elle aussi passionnante.\\nVous vous installez dans cette nouvelle ville et vous faites de nouveaux amis. Vous vous mariez, avez des enfants, et vivez votre vie normale heureux.se jusqu'à votre mort paisible.\nFIN");
+        graph.addNode("mortCombat", death);
+    
 
         
-        // Dialogue avec le maitre du clan des éléments
-        graph.addDecisionNode("maitreClanElementIntro1", "Bienvenue, jeune sorcier. Je suis le Maître de ce clan, et je suis honoré de te rencontrer. Notre clan des Sorciers des Éléments lutte depuis des siècles pour maintenir notre position dominante sur ces terres. Nous devons nous assurer que nos pouvoirs ne tombent pas entre de mauvaises mains, notamment celles des Sorciers Enchanteurs, nos ennemis jurés.");
-        graph.addDecisionNode("maitreClanElementIntro2", "Nous sommes sur le point d'accomplir une quête cruciale qui renforcera notre position et nous donnera un avantage sur nos adversaires. Pour cela, nous avons besoin de sorciers talentueux comme toi. Mais avant de te confier cette responsabilité, il est essentiel que tu te prépares adéquatement.");
-        // CE NODE
-        graph.addDecisionNode("maitreClanElementIntro3", "Je te conseille de parler à l'Aubergiste et à notre Historien, ils ont des peut-être des informations qui pourraient nous être utiles. N'hésite pas à combattre les monstres que tu vois avant d'y aller, tu manques encore de puissance. Prends ces potions avec toi, elles pourraient d'être utiles.");
-        
-        // Dialogue avec le maitre du clan des enchanteurs
-        graph.addDecisionNode("maitreClanEnchanteurIntro1", "Bienvenue, jeune sorcier. Je suis le Maître de ce clan Enchanteur. Nous avons besoin de sorciers talentueux comme toi pour sécuriser nos reliques. Nos ennemis, les Sorciers des Elements, semblent déterminés à récupérer la Pierre des Elements pour leur accorder un pouvoir tout puissant. Nous ne pouvons pas les laisser faire, encore plus quand nous savons que notre clan la possédait il y a de cela quelques siècles. Vas tu nous rejoindre?");
-        graph.addDecisionNode("refusQuete", "En es-tu sûr.e ? C'est le destin du monde qui en dépend");
-        graph.addDecisionNode("maitreClanEnchanteurIntro2", "Je te conseille de parler à l'Aubergiste et à l'Historien dans le village. Avant cela, n'hésite pas à combattre pour t'améliorer. Les sorciers Enchanteurs ont une puissance décuplée pour chaque ennemi terrassé. Prends ces quelques potions avec toi, et bon voyage.");
-        
-        //Noeud de fin si refus de la quête principale
-        graph.addTerminalNode("demission", "Je ne vois pas ce que tu aurais à faire au sein de notre clan si tu ne participes pas à notre objectif principal. Je me vois dans l'obligation de te congédier. Peut-être que nos chemins se croiseront un jour de nouveau.");
-        
+        graph.addNode("introduction", new SoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.wav"));
+        graph.addNode("explication", new DecisionNode("explication", "Bien sûr! Dans notre région, il y a deux puissants clans qui se disputent depuis des années : les sorciers des éléments et les sorciers Enchanteurs. Les sorciers des éléments manipulent les forces naturelles telles que le feu, l'eau ou la terre, tandis que les sorciers Enchanteurs se concentrent sur la manipulation de l'énergie Enchanteurle et des âmes. Ces deux clans sont engagés dans une lutte de pouvoir perpétuelle, chacun cherchant à étendre son influence et affirmer sa supprématie. C'est une période de tension constante, et beaucoup craignent que cela ne conduise à un conflit ouvert un jour. Dis moi, quel sorcier es tu?"));
+        graph.addNode("rejoindre", new DecisionNode("rejoindre", "Bien sûr! Vous pouvez rejoindre le clan des sorciers Enchanteurs et celui des éléments. Quel type de sorcier êtes vous?"));
+
+        graph.addNode("clanEnchanteur", new DecisionNode("clanEnchanteur","[Vous signez des documents obscurs]. Très bien, vous êtes désormais dans le clan Enchanteur! Vous allez y être téléporté, au plaisir de vous revoir !"));
+
+        graph.addNode("clanElement", new DecisionNode("clanElement", "[Vous signez des documents obscurs]. Très bien, vous êtes désormais dans le clan des éléments! Vous allez y être emmené directement. Merci d'être passé par chez nous et bonne chance!"));
+        graph.addNode("humain", new DecisionNode("humain", "quelle est votre compétence?"));
+        graph.addNode("humainAvecCompetence", new DecisionNode("humainAvecCompetence", "vous avez la compétence de '', que voulez-vous faire?"));
+        graph.addNode("finHumain", new TerminalNode("finHumain", "Vous ne pouvez pas rejoindre de clan, mais vous allez très bien vous entendre avec les membres du village ! L'aventure est réservée aux sorciers mais notre vie est elle aussi passionnante.\nVous vous installez dans cette nouvelle ville et vous faites de nouveaux amis. Vous vous mariez, avez des enfants, et vivez votre vie normale heureux.se jusqu'à votre mort paisible.\nFIN"));
+
+        // Dialogue avec le maître du clan des éléments
+        graph.addNode("maitreClanElementIntro1", new DecisionNode("maitreClanElementIntro1", "Bienvenue, jeune sorcier. Je suis le Maître de ce clan, et je suis honoré de te rencontrer. Notre clan des Sorciers des Éléments lutte depuis des siècles pour maintenir notre position dominante sur ces terres. Nous devons nous assurer que nos pouvoirs ne tombent pas entre de mauvaises mains, notamment celles des Sorciers Enchanteurs, nos ennemis jurés."));
+        graph.addNode("maitreClanElementIntro2", new DecisionNode("maitreClanElementIntro2", "Nous sommes sur le point d'accomplir une quête cruciale qui renforcera notre position et nous donnera un avantage sur nos adversaires. Pour cela, nous avons besoin de sorciers talentueux comme toi. Mais avant de te confier cette responsabilité, il est essentiel que tu te prépares adéquatement."));
+        graph.addNode("maitreClanElementIntro3", new DecisionNode("maitreClanElementIntro3", "Je te conseille de parler à l'Aubergiste et à notre Historien, ils ont des peut-être des informations qui pourraient nous être utiles. N'hésite pas à combattre les monstres que tu vois avant d'y aller, tu manques encore de puissance. Prends ces potions avec toi, elles pourraient d'être utiles."));
+
+        // Dialogue avec le maître du clan des enchanteurs
+        graph.addNode("maitreClanEnchanteurIntro1", new DecisionNode("maitreClanEnchanteurIntro1", "Bienvenue, jeune sorcier. Je suis le Maître de ce clan Enchanteur. Nous avons besoin de sorciers talentueux comme toi pour sécuriser nos reliques. Nos ennemis, les Sorciers des Elements, semblent déterminés à récupérer la Pierre des Elements pour leur accorder un pouvoir tout puissant. Nous ne pouvons pas les laisser faire, encore plus quand nous savons que notre clan la possédait il y a de cela quelques siècles. Vas tu nous rejoindre?"));
+        graph.addNode("refusQuete", new DecisionNode("refusQuete", "En es-tu sûr.e ? C'est le destin du monde qui en dépend"));
+        graph.addNode("maitreClanEnchanteurIntro2", new DecisionNode("maitreClanEnchanteurIntro2", "Je te conseille de parler à l'Aubergiste et à l'Historien dans le village. Avant cela, n'hésite pas à combattre pour t'améliorer. Les sorciers Enchanteurs ont une puissance décuplée pour chaque ennemi terrassé. Prends ces quelques potions avec toi, et bon voyage."));
+
+        // Nœud de fin si refus de la quête principale
+        graph.addNode("demission", new TerminalNode("demission", "Je ne vois pas ce que tu aurais à faire au sein de notre clan si tu ne participes pas à notre objectif principal. Je me vois dans l'obligation de te congédier. Peut-être que nos chemins se croiseront un jour de nouveau."));
+
         // Ajout des missions pour chaque clan
-        graph.addDecisionNode("missionClanElement", "Excellent choix. Ta mission est de retrouver la Pierre des Éléments, une relique de grande puissance. Avant de parler davantage de la mission, parle moi un peu de toi. Quel est l'élement qui te fait vibrer, celui avec lequel tu as le plus d'affinité?");
-        graph.addDecisionNode("missionClanEnchanteur", "Ta mission est de récupérer notre dû, la Pierre Elementaire, renfermant un grand pouvoir.");
+        graph.addNode("missionClanElement", new DecisionNode("missionClanElement", "Excellent choix. Ta mission est de retrouver la Pierre des Éléments, une relique de grande puissance. Avant de parler davantage de la mission, parle moi un peu de toi. Quel est l'élement qui te fait vibrer, celui avec lequel tu as le plus d'affinité?"));
+        graph.addNode("missionClanEnchanteur", new DecisionNode("missionClanEnchanteur", "Ta mission est de récupérer notre dû, la Pierre Elementaire, renfermant un grand pouvoir."));
 
-        // Choix Affinite pour Sorcier Element
-        graph.addDecisionNode("affiniteElement", "Tu as donc une affinité avec '', très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
-        
-  
+     // Choix Affinité pour Sorcier Élement
+        graph.addNode("affiniteElement", new DecisionNode("affiniteElement", "Tu as donc une affinité avec '', très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser."));
+
         // Choix d'action post introduction
         // Choix dans l'auberge
-        graph.addDecisionNode("AubergePostIntro", "L'auberge n'a pas changé depuis votre venue tout à l'heure. Alors que vous alliez voir l'aubergiste, un homme semblant assez alcoolisé vient vous parler. Il vous propose de vous offrir une récompense si vous le battez dans son domaine de prédilection, la pétanque");
-        graph.addChanceNode("PartiePetanque", "Vous jouez avec l'homme.");
-        graph.addDecisionNode("MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance. L'homme reconnait sa défaite, et vous offre un bâton magique qui semble en bien meilleur état que le votre.");
-        graph.addDecisionNode("PartiePerdue", "Vous faites tomber la boule sur vos pieds et criez de douleur. Vous ne gagnez pas ce match.");
-        graph.addDecisionNode("AubergisteParler", "L'aubergiste vous reconnait et vous demande ce que vous rechercher.");
-        graph.addDecisionNode("AubergePierreElem", "C'est une relique légendaire, censée renfermer la puissance brute des éléments. On dit qu'elle a été perdue il y a des siècles... Vous devriez parler à l'historien de la Bibliothèque des Anciens, il en sait sûrement plus.");
-        graph.addDecisionNode("AubergeEmplacementBibliotheque", "La Bibliothèque des Anciens se trouve à l'Est de la ville, non loin d'ici. Vous devriez pouvoir voir l'emplacement de l'historien sur votre carte.");
-        graph.addDecisionNode("AubergePersonnesUtiles", "L'historien est sans doute la personne qui s'y connait le mieux. Vous pourriez tout de même aller voir la guérisseuse au sud du village pour récupérer des potions spéciales pour vous protéger des dangers des donjons.");
-        graph.addDecisionNode("AubergePotions", "Si vous voulez vous préparer pour votre aventure, allez voir la guérisseuse. Elle aura peut-être des potions pour vous, si elle vous trouve suffisamment sympathique.");
-        
-        
-        // Choix dans la bibliotheque
-        graph.addDecisionNode("BibliothequePostIntro", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite.");
-        graph.addDecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Après avoir effectué mes recherches, je pense qu'elle se trouve dans le Sanctuaire au nord est du village. Cependant il est rempli de créatures dangereuses, et je n'ai pas la force nécessaire pour m'y aventurer. Peut-être y parviendrez-vous?");
-        
-        graph.addCombatNode("CarteCombat1", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", "mortCombat", gobelin1);
-        graph.addCombatNode("CarteCombat2", "En voici un deuxième! Préparez-vous au combat.", "mortCombat", gobelin3);
-        
-        
-        //Aller dans la forêt
-        graph.addDecisionNode("Foret", "En entrant dans le Sanctuaire, vous sentez l'atmosphère s'alourdir. En inspectant autour de vous, vous voyez une étendue d'arbres à perte de vue, qui semblent chuchoter des secrets anciens à chaque souffle de vent.");
-        graph.addChanceNode("ForetChemin", ""); //Est ce que le chemin choisi sera le bon?
-        graph.addDecisionNode("ForetMauvaisChemin", "Vous vous perdez dans la forêt. Que voulez-vous faire?");
-        graph.addTerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent.");
-        graph.addDecisionNode("ForetBonChemin", "Vous trouvez votre chemin.");
-        graph.addChanceNode("ForetMonstre", "Vous entendez du bruit."); //Quel monstre va être choisi?
-        graph.addCombatNode("CombatSlime1", "Vous tombez nez à nez avec un slime qui vous attaque!", "mortCombat", slime1);
-        graph.addCombatNode("CombatGobelin2", "Vous tombez nez à nez avec un gobelin qui vous attaque!", "mortCombat", gobelin2);
-        graph.addCombatNode("CombatChimere", "Vous voyez la Pierre juste devant vos yeux. Une créature surgit alors, une chimère protégeant la pierre qui fonce sur vous!", "mortCombat", chimere);
-        graph.addDecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?");
-        graph.addChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. La forêt elle même semble vous reprocher votre action, semblant plus sombre et menaçante qu'à votre arrivée. Vous quittez la forêt.");
-        
-        
-        
-        //Ramener Pierre à son clan ou à l'autre : fin de l'histoire
-        graph.addTerminalNode("PierrePourClanElement", "A écrire selon la classe du joueur.");
-        graph.addTerminalNode("PierrePourClanEnchanteur", "A écrire selon la classe du joueur.");
-        
-        //Pierre Detruite : fin de l'histoire
-        graph.addTerminalNode("FinPaix", "A écrire selon la classe du joueur.");
-        graph.addTerminalNode("FinConflit", "A écrire selon la classe du joueur.");
+        graph.addNode("AubergePostIntro", new DecisionNode("AubergePostIntro", "L'auberge n'a pas changé depuis votre venue tout à l'heure. Alors que vous alliez voir l'aubergiste, un homme semblant assez alcoolisé vient vous parler. Il vous propose de vous offrir une récompense si vous le battez dans son domaine de prédilection, la pétanque"));
+        graph.addNode("PartiePetanque", new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."));
+        graph.addNode("MeilleureArme", new DecisionNode("MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance. L'homme reconnait sa défaite, et vous offre un bâton magique qui semble en bien meilleur état que le votre."));
+        graph.addNode("PartiePerdue", new DecisionNode("PartiePerdue", "Vous faites tomber la boule sur vos pieds et criez de douleur. Vous ne gagnez pas ce match."));
+        graph.addNode("AubergisteParler", new DecisionNode("AubergisteParler", "L'aubergiste vous reconnait et vous demande ce que vous rechercher."));
+        graph.addNode("AubergePierreElem", new DecisionNode("AubergePierreElem", "C'est une relique légendaire, censée renfermer la puissance brute des éléments. On dit qu'elle a été perdue il y a des siècles... Vous devriez parler à l'historien de la Bibliothèque des Anciens, il en sait sûrement plus."));
+        graph.addNode("AubergeEmplacementBibliotheque", new DecisionNode("AubergeEmplacementBibliotheque", "La Bibliothèque des Anciens se trouve à l'Est de la ville, non loin d'ici. Vous devriez pouvoir voir l'emplacement de l'historien sur votre carte."));
+        graph.addNode("AubergePersonnesUtiles", new DecisionNode("AubergePersonnesUtiles", "L'historien est sans doute la personne qui s'y connait le mieux. Vous pourriez tout de même aller voir la guérisseuse au sud du village pour récupérer des potions spéciales pour vous protéger des dangers des donjons."));
+        graph.addNode("AubergePotions", new DecisionNode("AubergePotions", "Si vous voulez vous préparer pour votre aventure, allez voir la guérisseuse. Elle aura peut-être des potions pour vous, si elle vous trouve suffisamment sympathique."));
 
+     // Choix dans la bibliothèque
+        graph.addNode("BibliothequePostIntro", new DecisionNode("BibliothequePostIntro", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite."));
+        graph.addNode("BibliothequePierreElem", new DecisionNode("BibliothequePierreElem", "Historien: La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Après avoir effectué mes recherches, je pense qu'elle se trouve dans le Sanctuaire au nord est du village. Cependant il est rempli de créatures dangereuses, et je n'ai pas la force nécessaire pour m'y aventurer. Peut-être y parviendrez-vous?"));
 
-        // Choix avec guerisseuse
-        graph.addDecisionNode("Guerisseuse", "Vous voyez une maison et voyez la guerisseusse s'occuper de son jardin. Elle vous voit : Bonjour, que faites-vous ici?" );
-        graph.addDecisionNode("GuerisseuseContreGuerre", "Et pourquoi voulez-vous des informations sur cette Pierre? Vous aussi vous voulez la récupérer ? Pour pouvoir faire encore plus de mal autour de vous? Non merci");
-        graph.addDecisionNode("GuerisseuseFinDiscussion", "Nous avons suffisamment discuté. Au revoir.");
-        graph.addChanceNode("GuerisseusePlusInfo", "Je ne souhaite pas faire de mal, mais j'ai besoin de ces informations");
-        graph.addDecisionNode("GuerisseusePotionInfo", "Elle se radoucit : Je n'ai pas plus d'informations à donner. Mais je vous crois et je vous donne ces potions. J'espère qu'elles seront utiles dans votre quête.");
-        graph.addDecisionNode("GuerisseuseAider", "Est-ce que vous pourriez aider...? Oui je crois bien. Notre source d'eau dégage d'étranges énergies depuis plusieurs jours. Allez à la rivière enquêter, et revenez vers moi.");
-        graph.addDecisionNode("GuerisseusePotionAider", "Je sens que l'eau s'est purifiée. Je vous remercie pour votre aide. Je n'ai malheuresement pas plus d'informations sur la Pierre. Prenez donc ces potions et acceptez ma reconnaissance.");
+        graph.addNode("CarteCombat1", new CombatNode("CarteCombat1", "En vous promenant vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", death, gobelin1));
+        graph.addNode("CarteCombat2", new CombatNode("CarteCombat2", "En voici un deuxième! Préparez-vous au combat.", death, gobelin3));
+
+     // Aller dans la forêt
+        graph.addNode("Foret", new DecisionNode("Foret", "En entrant dans le Sanctuaire, vous sentez l'atmosphère s'alourdir. En inspectant autour de vous, vous voyez une étendue d'arbres à perte de vue, qui semblent chuchoter des secrets anciens à chaque souffle de vent."));
+        graph.addNode("ForetChemin", new ChanceNode("ForetChemin", "")); // Est ce que le chemin choisi sera le bon?
+        graph.addNode("ForetMauvaisChemin", new DecisionNode("ForetMauvaisChemin", "Vous vous perdez dans la forêt. Que voulez-vous faire?"));
+        graph.addNode("MortForet", new TerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent."));
+        graph.addNode("ForetBonChemin", new DecisionNode("ForetBonChemin", "Vous trouvez votre chemin."));
+        graph.addNode("ForetMonstre", new ChanceNode("ForetMonstre", "Vous entendez du bruit.")); // Quel monstre va être choisi?
+        graph.addNode("CombatSlime1", new CombatNode("CombatSlime1", "Vous tombez nez à nez avec un slime qui vous attaque!", death, slime1));
+        graph.addNode("CombatGobelin2", new CombatNode("CombatGobelin2", "Vous tombez nez à nez avec un gobelin qui vous attaque!", death, gobelin2));
+        graph.addNode("CombatChimere", new CombatNode("CombatChimere", "Vous voyez la Pierre juste devant vos yeux. Une créature surgit alors, une chimère protégeant la pierre qui fonce sur vous!", death, chimere));
+        graph.addNode("CombatChimereGagne", new DecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?"));
+        graph.addNode("DetruirePierre", new ChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. La forêt elle même semble vous reprocher votre action, semblant plus sombre et menaçante qu'à votre arrivée. Vous quittez la forêt."));
+
+        // Ramener Pierre à son clan ou à l'autre : fin de l'histoire
+        graph.addNode("PierrePourClanElement", new TerminalNode("PierrePourClanElement", "A écrire selon la classe du joueur."));
+        graph.addNode("PierrePourClanEnchanteur", new TerminalNode("PierrePourClanEnchanteur", "A écrire selon la classe du joueur."));
+
+        // Pierre détruite : fin de l'histoire
+        graph.addNode("FinPaix", new TerminalNode("FinPaix", "A écrire selon la classe du joueur."));
+        graph.addNode("FinConflit", new TerminalNode("FinConflit", "A écrire selon la classe du joueur."));
+
+        // Choix avec guérisseuse
+        graph.addNode("Guerisseuse", new DecisionNode("Guerisseuse", "Vous voyez une maison et voyez la guérisseusse s'occuper de son jardin. Elle vous voit : Bonjour, que faites-vous ici?" ));
+        graph.addNode("GuerisseuseContreGuerre", new DecisionNode("GuerisseuseContreGuerre", "Et pourquoi voulez-vous des informations sur cette Pierre? Vous aussi vous voulez la récupérer ? Pour pouvoir faire encore plus de mal autour de vous? Non merci"));
+        graph.addNode("GuerisseuseFinDiscussion", new DecisionNode("GuerisseuseFinDiscussion", "Nous avons suffisamment discuté. Au revoir."));
+        graph.addNode("GuerisseusePlusInfo", new ChanceNode("GuerisseusePlusInfo", "Je ne souhaite pas faire de mal, mais j'ai besoin de ces informations"));
+        graph.addNode("GuerisseusePotionInfo", new DecisionNode("GuerisseusePotionInfo", "Elle se radoucit : Je n'ai pas plus d'informations à donner. Mais je vous crois et je vous donne ces potions. J'espère qu'elles seront utiles dans votre quête."));
+        graph.addNode("GuerisseuseAider", new DecisionNode("GuerisseuseAider", "Est-ce que vous pourriez aider...? Oui je crois bien. Notre source d'eau dégage d'étranges énergies depuis plusieurs jours. Allez à la rivière enquêter, et revenez vers moi."));
+        graph.addNode("GuerisseusePotionAider", new DecisionNode("GuerisseusePotionAider", "Je sens que l'eau s'est purifiée. Je vous remercie pour votre aide. Je n'ai malheuresement pas plus d'informations sur la Pierre. Prenez donc ces potions et acceptez ma reconnaissance."));
 
         // Quête de la rivière
-        graph.addDecisionNode("Source", "Vous arrivez à la rivière. Plus que d'étranges énergies, l'apparence de l'eau est tout à fait étrange, légèrement verte.");
-        graph.addChanceNode("SourceEauMagie", "Vous utilisez votre magie pour purifier l'eau.");
-        graph.addCombatNode("SlimeGeant", "C'était un slime gigantesque qui polluait l'eau et la rendait gluante! Il n'apprécie pas votre agitation et attaque.", "mortCombat", queenslime);;
-        graph.addDecisionNode("SourceProblemeResolu", "L'eau redevient d'un bleu azur digne des piscines les plus chlorées.");
-
+        graph.addNode("Source", new DecisionNode("Source", "Vous arrivez à la rivière. Plus que d'étranges énergies, l'apparence de l'eau est tout à fait étrange, légèrement verte."));
+        graph.addNode("SourceEauMagie", new ChanceNode("SourceEauMagie", "Vous utilisez votre magie pour purifier l'eau."));
+        graph.addNode("SlimeGeant", new CombatNode("SlimeGeant", "C'était un slime gigantesque qui polluait l'eau et la rendait gluante! Il n'apprécie pas votre agitation et attaque.", death, queenslime));
+        graph.addNode("SourceProblemeResolu", new DecisionNode("SourceProblemeResolu", "L'eau redevient d'un bleu azur digne des piscines les plus chlorées."));
   
 
         // Enregistrement à l'auberge
@@ -295,10 +281,10 @@ public class JeuMain {
         
       
          
-        Node currentPlay = graph.getGraph().get("introduction");
+        Event currentPlay = graph.getGraph().get("introduction");
         currentPlay.display();
 
-        Node nextNode = currentPlay.chooseNext();
+        Event nextNode = currentPlay.chooseNext();
         currentPlay = nextNode;
         currentPlay.display();
 
@@ -319,7 +305,7 @@ public class JeuMain {
         
         
      // Mise à jour des nœuds avec le joueur choisi
-        for (Node node : graph.getGraph().values()) {
+        for (Event node : graph.getGraph().values()) {
             node.setJoueur(p);
         }
 
@@ -327,22 +313,14 @@ public class JeuMain {
             currentPlay.display();
 
             nextNode = currentPlay.chooseNext();
-
-            if (nextNode instanceof DecisionNode) {
-                currentPlay = nextNode;
-            } else if (nextNode instanceof ChanceNode) {
-                currentPlay = nextNode;
-            } else if (nextNode instanceof TerminalNode) {
-                currentPlay = nextNode;
-                currentPlay.display();
-                break;
-            } else if (nextNode instanceof CombatNode) {
-            	currentPlay = nextNode;
-            }
             
-            else {
-                break;
+            currentPlay = nextNode;
+            
+            if (nextNode instanceof TerminalNode) {
+            	currentPlay.display();
+            	break;
             }
+
         }
         
         

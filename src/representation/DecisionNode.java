@@ -15,7 +15,7 @@ import entities.Sort;
 
 public class DecisionNode extends InnerNode {
 
-	public DecisionNode(HashMap<String,Node> nodesSuivant) {
+	public DecisionNode(HashMap<String,Event> nodesSuivant) {
 		super(nodesSuivant);
 		
 	}
@@ -23,7 +23,7 @@ public class DecisionNode extends InnerNode {
 		super(nom, description);
 		
 	}
-	public DecisionNode(String nom, String description, HashMap<String,Node> nodesSuivant) {
+	public DecisionNode(String nom, String description, HashMap<String,Event> nodesSuivant) {
 		super(nom, description, nodesSuivant);
 		
 	}
@@ -35,8 +35,8 @@ public class DecisionNode extends InnerNode {
 	}
 
 	@Override
-	public Node chooseNext() {
-		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+	public Event chooseNext() {
+		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
 		
         Scanner sc = new Scanner(System.in);
@@ -56,14 +56,14 @@ public class DecisionNode extends InnerNode {
         }
         
         String chosenKey = reliqueList.get(choix - 1);
-        Node chosenNode = nodeList.get(choix - 1);
+        Event chosenNode = nodeList.get(choix - 1);
         
         handleSpecialCases(chosenKey, chosenNode,this.getNom());
         
         return chosenNode;
     }
     
-    private void handleSpecialCases(String chosenKey, Node chosenNode, String nameOfCurrentNode) {
+    private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
         //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
         		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
@@ -142,11 +142,11 @@ public class DecisionNode extends InnerNode {
     }
     
 	@Override
-	public Node chooseNext(String choice) {
-		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+	public Event chooseNext(String choice) {
+		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
 		String chosenKey = null ;
-        Node chosenNode = null;
+        Event chosenNode = null;
         for (int i =0; i< reliqueList.size();i++) {
         	if (reliqueList.get(i).equals(choice)) {
         		chosenKey =  reliqueList.get(i);
@@ -160,7 +160,7 @@ public class DecisionNode extends InnerNode {
         return chosenNode;
 	}
 	
-	 public Node chooseNext2(String choice) {
+	 public Event chooseNext2(String choice) {
 	        if (this instanceof InnerNode) {
 	        	handleSpecialCases2(choice);
 	            return ((InnerNode) this).getNodesSuivant().get(choice);
@@ -171,7 +171,7 @@ public class DecisionNode extends InnerNode {
 	 
 	 public  void handleSpecialCases2(String chosenKey) {
 		 
-		 Node chosenNode = ((InnerNode) this).getNodesSuivant().get(chosenKey);
+		 Event chosenNode = ((InnerNode) this).getNodesSuivant().get(chosenKey);
 		 
 		 
 	        //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {

@@ -1,6 +1,7 @@
 package representation;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Objects;
 
 import entities.Personnage;
@@ -12,6 +13,7 @@ public abstract class Node implements Serializable, Event {
 	protected String nom;
 	protected String description;
 	protected Personnage joueur;
+	protected HashMap<String,Event> nodesSuivant;
 	
 	
 	public Node() {
@@ -27,15 +29,7 @@ public abstract class Node implements Serializable, Event {
 		this.nom = nom;
 		this.description = description;
 	}
-	
-	
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return Objects.equals(nom, node.nom);
-    }
+
 	
 	public Personnage getJoueur() {
 		return joueur;
@@ -45,21 +39,11 @@ public abstract class Node implements Serializable, Event {
 		this.joueur = joueur;
 	}
 	
-	public static int getCpt() {
-		return cpt;
-	}
-
-	public static void setCpt(int cpt) {
-		Node.cpt = cpt;
-	}
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getNom() {
 		return nom;
@@ -77,11 +61,24 @@ public abstract class Node implements Serializable, Event {
 		this.description = description;
 	}
 	
-	public abstract Node chooseNext2(String choice);
+	public Node getNode() {
+		return this;
+	}
+	
+	public HashMap<String,Event>  getNodesSuivant() {
+		return this.nodesSuivant;
+	}
+	
+	
+	public void addToNodeSuivant(String replique ,Event toAdd) {
+		this.nodesSuivant.put(replique,toAdd);
+	}
+	
+	public abstract Event chooseNext2(String choice);
 	
 
 	public abstract void display();
 	
-	public abstract Node chooseNext(String choice);
-	public abstract Node chooseNext();
+	public abstract Event chooseNext(String choice);
+	public abstract Event chooseNext();
 }

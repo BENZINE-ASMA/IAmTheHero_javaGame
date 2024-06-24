@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import representation.DecisionNode;
+import representation.Event;
 import representation.Node;
 
 /**
@@ -21,7 +22,7 @@ class DecisionNodeTest {
 	DecisionNode decisionNode1;
 	DecisionNode decisionNode2;
 	DecisionNode decisionNode3;
-    HashMap<String, Node> nodesSuivant;
+    HashMap<String, Event> nodesSuivant;
 
 	/**
 	 * @throws java.lang.Exception
@@ -46,14 +47,14 @@ class DecisionNodeTest {
     @Test
     void testChooseNextValidOption() {
     	String input = "Noeud2"; // Simule la sélection de la première option
-        Node chosenNode = decisionNode1.chooseNext(input);
+        Event chosenNode = decisionNode1.chooseNext(input);
         assertEquals(nodesSuivant.get("Noeud2"), chosenNode);
     }
 
     @Test
     void testChooseNextInvalidOption() {
         String input = "Noeud4"; // Simule une entrée invalide 
-        Node chosenNode = decisionNode1.chooseNext(input);
+        Event chosenNode = decisionNode1.chooseNext(input);
         assertNull(chosenNode);
     }
 

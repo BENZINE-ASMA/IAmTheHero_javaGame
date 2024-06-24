@@ -21,7 +21,7 @@ public class CombatNode extends InnerNode {
 	private TerminalNode death; //noeud spécifique terminal pour la mort au combat
 	
 	
-	public CombatNode(HashMap<String, Node> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
+	public CombatNode(HashMap<String, Event> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
 		super(nodesSuivant);
 		this.death = death;
 		this.monstre = monstre;
@@ -34,12 +34,12 @@ public class CombatNode extends InnerNode {
 	}
 
 	@Override
-	public Node chooseNext() {
+	public Event chooseNext() {
 		if (!winner) {
 			return death;
 		}
 		
-		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
 		
         Scanner sc = new Scanner(System.in);
@@ -59,8 +59,7 @@ public class CombatNode extends InnerNode {
         }
         
         String chosenKey = reliqueList.get(choix - 1);
-        Node chosenNode = nodeList.get(choix - 1);
-        sc.close();
+        Event chosenNode = nodeList.get(choix - 1);
         return chosenNode;
 
 	}
@@ -329,12 +328,12 @@ public class CombatNode extends InnerNode {
 	}
 
 	@Override
-	public Node chooseNext(String choice) {
+	public Event chooseNext(String choice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	 public Node chooseNext2(String choice) {
+	 public Event chooseNext2(String choice) {
 	        if (this instanceof InnerNode) {
 	        	
 	            return ((InnerNode) this).getNodesSuivant().get(choice);
