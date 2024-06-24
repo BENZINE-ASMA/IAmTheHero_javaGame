@@ -17,6 +17,7 @@ import representation.Node;
 import representation.NodesGraph;
 import representation.TerminalNode;
 import representation.Event;
+import representation.ImageNode;
 import representation.SoundNode;
 
 /* Divers soucis/améliorations
@@ -62,8 +63,9 @@ public class JeuMain {
         graph.addNode("mortCombat", death);
     
 
+        graph.addNode("introduction", new ImageNode (new SoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.wav" ), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\taverne.jpg"));
         
-        graph.addNode("introduction", new SoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.wav"));
+        //graph.addNode("introduction", new SoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.wav"));
         graph.addNode("explication", new DecisionNode("explication", "Bien sûr! Dans notre région, il y a deux puissants clans qui se disputent depuis des années : les sorciers des éléments et les sorciers Enchanteurs. Les sorciers des éléments manipulent les forces naturelles telles que le feu, l'eau ou la terre, tandis que les sorciers Enchanteurs se concentrent sur la manipulation de l'énergie Enchanteurle et des âmes. Ces deux clans sont engagés dans une lutte de pouvoir perpétuelle, chacun cherchant à étendre son influence et affirmer sa supprématie. C'est une période de tension constante, et beaucoup craignent que cela ne conduise à un conflit ouvert un jour. Dis moi, quel sorcier es tu?"));
         graph.addNode("rejoindre", new DecisionNode("rejoindre", "Bien sûr! Vous pouvez rejoindre le clan des sorciers Enchanteurs et celui des éléments. Quel type de sorcier êtes vous?"));
 

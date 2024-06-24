@@ -35,11 +35,23 @@ public class SoundNode extends NodeDecorator {
             clip.close(); // Libérer les ressources
         }
     }
+    
+    @Override
+    public void playDecorator() {
+    	playAudio();
+    	if (decoratedNode instanceof NodeDecorator) {
+        	((NodeDecorator)decoratedNode).playDecorator();
+        }
+    }
 
     @Override
     public void display() {
         playAudio();
         super.display();
+    }
+    
+    public void display2() {
+    	playAudio();
     }
 
     @Override

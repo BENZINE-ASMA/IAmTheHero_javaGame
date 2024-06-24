@@ -164,9 +164,17 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         	
             // Mettre à jour le panel avec le texte du nœud courant et les choix
             panel.setNodeText(currentPlay.getDescription());
-            
+            /*
             if (currentPlay instanceof SoundNode) {
             	((SoundNode)currentPlay).playAudio();
+            }
+            
+            if (currentPlay instanceof ImageNode) {
+            	((ImageNode)currentPlay).displayImage();
+            }
+            */
+            if (currentPlay instanceof NodeDecorator) {
+            	((NodeDecorator)currentPlay).playDecorator();
             }
            
 
@@ -206,8 +214,8 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     
 
         
-        graph.addNode("introduction", new SoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.wav"));
-        graph.addNode("explication", new DecisionNode("explication", "Bien sûr! Dans notre région, il y a deux puissants clans qui se disputent depuis des années : les sorciers des éléments et les sorciers Enchanteurs. Les sorciers des éléments manipulent les forces naturelles telles que le feu, l'eau ou la terre, tandis que les sorciers Enchanteurs se concentrent sur la manipulation de l'énergie Enchanteurle et des âmes. Ces deux clans sont engagés dans une lutte de pouvoir perpétuelle, chacun cherchant à étendre son influence et affirmer sa supprématie. C'est une période de tension constante, et beaucoup craignent que cela ne conduise à un conflit ouvert un jour. Dis moi, quel sorcier es tu?"));
+        graph.addNode("introduction", new ImageNode (new SoundNode(new DecisionNode("introduction", "Bonjour et bienvenue à l'auberge de la ville ! Vous pouvez tout faire ici, acheter armes, potions, et même rejoindre les clans de notre contrée ! Je ne vous ai jamais vu ici avant, que puis-je pour vous ?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\musique1.wav" ), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\taverne.jpg"));
+        graph.addNode("explication", new ImageNode (new DecisionNode("explication", "Bien sûr! Dans notre région, il y a deux puissants clans qui se disputent depuis des années : les sorciers des éléments et les sorciers Enchanteurs. Les sorciers des éléments manipulent les forces naturelles telles que le feu, l'eau ou la terre, tandis que les sorciers Enchanteurs se concentrent sur la manipulation de l'énergie Enchanteurle et des âmes. Ces deux clans sont engagés dans une lutte de pouvoir perpétuelle, chacun cherchant à étendre son influence et affirmer sa supprématie. C'est une période de tension constante, et beaucoup craignent que cela ne conduise à un conflit ouvert un jour. Dis moi, quel sorcier es tu?"), "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\taverne.jpg"));
         graph.addNode("rejoindre", new DecisionNode("rejoindre", "Bien sûr! Vous pouvez rejoindre le clan des sorciers Enchanteurs et celui des éléments. Quel type de sorcier êtes vous?"));
 
         graph.addNode("clanEnchanteur", new DecisionNode("clanEnchanteur","[Vous signez des documents obscurs]. Très bien, vous êtes désormais dans le clan Enchanteur! Vous allez y être téléporté, au plaisir de vous revoir !"));

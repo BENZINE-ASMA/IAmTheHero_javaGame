@@ -12,6 +12,9 @@ public abstract class NodeDecorator implements Event, Serializable {
     public NodeDecorator(Event decoratedNode) {
         this.decoratedNode = decoratedNode;
     }
+    
+    public void playDecorator() {
+    }
 
     @Override
     public void display() {
@@ -74,4 +77,6 @@ public abstract class NodeDecorator implements Event, Serializable {
 	public HashMap<String,Event>  getNodesSuivant() {
 		return decoratedNode.getNode().nodesSuivant;
 	}
+	
+	public abstract void display2();
 }
