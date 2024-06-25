@@ -555,7 +555,16 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                        waitForPlayerMove = true;
 	                        targetCaseClass = Sanctuaire.class;  
 	                       
-	                    }
+	                    
+	                } else if(
+	                		(currentPlay.getDescription().startsWith("En vous promenant vous tombez sur un monstre dangereux, un gobelin ")) || 
+	                		(currentPlay.getDescription().startsWith("En voici un deuxième! Préparez-vous au combat "))
+	                		){
+                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers le Donjon");
+                        waitForPlayerMove = true;
+                        targetCaseClass = Donjon.class;  
+                       
+                    }
 	                    
 	                    else {
 	                    	if (currentPlay instanceof CombatNode) {
