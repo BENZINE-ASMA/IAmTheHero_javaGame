@@ -4,6 +4,8 @@ import entities.Personnage;
 
 public class TerminalNode extends Node {
 	
+	private static final long serialVersionUID = 1L;
+
 	public TerminalNode(String nom, String description) {
 		super(nom, description);
 	}

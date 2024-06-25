@@ -9,15 +9,13 @@ import entities.Potion;
 import entities.Sorcier;
 import entities.SorcierElement;
 import entities.SorcierSpirituel;
-import entities.Sort;
 import representation.ChanceNode;
 import representation.CombatNode;
 import representation.DecisionNode;
 import representation.Node;
 import representation.NodesGraph;
 import representation.TerminalNode;
-import representation.Event;
-import representation.SoundNode;
+
 
 /* Divers soucis/améliorations
  * Le ChanceNode ne fonctionne pas bien 
@@ -35,10 +33,10 @@ public class JeuMain {
     }
 
     public static void main(String[] args) {
-        Terrain terrain;
+       // Terrain terrain;
         Personnage p = null;  // Ensure this is initialized to null
 
-        Scanner sc = new Scanner(System.in);
+       // Scanner sc = new Scanner(System.in);
 
         NodesGraph graph = new NodesGraph();
         

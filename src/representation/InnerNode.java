@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import entities.Personnage;
 
 public abstract class InnerNode extends Node{
+	private static final long serialVersionUID = 1L;
 	protected HashMap<String,Node> nodesSuivant;
 	
 	public InnerNode(HashMap<String,Node> nodesSuivant) {

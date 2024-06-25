@@ -10,7 +10,7 @@ import Components.Donjon;
 import Components.Riviere;
 import Components.Sanctuaire;
 import Components.Village;
-import Interface.PanelComponent;
+
 import entities.Direction;
 import entities.EntiteMobile;
 import entities.Humain;
@@ -156,13 +156,20 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         cn.setJoueur(p);
     }
     
-
+    public void displayCombatNode(CombatNode cn) {
+        if (cn != null) {
+            cn.handleCombat(this);
+        }
+    }
     public void displayCurrentNode() {
     	
         if (currentPlay != null) {
+        	 if (currentPlay instanceof CombatNode) {
+                 displayCombatNode((CombatNode) currentPlay);
+        	 }
         	 if (currentPlay instanceof ChanceNode) {
         		 JOptionPane.showMessageDialog(this,	" c'est un Chance Node.... Patientez!");
-        		 System.out.println("say hello");
+        		//System.out.println("say hello");
          		panel.repaint();
          		return;
          	}
@@ -464,11 +471,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	       
 	        targetCaseClass = null;  // Reset the target case
 	        
-	        if (currentPlay instanceof CombatNode) {
-            	System.out.println(" it issss a combatt");
-            
-            	((CombatNode) currentPlay).display2(this);
-            }
+	       
 	        displayCurrentNode();
 	    }
 
@@ -557,9 +560,12 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    else {
 	                    	if (currentPlay instanceof CombatNode) {
 		                    	System.out.println(" it issss a combatt");
+		                    	displayCombatNode((CombatNode) currentPlay);
+		                    	//((CombatNode) currentPlay).display2(this);
+		                    	
+		                            //displayCombatNode((CombatNode) currentPlay);
+		                    	}
 		                    
-		                    	((CombatNode) currentPlay).display2(this);
-		                    }
 	                    	displayCurrentNode();
 		                   
 	                    }

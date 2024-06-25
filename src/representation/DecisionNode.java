@@ -15,6 +15,11 @@ import entities.Sort;
 
 public class DecisionNode extends InnerNode {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public DecisionNode(HashMap<String,Node> nodesSuivant) {
 		super(nodesSuivant);
 		

@@ -21,8 +21,8 @@ public class PanelComponent extends JPanel implements Serializable,KeyListener {
     private final int tailleCase = 24;
     private BufferedImage wallImage;
     private BufferedImage riverImage;
-    private BufferedImage clanAImage;
-    private BufferedImage clanBImage;
+   // private BufferedImage clanAImage;
+    //private BufferedImage clanBImage;
     private BufferedImage personnageImage;
     private BufferedImage guerisseuseImage;
     private BufferedImage historienImage;

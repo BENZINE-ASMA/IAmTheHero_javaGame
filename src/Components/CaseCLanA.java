@@ -3,6 +3,11 @@ import entities.Entite;
 
 public class CaseCLanA extends CaseTraversable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public CaseCLanA(int l, int c, Entite e) {
 		super(l, c, e);
 		

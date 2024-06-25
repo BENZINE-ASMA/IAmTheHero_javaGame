@@ -2,6 +2,11 @@ package Components;
 
 public class CaseIntraversable extends Case {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public CaseIntraversable(int l, int c) {
 		super(l, c);
 		

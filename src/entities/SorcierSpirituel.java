@@ -1,5 +1,9 @@
 package entities;
 public class SorcierSpirituel extends Sorcier {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int souls=0;
 	
     public SorcierSpirituel() {

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sorcier extends Personnage {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected List<Sort> sortsConnus = new ArrayList<Sort>();
 	protected int magieBase;
 	protected int magieRestant;
