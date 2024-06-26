@@ -2,7 +2,9 @@ package representation;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import entities.Personnage;
 
@@ -14,6 +16,7 @@ public abstract class Node implements Serializable, Event {
 	protected String description;
 	protected Personnage joueur;
 	protected HashMap<String,Event> nodesSuivant;
+	private Set<Class<?>> types = new HashSet<>();
 	
 	
 	public Node() {
@@ -22,6 +25,7 @@ public abstract class Node implements Serializable, Event {
 		this.nom = "";
 		this.description = "";
 		this.nodesSuivant = new HashMap<>();
+		types.add(this.getClass());
 	}
 	
 	public Node(String nom, String description) {
@@ -30,7 +34,18 @@ public abstract class Node implements Serializable, Event {
 		this.nom = nom;
 		this.description = description;
 		this.nodesSuivant = new HashMap<>();
+		types.add(this.getClass());
 	}
+	
+	@Override
+    public Set<Class<?>> getTypes() {
+        return types;
+    }
+
+    @Override
+    public void addTypes(Set<Class<?>> newTypes) {
+        types.addAll(newTypes);
+    }
 
 	
 	public Personnage getJoueur() {

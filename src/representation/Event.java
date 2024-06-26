@@ -1,6 +1,7 @@
 package representation;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import entities.Personnage;
 
@@ -20,5 +21,8 @@ public interface Event {
 	public void addToNodeSuivant(String replique ,Event toAdd);
 	public HashMap<String,Event>  getNodesSuivant();
 	public String insertLineBreaks(String text, int maxLength);
+	
+	Set<Class<?>> getTypes();
+    void addTypes(Set<Class<?>> newTypes);
 
 }

@@ -29,6 +29,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     private BufferedImage nodeImage; // Nouvelle propriété pour l'image du nœud
     ArrayList<String> nodeChoices;
     private JButton saveButton;
+    private String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
 
     public PanelComponent(Terrain terrain, FrameComponent fc) {
         this.terrain = terrain;
@@ -62,20 +63,47 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
 
     private void loadImages() {
         try {
-            wallImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\wall.png"));
-            riverImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\river.png"));
-            personnageImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\personnage.png"));
-            guerisseuseImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\guerisseuse.png"));
-            historienImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\historien.png"));
-            aubergisteImage = ImageIO.read(new File("C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\aubergiste.png"));
+            wallImage = ImageIO.read(new File(baseFolder + "wall.png"));
+            riverImage = ImageIO.read(new File(baseFolder + "river.png"));
+            personnageImage = ImageIO.read(new File(baseFolder + "personnage.png"));
+            guerisseuseImage = ImageIO.read(new File(baseFolder + "guerisseuse.png"));
+            historienImage = ImageIO.read(new File(baseFolder + "historien.png"));
+            aubergisteImage = ImageIO.read(new File(baseFolder + "aubergiste.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void setNodeText(String text) {
-        this.nodeText = text;
+        this.nodeText = insertLineBreaks(text,150);
         repaint();
+    }
+    
+    public String insertLineBreaks(String text, int maxLength) {
+        StringBuilder formattedText = new StringBuilder();
+        int length = text.length();
+        int start = 0;
+        
+
+        while (start < length) {
+            int end = Math.min(start + maxLength, length);
+            if (end < length) {
+                // Si nous ne sommes pas à la fin du texte, trouvons le dernier espace avant la limite
+                int lastSpace = text.lastIndexOf(' ', end);
+                if (lastSpace > start) {
+                    end = lastSpace;
+                }
+            }
+            // Ajouter le segment de texte au résultat
+            formattedText.append(text, start, end);
+            // Ajouter un saut de ligne s'il ne s'agit pas de la fin du texte
+            if (end < length) {
+                formattedText.append("\n");
+            }
+            start = end + 1; // Recommencer après l'espace (ou après la limite si aucun espace trouvé)
+        }
+
+        return formattedText.toString();
     }
 
     public void setNodeImage(String imagePath) {
@@ -100,7 +128,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int textAreaHeight = 150; // Augmentez cette valeur pour agrandir la section de texte
+        int textAreaHeight = 150; // Augmenter cette valeur pour agrandir la section de texte
         int imageHeight = getHeight() - textAreaHeight;
 
         // Dessiner l'image du nœud si elle est définie

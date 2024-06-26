@@ -2,6 +2,7 @@ package representation;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Set;
 
 import Interface.PanelComponent;
 import entities.Personnage;
@@ -12,6 +13,7 @@ public abstract class NodeDecorator implements Event, Serializable {
 
     public NodeDecorator(Event decoratedNode) {
         this.decoratedNode = decoratedNode;
+        this.decoratedNode.addTypes(Set.of(this.getClass()));
     }
     
     public abstract int playDecorator();
@@ -21,6 +23,16 @@ public abstract class NodeDecorator implements Event, Serializable {
     @Override
     public void display() {
         decoratedNode.display();
+    }
+    
+    @Override
+    public Set<Class<?>> getTypes() {
+        return decoratedNode.getTypes();
+    }
+
+    @Override
+    public void addTypes(Set<Class<?>> newTypes) {
+        decoratedNode.addTypes(newTypes);
     }
 
     @Override
@@ -41,6 +53,10 @@ public abstract class NodeDecorator implements Event, Serializable {
 	
 	public Node getNode() {
 		return decoratedNode.getNode();
+	}
+
+	public Event getDecoratedNode() {
+		return decoratedNode;
 	}
 	
 	
