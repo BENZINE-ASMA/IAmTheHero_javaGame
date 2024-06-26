@@ -19,5 +19,6 @@ public interface Event {
 	public void setJoueur(Personnage joueur);
 	public void addToNodeSuivant(String replique ,Event toAdd);
 	public HashMap<String,Event>  getNodesSuivant();
+	public String insertLineBreaks(String text, int maxLength);
 
 }

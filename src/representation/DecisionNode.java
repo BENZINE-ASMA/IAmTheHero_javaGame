@@ -14,6 +14,7 @@ import entities.SorcierSpirituel;
 import entities.Sort;
 
 public class DecisionNode extends InnerNode {
+	private static final long serialVersionUID = 1L;
 
 	public DecisionNode(HashMap<String,Event> nodesSuivant) {
 		super(nodesSuivant);
@@ -31,7 +32,7 @@ public class DecisionNode extends InnerNode {
 	
 	@Override
 	public void display() {
-		System.out.println(description);
+		System.out.println(insertLineBreaks(description,150));
 	}
 
 	@Override

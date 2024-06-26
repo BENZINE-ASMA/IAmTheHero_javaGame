@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Humain extends Personnage {
     protected Competence comp;
+    private static final long serialVersionUID = 1L;
 
     public Humain(Competence comp) {
         super();

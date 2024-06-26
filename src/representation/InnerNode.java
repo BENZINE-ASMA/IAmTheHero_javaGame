@@ -8,6 +8,7 @@ import entities.Personnage;
 
 public abstract class InnerNode extends Node{
 	//protected HashMap<String,Event> nodesSuivant;
+	private static final long serialVersionUID = 1L;
 	
 	public InnerNode(HashMap<String,Event> nodesSuivant) {
 		super();

@@ -3,6 +3,7 @@ package representation;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import Interface.PanelComponent;
 import entities.Personnage;
 
 public abstract class NodeDecorator implements Event, Serializable {
@@ -13,8 +14,9 @@ public abstract class NodeDecorator implements Event, Serializable {
         this.decoratedNode = decoratedNode;
     }
     
-    public void playDecorator() {
-    }
+    public abstract int playDecorator();
+    
+    public abstract int playDecorator(PanelComponent panel, int cpt);
 
     @Override
     public void display() {
@@ -79,4 +81,31 @@ public abstract class NodeDecorator implements Event, Serializable {
 	}
 	
 	public abstract void display2();
+	
+	public String insertLineBreaks(String text, int maxLength) {
+        StringBuilder formattedText = new StringBuilder();
+        int length = text.length();
+        int start = 0;
+
+        while (start < length) {
+            int end = Math.min(start + maxLength, length);
+            if (end < length) {
+                // Si nous ne sommes pas à la fin du texte, trouvons le dernier espace avant la limite
+                int lastSpace = text.lastIndexOf(' ', end);
+                if (lastSpace > start) {
+                    end = lastSpace;
+                }
+            }
+            // Ajouter le segment de texte au résultat
+            formattedText.append(text, start, end);
+            // Ajouter un saut de ligne s'il ne s'agit pas de la fin du texte
+            if (end < length) {
+                formattedText.append("\n");
+            }
+            start = end + 1; // Recommencer après l'espace (ou après la limite si aucun espace trouvé)
+        }
+
+        return formattedText.toString();
+    }
+
 }

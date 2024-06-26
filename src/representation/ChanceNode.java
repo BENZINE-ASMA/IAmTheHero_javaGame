@@ -23,7 +23,7 @@ public class ChanceNode extends InnerNode {
 
 	@Override
 	public void display() {
-		System.out.println(description);
+		System.out.println(insertLineBreaks(description,150));
 		
 	}
 

@@ -2,6 +2,7 @@ package entities;
 
 public class SorcierElement extends Sorcier {
     private String element;
+    private static final long serialVersionUID = 1L;
 	
 	public SorcierElement() {
         super();

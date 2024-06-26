@@ -2,6 +2,9 @@ package Components;
 import entities.Entite;
 
 public class CaseTraversable extends Case {
+	
+	private static final long serialVersionUID = 1L;
+	
 	protected Entite contenu;
 	public CaseTraversable(int l, int c) {
 		super(l, c);

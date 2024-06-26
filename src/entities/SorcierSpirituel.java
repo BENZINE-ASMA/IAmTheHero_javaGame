@@ -1,6 +1,7 @@
 package entities;
 public class SorcierSpirituel extends Sorcier {
 	private int souls=0;
+	private static final long serialVersionUID = 1L;
 	
     public SorcierSpirituel() {
         super();

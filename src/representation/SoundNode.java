@@ -3,6 +3,9 @@ package representation;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
+import Interface.PanelComponent;
+
 import java.io.File;
 import java.util.HashMap;
 
@@ -37,11 +40,21 @@ public class SoundNode extends NodeDecorator {
     }
     
     @Override
-    public void playDecorator() {
+    public int playDecorator() {
     	playAudio();
     	if (decoratedNode instanceof NodeDecorator) {
         	((NodeDecorator)decoratedNode).playDecorator();
         }
+    	return 0;
+    }
+    
+    @Override
+    public int playDecorator(PanelComponent panel, int cpt) {
+    	playAudio();
+    	if (decoratedNode instanceof NodeDecorator) {
+        	cpt += ((NodeDecorator)decoratedNode).playDecorator(panel, cpt);
+        }
+    	return cpt;
     }
 
     @Override

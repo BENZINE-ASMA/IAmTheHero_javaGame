@@ -8,6 +8,7 @@ public class Personnage extends EntiteMobile  {
     protected int capaciteMax;
 	protected int clan; // 0 -> no clan, 1 -> clan Element, 2 -> clan Spirituel
     protected Arme arme = null;
+    private static final long serialVersionUID = 1L;
 
     public Personnage() {
         super(Direction.nord);

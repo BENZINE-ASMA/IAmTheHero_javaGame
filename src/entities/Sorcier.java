@@ -8,6 +8,7 @@ public class Sorcier extends Personnage {
 	protected int magieBase;
 	protected int magieRestant;
 	protected int nbSortsConnus = 0;
+	private static final long serialVersionUID = 1L;
 	
 	public Sorcier() {
 		super();

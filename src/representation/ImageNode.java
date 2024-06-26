@@ -7,6 +7,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Interface.PanelComponent;
+
 import java.util.HashMap;
 import entities.Personnage;
 
@@ -21,11 +24,22 @@ public class ImageNode extends NodeDecorator {
     }
     
     @Override
-    public void playDecorator() {
+    public int playDecorator() {
     	displayImage();
         if (decoratedNode instanceof NodeDecorator) {
         	((NodeDecorator)decoratedNode).playDecorator();
         }
+        return 0;
+    }
+    
+
+    public int playDecorator(PanelComponent panel, int cpt) {
+    	displayImage(panel);
+    	cpt ++;
+        if (decoratedNode instanceof NodeDecorator) {
+        	cpt += ((NodeDecorator)decoratedNode).playDecorator(panel, cpt);
+        }
+        return cpt;
     }
 
     public void displayImage() {
@@ -41,6 +55,10 @@ public class ImageNode extends NodeDecorator {
         } catch (Exception e) {
             System.out.println("Erreur lors de l'affichage de l'image : " + e.getMessage());
         }
+    }
+    
+    public void displayImage(PanelComponent panel) {
+    	panel.setNodeImage(getImagePath());
     }
 
     public void hideImage() {
@@ -80,4 +98,14 @@ public class ImageNode extends NodeDecorator {
         hideImage();
         return node;
     }
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+    
+    
 }

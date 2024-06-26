@@ -7,7 +7,8 @@ import representation.Event;
 import representation.Node;
 
 public class GameSaver<T extends Personnage> implements Serializable{
-	private static final long uuid = 1L;
+	
+	private static final long serialVersionUID = 1L;
 	
 	private T personnage;
 	private Event currentPlay;

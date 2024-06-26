@@ -21,6 +21,7 @@ public abstract class Node implements Serializable, Event {
 		this.id = cpt;
 		this.nom = "";
 		this.description = "";
+		this.nodesSuivant = new HashMap<>();
 	}
 	
 	public Node(String nom, String description) {
@@ -28,6 +29,7 @@ public abstract class Node implements Serializable, Event {
 		this.id = cpt;
 		this.nom = nom;
 		this.description = description;
+		this.nodesSuivant = new HashMap<>();
 	}
 
 	
@@ -74,11 +76,40 @@ public abstract class Node implements Serializable, Event {
 		this.nodesSuivant.put(replique,toAdd);
 	}
 	
-	public abstract Event chooseNext2(String choice);
-	
 
 	public abstract void display();
 	
+	   public String insertLineBreaks(String text, int maxLength) {
+	        StringBuilder formattedText = new StringBuilder();
+	        int length = text.length();
+	        int start = 0;
+	        
+
+	        while (start < length) {
+	            int end = Math.min(start + maxLength, length);
+	            if (end < length) {
+	                // Si nous ne sommes pas à la fin du texte, trouvons le dernier espace avant la limite
+	                int lastSpace = text.lastIndexOf(' ', end);
+	                if (lastSpace > start) {
+	                    end = lastSpace;
+	                }
+	            }
+	            // Ajouter le segment de texte au résultat
+	            formattedText.append(text, start, end);
+	            // Ajouter un saut de ligne s'il ne s'agit pas de la fin du texte
+	            if (end < length) {
+	                formattedText.append("\n");
+	            }
+	            start = end + 1; // Recommencer après l'espace (ou après la limite si aucun espace trouvé)
+	        }
+
+	        return formattedText.toString();
+	    }
+	
+	
 	public abstract Event chooseNext(String choice);
+	
 	public abstract Event chooseNext();
+
+	public abstract Event chooseNext2(String choice);
 }

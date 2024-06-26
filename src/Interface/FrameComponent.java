@@ -116,6 +116,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
     }
+
     
     
 
@@ -151,7 +152,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         displayCurrentNode();
     }
 
-
+/*
     public void displayCurrentNode() {
     	
         if (currentPlay != null) {
@@ -164,7 +165,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         	
             // Mettre à jour le panel avec le texte du nœud courant et les choix
             panel.setNodeText(currentPlay.getDescription());
-            /*
+            
             if (currentPlay instanceof SoundNode) {
             	((SoundNode)currentPlay).playAudio();
             }
@@ -172,7 +173,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
             if (currentPlay instanceof ImageNode) {
             	((ImageNode)currentPlay).displayImage();
             }
-            */
+            
             if (currentPlay instanceof NodeDecorator) {
             	((NodeDecorator)currentPlay).playDecorator();
             }
@@ -189,6 +190,55 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 
             panel.repaint();
         }
+    }*/
+    
+    public void displayCombatNode(CombatNode cn) {
+        if (cn != null) {
+            cn.handleCombat(this);
+        }
+    }
+    
+    
+    public void displayCurrentNode() {
+    	if (currentPlay != null) {
+    		
+    	 if (currentPlay instanceof CombatNode) {
+                displayCombatNode((CombatNode) currentPlay);
+       	 }
+       	 if (currentPlay instanceof ChanceNode) {
+       		 JOptionPane.showMessageDialog(this,	" c'est un Chance Node.... Patientez!");
+       		 System.out.println("say hello");
+        		panel.repaint();
+        		return;
+        	}
+    	
+       	 /*
+        if (currentPlay instanceof ImageNode) {
+            ImageNode imageNode = (ImageNode) currentPlay;
+            panel.setNodeImage(imageNode.getImagePath());
+        } else {
+            panel.setNodeImage(null);
+        }
+        */
+       	int cpt = 0;
+        
+        if (currentPlay instanceof NodeDecorator) {
+        	cpt = ((NodeDecorator)currentPlay).playDecorator(panel, cpt);
+        }
+        if (cpt == 0) {
+        	panel.setNodeImage(null);
+        }
+       
+        
+        panel.setNodeText(currentPlay.getDescription());
+        
+        Map<String, Event> nodesSuivant = currentPlay.getNodesSuivant();
+        ArrayList<String> options = new ArrayList<>(nodesSuivant.keySet());
+        panel.setNodeChoices(options);
+        panel.revalidate();
+        panel.repaint();
+        //panel.setNodeImage(null);
+    }
     }
 
 	private NodesGraph createGraph() {
@@ -466,12 +516,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	        waitForPlayerMove = false;
 	       
 	        targetCaseClass = null;  // Reset the target case
-	        
-	        if (currentPlay instanceof CombatNode) {
-            	System.out.println(" it issss a combatt");
-            
-            	((CombatNode) currentPlay).display2(this);
-            }
+
 	        displayCurrentNode();
 	    }
 
@@ -535,15 +580,13 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                        
 	                        
 	                        
-	                    } else if (
-	                    		(currentPlay.getDescription().startsWith("Vous vous baladez pour trouver un monstre à combattre."))
-	                    		|| (currentPlay.getDescription().startsWith("Vous cherchez un deuxième monstre."))
-	                    		
-	                    		)
-	                    {
-	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers le monstre présent sur une case grise.");
-	                        waitForPlayerMove = true;
-	                        targetCaseClass = Donjon.class; 
+	                    } else if(
+	                		(currentPlay.getDescription().startsWith("En vous promenant vous tombez sur un monstre dangereux, un gobelin ")) || 
+	                		(currentPlay.getDescription().startsWith("En voici un deuxième! Préparez-vous au combat "))
+	                		){
+                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers le Donjon");
+                        waitForPlayerMove = true;
+                        targetCaseClass = Donjon.class;  
 	                       
 	                    } else if (currentPlay.getDescription().startsWith("Vous arrivez à la rivière. Plus que d'étranges énergies,")) {
 	                        JOptionPane.showMessageDialog(this, "Vous êtes censé vous déplacer vers la rivière");
@@ -560,9 +603,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    else {
 	                    	if (currentPlay instanceof CombatNode) {
 		                    	System.out.println(" it issss a combatt");
-		                    
-		                    	((CombatNode) currentPlay).display2(this);
-		                    }
+		                    	displayCombatNode((CombatNode) currentPlay);
+		                    	//((CombatNode) currentPlay).display2(this);
+
+		                            //displayCombatNode((CombatNode) currentPlay);
+		                    	}
 	                    	displayCurrentNode();
 		                   
 	                    }
@@ -573,6 +618,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	    }
 
 	    panel.repaint();
+	    //panel.setNodeImage(null);
 		}
 	}
 
@@ -585,7 +631,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	@Override
 	public void saveGame(String playerName) {
 	    //String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
-		String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src" + playerName + ".dat";
+		String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	    
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
 	        GameSaver gamesaver = new GameSaver(this.p, this.currentPlay, this.panel.terrain);
@@ -600,7 +646,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	@Override
 	public  void loadGame(String playerName) {
 	    //String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
-		String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src" + playerName + ".dat";
+		String fileName = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
 	   
 		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
 	        GameSaver gamesaver = (GameSaver) in.readObject();
