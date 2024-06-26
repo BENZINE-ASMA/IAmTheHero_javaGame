@@ -256,6 +256,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         // Choix d'action post introduction
         // Choix dans l'auberge
         graph.addNode("AubergePostIntro", new ImageNode (new DecisionNode("AubergePostIntro", "L'auberge n'a pas changé depuis votre venue tout à l'heure. Alors que vous alliez voir l'aubergiste, un homme semblant assez alcoolisé vient vous parler. Il vous propose de vous offrir une récompense si vous le battez dans son domaine de prédilection, la pétanque"), baseFolder + "taverne.jpg"));
+        
+        //ASMA
+        //graph.addNode("PartiePetanque",new ImageNode (new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."), baseFolder + "taverne.jpg"));
+        
+        
         graph.addNode("PartiePetanque",new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."));
         graph.addNode("MeilleureArme",new ImageNode ( new DecisionNode("MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance. L'homme reconnait sa défaite, et vous offre un bâton magique qui semble en bien meilleur état que le votre."), baseFolder + "taverne.jpg"));
         graph.addNode("PartiePerdue", new ImageNode (new DecisionNode("PartiePerdue", "Vous faites tomber la boule sur vos pieds et criez de douleur. Vous ne gagnez pas ce match."), baseFolder + "taverne.jpg"));
