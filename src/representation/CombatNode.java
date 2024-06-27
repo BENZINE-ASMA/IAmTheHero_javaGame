@@ -302,6 +302,8 @@ public class CombatNode extends InnerNode {
     public void handleCombat(FrameComponent frame) {
     	
         StringBuilder stats = new StringBuilder(description);
+        List<Sort> sorts = ((Sorcier)joueur).getSortsConnus();
+        
         stats.append("\nVos statistiques :");
         if (joueur instanceof Sorcier) {
             stats.append("\nVos MP : ").append(((Sorcier)joueur).getMagieRestant()).append("/").append(((Sorcier)joueur).getMagieBase());
@@ -309,7 +311,10 @@ public class CombatNode extends InnerNode {
         stats.append("\nVos PV : ").append(joueur.getPvRestant()).append("/").append(joueur.getPvBase());
         stats.append("\nVotre attaque avec ").append(joueur.getArme()).append(" : ").append(joueur.getAttaque()/2 + joueur.getArme().getPointsDegats());
         stats.append("\nVotre vitesse : ").append(joueur.getVitesse());
-
+        for (int i=0; i<sorts.size(); i++) {
+        	stats.append("\n" + sorts.get(i).getNom() + ": coût mana : " + sorts.get(i).getCoutMana() + ", dégats de base : " + sorts.get(i).getDegats() + ", soin de points de vie: " + sorts.get(i).getSoin());
+        }
+        
         JOptionPane.showMessageDialog(frame, stats.toString());
 
         while (monstre.getPvRestant() > 0 && joueur.getPvRestant() > 0) {

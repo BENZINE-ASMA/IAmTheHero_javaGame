@@ -65,31 +65,34 @@ public class DecisionNode extends InnerNode {
     }
     
 	private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
+
         //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
-        	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
-        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
-        		try {
-                    Competence competence = Competence.valueOf(chosenKey.substring(8));
-                    ((Humain)joueur).setCompetence(competence);
-                    System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
-                } catch (IllegalArgumentException e) {
-                    System.out.println("La compétence " + chosenKey.substring(8) + " n'existe pas.");
-                }
-        	
-        }
-        //rajouter pour l'affinite du sorcier des éléments
-        	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("missionClanElement")) {
-        		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
-        	
-        		try {
-                    String element = chosenKey.substring(37);
-                    ((SorcierElement)joueur).setElement(element);
-                    System.out.println("Element " + chosenKey.substring(37) + " ajoutée au joueur.");
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Element " + chosenKey.substring(37) + " n'existe pas.");
-                }
-        
-        	}
+	if (this.nom.equals("humain")) {
+		chosenNode.setDescription("vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?");
+		try {
+			//this.joueur= new Humain();
+          Competence competence = Competence.valueOf(chosenKey.substring(8));
+          ((Humain)joueur).setCompetence(competence);
+          System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
+      } catch (IllegalArgumentException e) {
+          System.out.println("La compétence " + chosenKey.substring(8) + " n'existe pas.");
+      }
+	
+}
+//rajouter pour l'affinite du sorcier des éléments
+	if (this.nom.equals("missionClanElement")) {
+		//this.joueur =new SorcierElement();
+		chosenNode.setDescription("Tu as donc une affinité avec " + chosenKey.substring(37) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
+		try {
+          String element = chosenKey.substring(37);
+          ((SorcierElement)joueur).setElement(element);
+          System.out.println("Element " + chosenKey.substring(37) + " ajoutée au joueur.");
+      } catch (IllegalArgumentException e) {
+          System.out.println("Element " + chosenKey.substring(37) + " n'existe pas.");
+      }
+	
+	
+	}
         	
         	
         	if (nameOfCurrentNode.equals("GuerisseusePotionAider")) {
@@ -140,7 +143,7 @@ public class DecisionNode extends InnerNode {
         		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
         	}
         	
-        	if (chosenNode instanceof TerminalNode && nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanElement".equals(chosenNode.getNom()))) {
+        	if (nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanElement".equals(chosenNode.getNom()))) {
     			if (joueur instanceof SorcierElement) {
     				chosenNode.setDescription("Le Maître du Clan est ravi de votre réussite. Le conflit pourrait bientôt éclater, offrant à votre clan un avantage considérable. Vous gagnez en prestige au sein du clan des Éléments et devenez un pilier majeur de la confrérie. FIN");
     			}
@@ -149,7 +152,7 @@ public class DecisionNode extends InnerNode {
     			}
     	
     		}
-    		if (chosenNode instanceof TerminalNode && nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanEnchanteur".equals(chosenNode.getNom()))) {
+    		if (nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanEnchanteur".equals(chosenNode.getNom()))) {
     			if (joueur instanceof SorcierElement) {
     				chosenNode.setDescription("Les Sorciers des Éléments vous voient comme un traître aux Enchanteurs ayant fait le bon choix. Ravis de pouvoir enfin prendre le contrôle total du territoire, ils vous acceptent dans leur clan, où vous pourrez poursuivre vos aventures. FIN");
     				}
@@ -193,12 +196,12 @@ public class DecisionNode extends InnerNode {
 	 
 public  void handleSpecialCases2(String chosenKey) {
 		 
-		 Event chosenNode = ((InnerNode) this).getNodesSuivant().get(chosenKey);
+		 Event chosenNode = getNodesSuivant().get(chosenKey);
 		 
 		 
 	        //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
-     	if (chosenNode instanceof DecisionNode && this.nom.equals("humain")) {
-     		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
+     	if (this.nom.equals("humain")) {
+     		chosenNode.setDescription("vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?");
      		try {
      			//this.joueur= new Humain();
                  Competence competence = Competence.valueOf(chosenKey.substring(8));
@@ -210,11 +213,9 @@ public  void handleSpecialCases2(String chosenKey) {
      	
      }
      //rajouter pour l'affinite du sorcier des éléments
-     	if (chosenNode instanceof DecisionNode && this.nom.equals("missionClanElement")) {
+     	if (this.nom.equals("missionClanElement")) {
      		//this.joueur =new SorcierElement();
-     		
-     		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
-     	
+     		chosenNode.setDescription("Tu as donc une affinité avec " + chosenKey.substring(37) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
      		try {
                  String element = chosenKey.substring(37);
                  ((SorcierElement)joueur).setElement(element);
@@ -250,12 +251,10 @@ public  void handleSpecialCases2(String chosenKey) {
      	if (this.nom.equals("maitreClanElementIntro3")) {
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
-     		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      	}
      	
      	if (this.nom.equals("maitreClanEnchanteurIntro2")) {
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
-     		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      	}
      	
@@ -274,7 +273,7 @@ public  void handleSpecialCases2(String chosenKey) {
      		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
      	}
      	
-     	if (chosenNode instanceof TerminalNode && ("PierrePourClanElement".equals(chosenNode.getNom()))) {
+     	if ("PierrePourClanElement".equals(chosenNode.getNom())) {
 			if (joueur instanceof SorcierElement) {
 				chosenNode.setDescription("Le Maître du Clan est ravi de votre réussite. Le conflit pourrait bientôt éclater, offrant à votre clan un avantage considérable. Vous gagnez en prestige au sein du clan des Éléments et devenez un pilier majeur de la confrérie. FIN");
 			}
@@ -283,7 +282,7 @@ public  void handleSpecialCases2(String chosenKey) {
 			}
 	
 		}
-		if (chosenNode instanceof TerminalNode && ("PierrePourClanEnchanteur".equals(chosenNode.getNom()))) {
+		if ("PierrePourClanEnchanteur".equals(chosenNode.getNom())) {
 			if (joueur instanceof SorcierElement) {
 				chosenNode.setDescription("Les Sorciers des Éléments vous voient comme un traître aux Enchanteurs ayant fait le bon choix. Ravis de pouvoir enfin prendre le contrôle total du territoire, ils vous acceptent dans leur clan, où vous pourrez poursuivre vos aventures. FIN");
 				}

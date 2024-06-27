@@ -163,10 +163,10 @@
 		        graph.addArc("humainAvecCompetence", "finHumain", "Je ne veux pas rejoindre de clan.");
 
 		        // Introduction du clan des éléments
-		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec le feu.");
-		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec l'eau.");
-		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec la terre.");
-		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec l'air.");
+		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec le feu");
+		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec l' eau");
+		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec la terre");
+		        graph.addArc("missionClanElement", "affiniteElement", "J'ai une affinité très forte avec l' air");
 		        graph.addArc("affiniteElement", "maitreClanElementIntro3", "Écouter le maître du clan.");
 		        graph.addArc("maitreClanElementIntro3", "AubergePostIntro", "Se rendre à l'auberge.");
 		        graph.addArc("maitreClanElementIntro3", "BibliothequePostIntro", "Se rendre à la bibliothèque chercher l'historien.");
