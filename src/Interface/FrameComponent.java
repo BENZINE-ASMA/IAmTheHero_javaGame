@@ -468,16 +468,26 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         	return;
         }
 		
+		if (currentPlay instanceof ChanceNode) {
+			 System.out.println("heelo2");
+        	currentPlay = ((ChanceNode)currentPlay).chooseNext3();
+        	 System.out.println("heelo 3   " + this.currentPlay == null);
+        	displayCurrentNode();
+        	
+        	//System.out.println("test  " +currentPlay.getDescription());
+        	return;
+        }
 		if (currentPlay instanceof ImageNode) {
 		    ImageNode imageNode = (ImageNode) currentPlay;
 		    if (imageNode.getNode() instanceof ChanceNode) {
-		        
+		        System.out.println("heelo2");
 		        currentPlay = ((ChanceNode) imageNode.getNode()).chooseNext3();
-		     
+		        System.out.println("heelo 3   " + (this.currentPlay == null));
 		        displayCurrentNode();
 		        return;
 		    }
 		}
+
 		
 		if (panel != null) {
 			
