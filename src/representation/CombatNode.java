@@ -14,36 +14,38 @@ import entities.Sort;
 
 public class CombatNode extends InnerNode {
     private static final long serialVersionUID = 1L;
-	private EntiteMobile monstre;
+    private EntiteMobile monstre;
     private boolean finished = false;
     private boolean winner;
     private TerminalNode death; // noeud spécifique terminal pour la mort au combat
+    private Scanner sc;
 
+    public boolean getWinner() {
+    	return this.winner;
+    }
     public CombatNode(HashMap<String, Event> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
         super(nodesSuivant);
         this.death = death;
         this.monstre = monstre;
+        this.sc = new Scanner(System.in);
     }
 
     public CombatNode(String nom, String description, TerminalNode death, EntiteMobile monstre) {
         super(nom, description);
         this.death = death;
         this.monstre = monstre;
+        this.sc = new Scanner(System.in);
     }
-    
-    
-    //---------------------------------------- console version
 
     @Override
-	public Event chooseNext() {
-		if (!winner) {
-			return death;
-		}
-		
-		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
-		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
-		
-        Scanner sc = new Scanner(System.in);
+    public Event chooseNext() {
+        if (!winner) {
+            return death;
+        }
+
+        ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
+        ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
+
         for (int i = 0; i < nodeList.size(); i++) {
             System.out.println((i + 1) + ": " + reliqueList.get(i));
         }
@@ -51,169 +53,184 @@ public class CombatNode extends InnerNode {
         int choix;
         while (true) {
             System.out.print("Choisissez une option : ");
-            choix = sc.nextInt();
-            if (choix > 0 && choix <= nodeList.size()) {
-                break;
+            if (sc.hasNextInt()) {
+                choix = sc.nextInt();
+                if (choix > 0 && choix <= nodeList.size()) {
+                    break;
+                } else {
+                    System.out.println("Choix invalide, veuillez réessayer.");
+                }
             } else {
-                System.out.println("Choix invalide, veuillez réessayer.");
+                System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                sc.next(); // Clear the invalid input
             }
         }
-        
-        //String chosenKey = reliqueList.get(choix - 1);
+
         Event chosenNode = nodeList.get(choix - 1);
-        sc.close();
         return chosenNode;
+    }
 
-	}
-	
-	public void choixAction() {
-		try (Scanner sc = new Scanner(System.in)) {
-			int sizeChoice;
-			
-			if (joueur instanceof Sorcier) {
-				sizeChoice = 4;
-			}
-			else {
-				sizeChoice = 3;
-			}
-			
-
-			while (true) {  // permet de revenir en arrière sur ses choix si pas d'objet adapté ou de sort avec assez de mana
-				
-				System.out.println("1: Regarder dans le sac");
-				System.out.println("2: Attaquer à mains nues");
-				System.out.println("3: Attaquer avec " + joueur.getArme());
-				if (joueur instanceof Sorcier){
-					System.out.println("4: Lancer un sort");
-				}
-				
-				int choix;
-			    while (true) {
-			        System.out.print("Choisissez une option : ");
-			        choix = sc.nextInt();
-			        if (choix > 0 && choix <= sizeChoice) {
-			            break;
-			        } else {
-			            System.out.println("Choix invalide, veuillez réessayer.");
-			        }
-			    }
-			    
-			    int choix2;
-			    if (choix == 1) {
-			    	System.out.println("0 : choisir une autre action");
-			    	joueur.afficherPotions();
-			    	while (true) {
-			            System.out.print("Choisissez une option : ");
-			            choix2 = sc.nextInt();
-			            if (choix2 >= 0 && choix2 <= joueur.getCapaciteMax()) {
-			                break;
-			            } else {
-			                System.out.println("Choix invalide, veuillez réessayer.");
-			            }
-			        }
-			    	
-			    	if (choix2 == 0) {
-			    		continue;
-			    	}
-			    	else {
-			    		joueur.utiliserPotion(joueur.getSac().get(choix2-1));
-			    		break;
-			    	}
-			    	
-			    }
-			    else if (choix == 2){
-			    	joueur.attaquePhysique(monstre);
-			    	break;
-			    }
-			    else if (choix == 3) {
-			    	joueur.attaqueArmee(monstre);
-			    	break;
-			    }
-			    else {
-			    	//choisir le sort à utiliser ; ne pas l'utiliser si pas assez de mana
-			    	List<Sort> lsort = ((Sorcier)joueur).getSortsConnus();
-			    	int nbSorts = ((Sorcier)joueur).getNbSortsConnus();
-			    	
-			    	
-			    	while (true) {
-			            System.out.println("0 : choisir une autre action");
-			        	((Sorcier)joueur).afficherSortsConnus();
-			        	System.out.print("Choisissez une option : ");
-			            choix2 = sc.nextInt();
-			            if (choix2 >= 0 && choix2 <= nbSorts) {
-			                if (choix2 > 0) {
-			                	System.out.println(lsort.get(choix2-1).getCoutMana() + " " + ((Sorcier)joueur).getMagieRestant());
-			                	if (lsort.get(choix2-1).getCoutMana()<= ((Sorcier)joueur).getMagieRestant()) {
-			                		break;
-			                	}
-			                	else {
-			                		System.out.println("Pas assez de mana, veuillez réessayer.");
-			                		continue;
-			                	}
-			                }
-			                break;
-			            } 
-			            
-			            else {
-			                System.out.println("Choix invalide, veuillez réessayer.");
-			            }
-			        }
-			    	
-			    	if (choix2 == 0) {
-			    		continue;
-			    	}
-			    	else {
-			    		((Sorcier)joueur).lancerSort(monstre, lsort.get(choix2-1));
-			    		break;
-			    	}
-			    	
-			    }
-			}
-		}
-		
-        
-	}
-	
-	
-	public void chooseReward() {
-		Scanner sc = new Scanner(System.in);
+    public void choixAction() {
         int sizeChoice;
-		
-		if (joueur instanceof Sorcier) {
-			sizeChoice = 4;
-		}
-		else {
-			sizeChoice = 3;
-		}
-		
-		System.out.println("Vous gagnez 5 points de compétence, dans quoi voulez-vous les mettre ?");
-		System.out.println("1: Points de vie");
-		System.out.println("2: Attaque");
-		System.out.println("3: Vitesse");
-		if (joueur instanceof Sorcier){
-			System.out.println("4: Points de magie");
-		}
-    	
-    	int choix;
+
+        if (joueur instanceof Sorcier) {
+            sizeChoice = 4;
+        } else {
+            sizeChoice = 3;
+        }
+
+        while (true) {
+            System.out.println("1: Regarder dans le sac");
+            System.out.println("2: Attaquer à mains nues");
+            System.out.println("3: Attaquer avec " + joueur.getArme());
+            if (joueur instanceof Sorcier) {
+                System.out.println("4: Lancer un sort");
+            }
+
+            int choix;
+            while (true) {
+                System.out.print("Choisissez une option : ");
+                if (sc.hasNextInt()) {
+                    choix = sc.nextInt();
+                    if (choix > 0 && choix <= sizeChoice) {
+                        break;
+                    } else {
+                        System.out.println("Choix invalide, veuillez réessayer.");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                    sc.next(); // Clear the invalid input
+                }
+            }
+
+            int choix2;
+            if (choix == 1) {
+                System.out.println("0 : choisir une autre action");
+                joueur.afficherPotions();
+                while (true) {
+                    System.out.print("Choisissez une option : ");
+                    if (sc.hasNextInt()) {
+                        choix2 = sc.nextInt();
+                        if (choix2 >= 0 && choix2 <= joueur.getCapaciteMax()) {
+                            break;
+                        } else {
+                            System.out.println("Choix invalide, veuillez réessayer.");
+                        }
+                    } else {
+                        System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                        sc.next(); // Clear the invalid input
+                    }
+                }
+
+                if (choix2 == 0) {
+                    continue;
+                } else {
+                    joueur.utiliserPotion(joueur.getSac().get(choix2 - 1));
+                    break;
+                }
+
+            } else if (choix == 2) {
+                joueur.attaquePhysique(monstre);
+                break;
+            } else if (choix == 3) {
+                joueur.attaqueArmee(monstre);
+                break;
+            } else {
+                // choisir le sort à utiliser ; ne pas l'utiliser si pas assez de mana
+                List<Sort> lsort = ((Sorcier) joueur).getSortsConnus();
+                int nbSorts = ((Sorcier) joueur).getNbSortsConnus();
+
+                while (true) {
+                    System.out.println("0 : choisir une autre action");
+                    ((Sorcier) joueur).afficherSortsConnus();
+                    System.out.print("Choisissez une option : ");
+                    if (sc.hasNextInt()) {
+                        choix2 = sc.nextInt();
+                        if (choix2 >= 0 && choix2 <= nbSorts) {
+                            if (choix2 > 0) {
+                                System.out.println(lsort.get(choix2 - 1).getCoutMana() + " " + ((Sorcier) joueur).getMagieRestant());
+                                if (lsort.get(choix2 - 1).getCoutMana() <= ((Sorcier) joueur).getMagieRestant()) {
+                                    break;
+                                } else {
+                                    System.out.println("Pas assez de mana, veuillez réessayer.");
+                                    continue;
+                                }
+                            }
+                            break;
+                        } else {
+                            System.out.println("Choix invalide, veuillez réessayer.");
+                        }
+                    } else {
+                        System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                        sc.next(); // Clear the invalid input
+                    }
+                }
+
+                if (choix2 == 0) {
+                    continue;
+                } else {
+                    ((Sorcier) joueur).lancerSort(monstre, lsort.get(choix2 - 1));
+                    break;
+                }
+
+            }
+        }
+    }
+
+    public void chooseReward() {
+        int sizeChoice;
+
+        if (joueur instanceof Sorcier) {
+            sizeChoice = 4;
+        } else {
+            sizeChoice = 3;
+        }
+
+        System.out.println("Vous gagnez 5 points de compétence, dans quoi voulez-vous les mettre ?");
+        System.out.println("1: Points de vie");
+        System.out.println("2: Attaque");
+        System.out.println("3: Vitesse");
+        if (joueur instanceof Sorcier) {
+            System.out.println("4: Points de magie");
+        }
+
+        int choix;
         while (true) {
             System.out.print("Choisissez une option : ");
-            choix = sc.nextInt();
-            if (choix > 0 && choix <= sizeChoice) {
-                break;
+            if (sc.hasNextInt()) {
+                choix = sc.nextInt();
+                if (choix > 0 && choix <= sizeChoice) {
+                    break;
+                } else {
+                    System.out.println("Choix invalide, veuillez réessayer.");
+                }
             } else {
-                System.out.println("Choix invalide, veuillez réessayer.");
+                System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                sc.next(); // Clear the invalid input
             }
         }
-        
-        switch(choix) {
-        case 1: joueur.augmenterPVBases(5); joueur.augmenterPVRestants(5); break;
-        case 2: joueur.augmenterAttaque(5); break;
-        case 3: joueur.augmenterVitesse(5); break;
-        case 4: ((Sorcier)joueur).augmenterMPBase(5); ((Sorcier)joueur).augmenterMPRestant(5); break;
+
+        switch (choix) {
+            case 1:
+                joueur.augmenterPVBases(5);
+                joueur.augmenterPVRestants(5);
+                break;
+            case 2:
+                joueur.augmenterAttaque(5);
+                break;
+            case 3:
+                joueur.augmenterVitesse(5);
+                break;
+            case 4:
+                if (joueur instanceof Sorcier) {
+                    ((Sorcier) joueur).augmenterMPBase(5);
+                    ((Sorcier) joueur).augmenterMPRestant(5);
+                }
+                break;
         }
-        
+
         System.out.println("Modification effectuée.");
-	}
+    }
 
 	@Override
 	public void display() {
@@ -283,6 +300,7 @@ public class CombatNode extends InnerNode {
 
     
     public void handleCombat(FrameComponent frame) {
+    	
         StringBuilder stats = new StringBuilder(description);
         stats.append("\nVos statistiques :");
         if (joueur instanceof Sorcier) {
@@ -377,6 +395,7 @@ public class CombatNode extends InnerNode {
                 }
                 break;
         }
+        
     }
 
 
@@ -418,6 +437,9 @@ public class CombatNode extends InnerNode {
     }
 
     public Event chooseNext2(String choice) {
+    	if (!winner) {
+			return death;
+		}
         return this.getNodesSuivant().get(choice);
     }
 

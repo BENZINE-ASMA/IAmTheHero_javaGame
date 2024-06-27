@@ -58,7 +58,9 @@ public class ImageNode extends NodeDecorator {
     }
     
     public void displayImage(PanelComponent panel) {
-    	panel.setNodeImage(getImagePath());
+    	if(getImagePath() != null) {
+    		panel.setNodeImage(getImagePath());    		
+    	}
     }
 
     public void hideImage() {

@@ -29,7 +29,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     private BufferedImage nodeImage; // Nouvelle propriété pour l'image du nœud
     ArrayList<String> nodeChoices;
     private JButton saveButton;
-    private String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
+    private String baseFolder = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\";
 
     public PanelComponent(Terrain terrain, FrameComponent fc) {
         this.terrain = terrain;

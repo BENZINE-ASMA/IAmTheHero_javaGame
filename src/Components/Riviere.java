@@ -1,6 +1,6 @@
 package Components;
 
-public class Riviere extends CaseIntraversable {
+public class Riviere extends CaseTraversable {
 	
 	private static final long serialVersionUID = 1L;
 

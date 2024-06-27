@@ -47,7 +47,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     private Event currentPlay;
     private boolean waitForPlayerMove = false;
     private Class<? extends Case> targetCaseClass = null;
-    private String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
+    private String baseFolder = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\";
 
     public FrameComponent() {
         // Initialize graph and currentPlay
@@ -162,6 +162,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     
     
     public void displayCurrentNode() {
+    	
     	if (currentPlay != null) {
     		
     		int cpt = 0;
@@ -176,6 +177,10 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     		CombatNode combatNode = NodeUtil.findNodeOfType(currentPlay, CombatNode.class);
             if (combatNode != null) {
             	displayCombatNode((CombatNode) combatNode);
+            	if (!(combatNode.getWinner())){
+            		return;
+            		
+            	}
             }
     	//if (currentPlay.getTypes().contains(CombatNode.class)) {
     		//displayCombatNode((CombatNode) currentPlay);
@@ -261,7 +266,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         //graph.addNode("PartiePetanque",new ImageNode (new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."), baseFolder + "taverne.jpg"));
         
         
-        graph.addNode("PartiePetanque",new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."));
+       graph.addNode("PartiePetanque",new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."));
         graph.addNode("MeilleureArme",new ImageNode ( new DecisionNode("MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance. L'homme reconnait sa défaite, et vous offre un bâton magique qui semble en bien meilleur état que le votre."), baseFolder + "taverne.jpg"));
         graph.addNode("PartiePerdue", new ImageNode (new DecisionNode("PartiePerdue", "Vous faites tomber la boule sur vos pieds et criez de douleur. Vous ne gagnez pas ce match."), baseFolder + "taverne.jpg"));
         graph.addNode("AubergisteParler", new ImageNode (new DecisionNode("AubergisteParler", "L'aubergiste vous reconnait et vous demande ce que vous rechercher."), baseFolder + "taverne.jpg"));
@@ -455,11 +460,17 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		if (currentPlay.getDescription().equals("Vous êtes mort bravement au combat.")) {
+        	currentPlay.display();
+        	return;
+        }
+		
 		if (currentPlay instanceof ChanceNode) {
         	currentPlay = ((ChanceNode)currentPlay).chooseNext3();
         	displayCurrentNode();
         	
-        	System.out.println("test  " +currentPlay.getDescription());
+        	//System.out.println("test  " +currentPlay.getDescription());
         	return;
         }
 		
@@ -508,6 +519,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    panel.setNodeImage(null);
 	                    panel.repaint();
 	                    currentPlay = currentPlay.chooseNext2(choice);
+	                    if (currentPlay != null && currentPlay.getDescription().equals("Vous êtes mort bravement au combat.")) {
+	                    	currentPlay.display();
+	                    	exit(0);
+	                    }
+	                    
 	                    
 	                    
 	                    
@@ -567,7 +583,9 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    else {
 	                    	if (currentPlay instanceof CombatNode) {
 		                    	System.out.println(" it issss a combatt");
+		                    	displayCurrentNode();
 		                    	displayCombatNode((CombatNode) currentPlay);
+		                    	
 		                    	//((CombatNode) currentPlay).display2(this);
 
 		                            //displayCombatNode((CombatNode) currentPlay);
@@ -585,6 +603,14 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	    //panel.setNodeImage(null);
 		}
 	}
+
+
+	private void exit(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 	@Override
