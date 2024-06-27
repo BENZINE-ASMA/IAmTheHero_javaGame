@@ -188,6 +188,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
        	 
        	if (currentPlay.getTypes().contains(ChanceNode.class)) {
        		JOptionPane.showMessageDialog(this,	" c'est un Chance Node.... Patientez!");
+       		
       		 System.out.println("say hello");
        		panel.repaint();
        		return;
@@ -263,10 +264,10 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         graph.addNode("AubergePostIntro", new ImageNode (new DecisionNode("AubergePostIntro", "L'auberge n'a pas changé depuis votre venue tout à l'heure. Alors que vous alliez voir l'aubergiste, un homme semblant assez alcoolisé vient vous parler. Il vous propose de vous offrir une récompense si vous le battez dans son domaine de prédilection, la pétanque"), baseFolder + "taverne.jpg"));
         
         //ASMA
-        //graph.addNode("PartiePetanque",new ImageNode (new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."), baseFolder + "taverne.jpg"));
+        graph.addNode("PartiePetanque",new ImageNode (new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."), baseFolder + "taverne.jpg"));
         
         
-       graph.addNode("PartiePetanque",new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."));
+       //graph.addNode("PartiePetanque",new ChanceNode("PartiePetanque", "Vous jouez avec l'homme."));
         graph.addNode("MeilleureArme",new ImageNode ( new DecisionNode("MeilleureArme", "Vous êtes un as de la pétanque, tirez et pointez comme si vous faisiez ça depuis votre enfance. L'homme reconnait sa défaite, et vous offre un bâton magique qui semble en bien meilleur état que le votre."), baseFolder + "taverne.jpg"));
         graph.addNode("PartiePerdue", new ImageNode (new DecisionNode("PartiePerdue", "Vous faites tomber la boule sur vos pieds et criez de douleur. Vous ne gagnez pas ce match."), baseFolder + "taverne.jpg"));
         graph.addNode("AubergisteParler", new ImageNode (new DecisionNode("AubergisteParler", "L'aubergiste vous reconnait et vous demande ce que vous rechercher."), baseFolder + "taverne.jpg"));
@@ -460,19 +461,23 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		 
 		
 		if (currentPlay.getDescription().equals("Vous êtes mort bravement au combat.")) {
         	currentPlay.display();
         	return;
         }
 		
-		if (currentPlay instanceof ChanceNode) {
-        	currentPlay = ((ChanceNode)currentPlay).chooseNext3();
-        	displayCurrentNode();
-        	
-        	//System.out.println("test  " +currentPlay.getDescription());
-        	return;
-        }
+		if (currentPlay instanceof ImageNode) {
+		    ImageNode imageNode = (ImageNode) currentPlay;
+		    if (imageNode.getNode() instanceof ChanceNode) {
+		        
+		        currentPlay = ((ChanceNode) imageNode.getNode()).chooseNext3();
+		     
+		        displayCurrentNode();
+		        return;
+		    }
+		}
 		
 		if (panel != null) {
 			
@@ -523,12 +528,14 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                    	currentPlay.display();
 	                    	exit(0);
 	                    }
-	                    
-	                    
+	                  
 	                    
 	                    
 
 	                    // Check the description and set waitForPlayerMove and targetCaseClass accordingly
+	                    System.out.println("sooolve issue    " + this.currentPlay.getDescription());
+	                    System.out.println(this.currentPlay.getClass());
+	                    
 	                    if (
 	                    		(currentPlay.getDescription().startsWith("Bienvenue, jeune sorcier. Je suis le Maître de ce clan Enchanteur"))||
 	                    		

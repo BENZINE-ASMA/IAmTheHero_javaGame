@@ -109,6 +109,7 @@ public class ImageNode extends NodeDecorator {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-    
+
+
     
 }

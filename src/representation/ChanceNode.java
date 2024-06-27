@@ -10,7 +10,7 @@ import entities.SorcierSpirituel;
 
 public class ChanceNode extends InnerNode {
 	
-	private static final long serialVersionUID = 1L;
+	 private static final long serialVersionUID = 1L;
 
 
 	public ChanceNode(HashMap<String,Event> nodesSuivant) {
@@ -47,7 +47,9 @@ public class ChanceNode extends InnerNode {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	 public Event chooseNext3() {
+		 System.out.println("heelo1");
 	        if (this instanceof InnerNode) {
 	        	ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
 	        	ArrayList<String> repliqueList = new ArrayList<>(nodesSuivant.keySet());

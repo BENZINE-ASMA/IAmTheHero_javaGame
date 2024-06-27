@@ -25,4 +25,5 @@ public interface Event {
 	Set<Class<?>> getTypes();
     void addTypes(Set<Class<?>> newTypes);
 
+
 }
