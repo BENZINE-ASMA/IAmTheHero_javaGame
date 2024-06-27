@@ -64,7 +64,7 @@ public class DecisionNode extends InnerNode {
         return chosenNode;
     }
     
-    private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
+	private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
         //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
         	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
         		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
@@ -139,8 +139,29 @@ public class DecisionNode extends InnerNode {
         		((Sorcier)joueur).apprendreSort(Sort.EXPLOSION_D_AME); 
         		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
         	}
+        	
+        	if (chosenNode instanceof TerminalNode && nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanElement".equals(chosenNode.getNom()))) {
+    			if (joueur instanceof SorcierElement) {
+    				chosenNode.setDescription("Le Maître du Clan est ravi de votre réussite. Le conflit pourrait bientôt éclater, offrant à votre clan un avantage considérable. Vous gagnez en prestige au sein du clan des Éléments et devenez un pilier majeur de la confrérie. FIN");
+    			}
+    			if (joueur instanceof SorcierSpirituel) {
+    				chosenNode.setDescription("Les Enchanteurs sont étonnés de vous voir, mais acceptent la Pierre avec grand plaisir. Ils vous offrent une place au sein de leur communauté, une première pour un Sorcier des Éléments. L'intégration sera difficile, mais c'est là votre choix. FIN");
+    			}
+    	
+    		}
+    		if (chosenNode instanceof TerminalNode && nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanEnchanteur".equals(chosenNode.getNom()))) {
+    			if (joueur instanceof SorcierElement) {
+    				chosenNode.setDescription("Les Sorciers des Éléments vous voient comme un traître aux Enchanteurs ayant fait le bon choix. Ravis de pouvoir enfin prendre le contrôle total du territoire, ils vous acceptent dans leur clan, où vous pourrez poursuivre vos aventures. FIN");
+    				}
+    			if (joueur instanceof SorcierSpirituel) {
+    				chosenNode.setDescription("La Pierre renfermant un grand pouvoir appartient désormais aux Enchanteurs, avec le risque qu'ils l'utilisent à mauvais escient. Quoi qu'il en soit, vous faites désormais pleinement partie du clan et gagnez en prestige au sein de celui-ci. FIN");
+    				
+    			}
+    	
+    		}
         		
     }
+
     
 	@Override
 	public Event chooseNext(String choice) {
@@ -170,7 +191,7 @@ public class DecisionNode extends InnerNode {
 	        return null;
 	    }
 	 
-	 public  void handleSpecialCases2(String chosenKey) {
+public  void handleSpecialCases2(String chosenKey) {
 		 
 		 Event chosenNode = ((InnerNode) this).getNodesSuivant().get(chosenKey);
 		 
@@ -252,7 +273,28 @@ public class DecisionNode extends InnerNode {
      		((Sorcier)joueur).apprendreSort(Sort.EXPLOSION_D_AME); 
      		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
      	}
+     	
+     	if (chosenNode instanceof TerminalNode && ("PierrePourClanElement".equals(chosenNode.getNom()))) {
+			if (joueur instanceof SorcierElement) {
+				chosenNode.setDescription("Le Maître du Clan est ravi de votre réussite. Le conflit pourrait bientôt éclater, offrant à votre clan un avantage considérable. Vous gagnez en prestige au sein du clan des Éléments et devenez un pilier majeur de la confrérie. FIN");
+			}
+			if (joueur instanceof SorcierSpirituel) {
+				chosenNode.setDescription("Les Enchanteurs sont étonnés de vous voir, mais acceptent la Pierre avec grand plaisir. Ils vous offrent une place au sein de leur communauté, une première pour un Sorcier des Éléments. L'intégration sera difficile, mais c'est là votre choix. FIN");
+			}
+	
+		}
+		if (chosenNode instanceof TerminalNode && ("PierrePourClanEnchanteur".equals(chosenNode.getNom()))) {
+			if (joueur instanceof SorcierElement) {
+				chosenNode.setDescription("Les Sorciers des Éléments vous voient comme un traître aux Enchanteurs ayant fait le bon choix. Ravis de pouvoir enfin prendre le contrôle total du territoire, ils vous acceptent dans leur clan, où vous pourrez poursuivre vos aventures. FIN");
+				}
+			if (joueur instanceof SorcierSpirituel) {
+				chosenNode.setDescription("La Pierre renfermant un grand pouvoir appartient désormais aux Enchanteurs, avec le risque qu'ils l'utilisent à mauvais escient. Quoi qu'il en soit, vous faites désormais pleinement partie du clan et gagnez en prestige au sein de celui-ci. FIN");
+				
+			}
+	
+		}
      		
  }
+
 	
 }
