@@ -10,8 +10,9 @@ import java.io.File;
 import java.util.HashMap;
 
 public class SoundNode extends NodeDecorator {
+	 private static final long serialVersionUID = 1L;
     private String musicPath;
-    private Clip clip; // Référence au Clip
+    private transient Clip clip; // Référence au Clip
 
     public SoundNode(Event musicNode, String musicPath) {
         super(musicNode);

@@ -18,7 +18,7 @@ public class CombatNode extends InnerNode {
     private boolean finished = false;
     private boolean winner;
     private TerminalNode death; // noeud spécifique terminal pour la mort au combat
-    private Scanner sc;
+    transient Scanner sc;
 
     public boolean getWinner() {
     	return this.winner;

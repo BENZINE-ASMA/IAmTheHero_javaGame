@@ -14,6 +14,7 @@ import java.util.HashMap;
 import entities.Personnage;
 
 public class ImageNode extends NodeDecorator {
+	 private static final long serialVersionUID = 1L;
     private String imagePath;
     private JFrame frame;
 
