@@ -37,7 +37,6 @@ public class ChanceNode extends InnerNode {
 		Event chosenNode = nodeList.get(indice);
 		String chosenKey = repliqueList.get(indice);
         
-        handleSpecialCases(chosenKey, chosenNode,this.getNom());
 		
 		return chosenNode;
 	}
@@ -59,7 +58,6 @@ public class ChanceNode extends InnerNode {
 	    		Event chosenNode = nodeList.get(indice);
 	    		String chosenKey = repliqueList.get(indice);
 	            
-	            handleSpecialCases(chosenKey, chosenNode,this.getNom());
 	    		System.out.println(" the chosen isss "+ chosenNode + "   " + chosenNode.getDescription()+ " ++++ " + chosenNode.getNom());
 	    		return chosenNode;
 	            
@@ -69,29 +67,6 @@ public class ChanceNode extends InnerNode {
 	    }
 	 
 	 
-	 private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
-			if (chosenNode instanceof TerminalNode && nameOfCurrentNode.equals("DetruirePierre") && ("FinPaix".equals(chosenNode.getNom()))) {
-				if (joueur instanceof SorcierElement) {
-					chosenNode.setDescription("Le Maître du Clan, extrêmement déçu par votre décision, vous informe que la Pierre était leur seule chance contre les Enchanteurs. Les deux clans devront envisager la paix. Bien que vous soyez moins apprécié.e de vos camarades, vous avez peut être amené la paix. FIN");
-				}
-				if (joueur instanceof SorcierSpirituel) {
-					chosenNode.setDescription("Le Maître du Clan aurait préféré une domination totale, mais au moins la menace des Sorciers des Éléments est écartée. La paix est envisageable. Vous restez dans le clan et vivrez de nombreuses aventures avec vos camarades. FIN");
-				}
-		
-			}
-			
-			if (chosenNode instanceof TerminalNode && nameOfCurrentNode.equals("DetruirePierre") && ("FinConflit".equals(chosenNode.getNom()))) {
-				if (joueur instanceof SorcierElement) {
-					chosenNode.setDescription("Le Maître du Clan s'affole en apprenant la nouvelle. Refusant toute paix ou alliance, il vous considère comme un traître et lance son sort le plus puissant : Immolation. Vous mourrez dans d'atroces souffrances. FIN");
-				}
-				if (joueur instanceof SorcierSpirituel) {
-					chosenNode.setDescription("Le Maître du Clan est soulagé que ce pouvoir ne tombe pas entre les mains des Sorciers Élémentaires, mais il aurait aimé en finir avec ce conflit. Déçu de vous, il vous exclut du clan. Vous devrez continuer votre aventure seul.e, sur un territoire en conflit. FIN");
-				}
-		
-			}
-			
-		}
-
 	@Override
 	public Event chooseNext2(String choice) {
 		// TODO Auto-generated method stub

@@ -124,7 +124,7 @@
 		        graph.addNode("PierrePourClanEnchanteur", new TerminalNode("PierrePourClanEnchanteur", "A écrire selon la classe du joueur."));
 		        
 		        graph.addNode("FinPaix", new TerminalNode("FinPaix", "Le Maître du Clan, extrêmement déçu par votre décision, vous informe que la Pierre était leur seule chance de gagner. Les deux clans devront envisager la paix. Vous perdez tout prestige et êtes renvoyé.e. Vous devrez poursuivre vos aventures seul.e. FIN"));
-		        graph.addNode("FinConflit", new TerminalNode("FinConflit", "A écrire selon la classe du joueur."));
+		        graph.addNode("FinConflit", new TerminalNode("FinConflit", "Le Maître du Clan s'affole en apprenant la nouvelle. Refusant toute paix ou alliance, il vous considère comme un traître et lance son sort le plus puissant : Immolation. Vous mourrez dans d'atroces souffrances. FIN"));
 		        
 		        graph.addNode("Guerisseuse", new DecisionNode("Guerisseuse", "Vous découvrez une petite maison où une guérisseuse s'occupe de son jardin. Elle vous remarque et vous salue : Bonjour, que faites-vous ici?"));
 		        graph.addNode("GuerisseuseContreGuerre", new DecisionNode("GuerisseuseContreGuerre", "Vous demandez des informations sur la Pierre, mais la guérisseuse vous regarde avec suspicion : Et pourquoi voulez-vous des informations sur cette Pierre? Vous aussi vous voulez la récupérer? Pour pouvoir faire encore plus de mal autour de vous? Non merci."));

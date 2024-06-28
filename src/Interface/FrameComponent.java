@@ -300,19 +300,19 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         graph.addNode("Foret", new ImageNode(new DecisionNode("Foret", "En entrant dans le Sanctuaire, l'atmosphère s'alourdit. Une étendue d'arbres à perte de vue semble chuchoter des secrets anciens à chaque souffle de vent."), baseFolder + "sanctuaire.jpeg"));
 
         // Chance de choisir le bon chemin dans la forêt
-        graph.addNode("ForetChemin", new ImageNode(new ChanceNode("ForetChemin", "Est-ce que le chemin choisi sera le bon?"), "sanctuaire.jpeg"));
+        graph.addNode("ForetChemin", new ImageNode(new ChanceNode("ForetChemin", "Est-ce que le chemin choisi sera le bon?"), baseFolder + "sanctuaire.jpeg"));
 
         // Se perdre dans la forêt
         graph.addNode("ForetMauvaisChemin", new ImageNode(new DecisionNode("ForetMauvaisChemin", "Vous vous perdez dans la forêt. Que voulez-vous faire?"), baseFolder + "sanctuaire.jpeg"));
 
         // Mort dans la forêt
-        graph.addNode("MortForet", new ImageNode( new TerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent."), "plant.jpeg"));
+        graph.addNode("MortForet", new ImageNode( new TerminalNode("MortForet", "Vous ne connaissez pas la forêt et continuez à avancer malgré tout. Des plantes carnivores vous attrapent et vous mangent."), baseFolder + "plant.jpeg"));
 
         // Trouver le bon chemin dans la forêt
         graph.addNode("ForetBonChemin", new ImageNode(new DecisionNode("ForetBonChemin", "Vous trouvez votre chemin."), baseFolder + "sanctuaire.jpeg"));
 
         // Rencontrer un monstre dans la forêt
-        graph.addNode("ForetMonstre", new ImageNode (new ChanceNode("ForetMonstre", "Vous entendez du bruit."), "sanctuaire.jpeg"));
+        graph.addNode("ForetMonstre", new ImageNode (new ChanceNode("ForetMonstre", "Vous entendez du bruit."), baseFolder + "sanctuaire.jpeg"));
 
         // Combat 
         graph.addNode("CombatSlime1", new ImageNode(new SoundNode (new CombatNode("CombatSlime1", "Vous tombez nez à nez avec un slime qui vous attaque!", death, slime1), baseFolder + "tetris.wav"), baseFolder + "slime.jpg"));
@@ -323,16 +323,16 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         graph.addNode("CombatChimereGagne", new ImageNode(new DecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?"), baseFolder + "pierre.jpeg"));
 
         //here
-        // Décision de détruire la Pierre
-        graph.addNode("DetruirePierre", new ImageNode (new ChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. La forêt elle-même semble vous reprocher votre action, semblant plus sombre et menaçante qu'à votre arrivée. Vous quittez la forêt."), "pierre.jpeg"));
+        // Décision de détruire la Pierre	
+        graph.addNode("DetruirePierre", new ImageNode (new ChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. La forêt elle-même semble vous reprocher votre action, semblant plus sombre et menaçante qu'à votre arrivée. Vous quittez la forêt."), baseFolder + "pierre.jpeg"));
 
         // Ramener Pierre à son clan ou à l'autre : fin de l'histoire
-        graph.addNode("PierrePourClanElement", new ImageNode (new TerminalNode("PierrePourClanElement", "A écrire selon la classe du joueur."), "element.jpeg"));
-        graph.addNode("PierrePourClanEnchanteur", new ImageNode (new TerminalNode("PierrePourClanEnchanteur", "A écrire selon la classe du joueur."), "enchanteur.jpeg"));
+        graph.addNode("PierrePourClanElement", new ImageNode (new TerminalNode("PierrePourClanElement", "A écrire selon la classe du joueur."), baseFolder + "element.jpeg"));
+        graph.addNode("PierrePourClanEnchanteur", new ImageNode (new TerminalNode("PierrePourClanEnchanteur", "A écrire selon la classe du joueur."), baseFolder + "enchanteur.jpeg"));
 
         // Pierre détruite : fin de l'histoire
         graph.addNode("FinPaix", new ImageNode( new TerminalNode("FinPaix", "Le Maître du Clan, extrêmement déçu par votre décision, vous informe que la Pierre était leur seule chance de gagner. Les deux clans devront envisager la paix. Vous perdez tout prestige et êtes renvoyé.e. Vous devrez poursuivre vos aventures seul.e. FIN"), baseFolder + "interieurclan.jpeg"));
-        graph.addNode("FinConflit", new ImageNode (new TerminalNode("FinConflit", "A écrire selon la classe du joueur."), baseFolder + "interieurclan.jpeg"));
+        graph.addNode("FinConflit", new ImageNode (new TerminalNode("FinConflit", "Le Maître du Clan s'affole en apprenant la nouvelle. Refusant toute paix ou alliance, il vous considère comme un traître et lance son sort le plus puissant : Immolation. Vous mourrez dans d'atroces souffrances. FIN"), baseFolder + "interieurclan.jpeg"));
 
      // Choix avec la guérisseuse
         graph.addNode("Guerisseuse", new ImageNode(new DecisionNode("Guerisseuse", "Vous découvrez une petite maison où une guérisseuse s'occupe de son jardin. Elle vous remarque et vous salue : Bonjour, que faites-vous ici?"), baseFolder + "guerisseusemaison.jpeg"));
@@ -492,6 +492,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         	currentPlay.display();
         	return;
         }
+	
 		
 		if (currentPlay instanceof ChanceNode) {
 			 System.out.println("heelo2");

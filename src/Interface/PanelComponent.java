@@ -75,7 +75,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     }
 
     public void setNodeText(String text) {
-        this.nodeText = insertLineBreaks(text,150);
+        this.nodeText = insertLineBreaks(text,140);
         repaint();
     }
     
@@ -183,17 +183,32 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         g.setColor(Color.WHITE);
         g.fillRect(0, imageHeight, getWidth(), textAreaHeight);
 
+        int y = imageHeight + 20;
         if (nodeText != null && !nodeText.isEmpty()) {
             g.setColor(Color.BLACK);
-            g.drawString(nodeText, 10, imageHeight + 20);
+            y = drawMultilineString(g, nodeText, 10, y);
         }
+
+        // Ajout de l'espace supplémentaire avant les choix du nœud
+        y += 20;
 
         // Dessiner les choix du nœud
         if (nodeChoices != null && !nodeChoices.isEmpty()) {
             for (int i = 0; i < nodeChoices.size(); i++) {
-                g.drawString((i + 1) + ". " + nodeChoices.get(i), 10, imageHeight + 40 + (i * 20));
+                g.drawString((i + 1) + ". " + nodeChoices.get(i), 10, y + (i * 20));
             }
         }
+    }
+
+    private int drawMultilineString(Graphics g, String text, int x, int y) {
+        FontMetrics fm = g.getFontMetrics();
+        int lineHeight = fm.getHeight();
+
+        for (String line : text.split("\n")) {
+            g.drawString(line, x, y);
+            y += lineHeight;
+        }
+        return y;
     }
 
     @Override
