@@ -18,5 +18,24 @@ Bienvenue dans notre jeu interactif "Vous êtes le héros". Dans ce jeu, vous pl
 - **Nœuds interactifs** : Des nœuds de décision, de chance, de combats et terminaux qui dirigent le récit.
 - **Immersion audiovisuelle** : Sons et images intégrés pour une expérience immersive.
 - **Personnages et combats** : Rencontrez divers personnages et engagez des combats en utilisant vos compétences.
-- **Terrain interactif** : Permet au joueur de se déplacer sur la carte pour explorer et interagir avec l'environnement. 
+- **Terrain interactif** : Permet au joueur de se déplacer sur la carte pour explorer et interagir avec l'environnement.
 
+## Exécution du jeu
+
+### Cloner le dépôt
+
+1. **Cloner le dépôt** :
+   ```bash
+   git clone https://github.com/BENZINE-ASMA/IAmTheHero_javaGame.git
+   ```
+2. ** Telecharger le Jar Executer le Jeu en version Console**
+    ```bash
+    jar cvfe IAmTheHero.jar JeuMain -C bin .
+    java -jar IAmTheHero.jar
+
+   ```
+3. **Executer le Jeu en version Interface graphique avec SWING**
+    ```bash
+    jar cvfe IAmTheHero.jar Interface.MainUI -C bin .
+    java -jar IAmTheHero.jar
+   ```
