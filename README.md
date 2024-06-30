@@ -27,7 +27,7 @@ Bienvenue dans notre jeu interactif "Vous êtes le héros". Dans ce jeu, vous pl
 
 1. **Cloner le dépôt** :
 
-2. ** Télécharger le JAR et exécuter le jeu en version console**
+2. **Télécharger le JAR et exécuter le jeu en version console**
     ```bash
     jar cvfe IAmTheHero.jar JeuMain -C bin .
     java -jar IAmTheHero.jar
