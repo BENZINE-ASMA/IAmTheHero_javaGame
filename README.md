@@ -26,9 +26,7 @@ Bienvenue dans notre jeu interactif "Vous êtes le héros". Dans ce jeu, vous pl
 ### Cloner le dépôt
 
 1. **Cloner le dépôt** :
-   ```bash
-   git clone https://github.com/BENZINE-ASMA/IAmTheHero_javaGame.git
-   ```
+
 2. ** Télécharger le JAR et exécuter le jeu en version console**
     ```bash
     jar cvfe IAmTheHero.jar JeuMain -C bin .
