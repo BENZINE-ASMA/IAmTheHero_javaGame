@@ -52,7 +52,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     private Event currentPlay;
     private boolean waitForPlayerMove = false;
     private Class<? extends Case> targetCaseClass = null;
-    private String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
+    private String baseFolder = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\";
 
     
     /**
