@@ -2,67 +2,99 @@ package entities;
 
 import java.util.ArrayList;
 
+/**
+ * Classe représentant un humain, un type de personnage avec des compétences spécifiques.
+ */
 public class Humain extends Personnage {
-    protected Competence comp;
     private static final long serialVersionUID = 1L;
 
+    /**
+     * La compétence spécifique de l'humain.
+     */
+    protected Competence comp;
+
+    /**
+     * Constructeur d'un humain avec une compétence spécifique.
+     * 
+     * @param comp la compétence de l'humain
+     */
     public Humain(Competence comp) {
         super();
         setCompetence(comp);
-        vitesse = 15;
+        this.vitesse = 15;
         this.name = "Humain";
-        sac = new ArrayList<Potion>();
-		capaciteMax = 10; 
-		arme = Arme.EPEE_BOIS;
-		pvBase = 70;
-		pvRestant = 70;
+        this.sac = new ArrayList<Potion>();
+        this.capaciteMax = 10;
+        this.arme = Arme.EPEE_BOIS;
+        this.pvBase = 70;
+        this.pvRestant = 70;
     }
 
+    /**
+     * Constructeur par défaut d'un humain.
+     */
     public Humain() {
         super();
-        vitesse = 15;
-        sac = new ArrayList<Potion>();
-		capaciteMax = 10; 
-		arme = Arme.EPEE_BOIS;
-		pvBase = 70;
-		pvRestant = 70;
+        this.vitesse = 15;
+        this.sac = new ArrayList<Potion>();
+        this.capaciteMax = 10;
+        this.arme = Arme.EPEE_BOIS;
+        this.pvBase = 70;
+        this.pvRestant = 70;
     }
 
+    /**
+     * Constructeur d'un humain avec une direction et une compétence spécifiques.
+     * 
+     * @param dir la direction initiale de l'humain
+     * @param comp la compétence de l'humain
+     */
     public Humain(Direction dir, Competence comp) {
         super(dir);
         setCompetence(comp);
-        vitesse = 15;
-        sac = new ArrayList<Potion>();
-		capaciteMax = 10; 
-		arme = Arme.EPEE_BOIS;
-		pvBase = 70;
-		pvRestant = 70;
+        this.vitesse = 15;
+        this.sac = new ArrayList<Potion>();
+        this.capaciteMax = 10;
+        this.arme = Arme.EPEE_BOIS;
+        this.pvBase = 70;
+        this.pvRestant = 70;
     }
 
+    /**
+     * Définit la compétence de l'humain.
+     * 
+     * @param comp la nouvelle compétence
+     */
     public void setCompetence(Competence comp) {
         this.comp = comp;
         if (comp.equals(Competence.combattant)) {
-        	this.setAttaque(20);
-            
+            this.setAttaque(20);
         } else {
-        	this.setAttaque(15);
+            this.setAttaque(15);
         }
     }
 
+    /**
+     * Obtient la compétence de l'humain.
+     * 
+     * @return la compétence de l'humain
+     */
     public Competence getCompetence() {
         return comp;
     }
-    
 
-    // Pour afficher les compétences du joueur
+    /**
+     * Affiche les compétences du joueur.
+     */
     public void afficherCompetences() {
         System.out.println("Compétence du joueur : " + comp);
     }
-         
-        @Override
-        public void afficherInfos() {
-            System.out.println("Vous êtes un humain avec la compétence de " + this.comp);
-        }
 
-    
+    /**
+     * Affiche les informations sur l'humain.
+     */
+    @Override
+    public void afficherInfos() {
+        System.out.println("Vous êtes un humain avec la compétence de " + this.comp);
+    }
 }

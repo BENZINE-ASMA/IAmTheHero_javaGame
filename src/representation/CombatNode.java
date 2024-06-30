@@ -12,6 +12,11 @@ import entities.Sorcier;
 import entities.SorcierSpirituel;
 import entities.Sort;
 
+/**
+ * Représente un nœud dans l'arborescence de décision du jeu où se déroule un combat entre le personnage du joueur
+ * et une entité mobile (monstre). Ce nœud permet au joueur de s'engager dans le combat, de faire des choix
+ * pendant le combat et de gérer les résultats du combat.
+ */
 public class CombatNode extends InnerNode {
     private static final long serialVersionUID = 1L;
     private EntiteMobile monstre;
@@ -20,9 +25,13 @@ public class CombatNode extends InnerNode {
     private TerminalNode death; // noeud spécifique terminal pour la mort au combat
     transient Scanner sc;
 
-    public boolean getWinner() {
-    	return this.winner;
-    }
+    /**
+     * Constructeur d'un CombatNode avec les paramètres donnés.
+     *
+     * @param nodesSuivant un HashMap des événements suivants où les résultats du combat mènent à des nœuds subséquents
+     * @param death        nœud terminal spécifique pour la mort au combat
+     * @param monstre      l'entité mobile adversaire dans le combat
+     */
     public CombatNode(HashMap<String, Event> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
         super(nodesSuivant);
         this.death = death;
@@ -30,6 +39,14 @@ public class CombatNode extends InnerNode {
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Constructeur d'un CombatNode avec les paramètres donnés.
+     *
+     * @param nom        nom du nœud de combat
+     * @param description description du nœud de combat
+     * @param death      nœud terminal spécifique pour la mort au combat
+     * @param monstre    l'entité mobile adversaire dans le combat
+     */
     public CombatNode(String nom, String description, TerminalNode death, EntiteMobile monstre) {
         super(nom, description);
         this.death = death;
@@ -37,6 +54,20 @@ public class CombatNode extends InnerNode {
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Obtient l'état de victoire du combat.
+     *
+     * @return true si le joueur gagne, false sinon
+     */
+    public boolean getWinner() {
+    	return this.winner;
+    }
+    
+    /**
+     * Permet au joueur de choisir l'événement suivant ou le nœud suivant en fonction du résultat du combat.
+     *
+     * @return l'événement ou le nœud suivant en fonction du choix du joueur ou du résultat par défaut
+     */
     @Override
     public Event chooseNext() {
         if (!winner) {
@@ -70,6 +101,75 @@ public class CombatNode extends InnerNode {
         return chosenNode;
     }
 
+  
+    /**
+     * Affiche l'état du combat et les choix du joueur lors du gameplay en mode console.
+     */
+	@Override
+	public void display() {
+		System.out.println(description);
+		System.out.println("Vos statistiques :");
+		if (joueur instanceof Sorcier) {
+			System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant() + "/" + ((Sorcier)joueur).getMagieBase());
+		}
+		System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
+		System.out.println("Votre attaque avec " + joueur.getArme() + " : " + (joueur.getAttaque()/2 + joueur.getArme().getPointsDegats()));
+		System.out.println("Votre vitesse : " + joueur.getVitesse());
+		
+		
+		while (monstre.getPvRestant() > 0 && joueur.getPvRestant() > 0) {
+			System.out.println("PV de " + monstre.getName() + ": " + monstre.getPvRestant() + "/" + monstre.getPvBase()+ "\nVos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
+			if (joueur instanceof Sorcier) {
+				System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant() + "/" + ((Sorcier)joueur).getMagieBase());
+			}
+			
+			if (monstre.getVitesse()>joueur.getVitesse()) {
+				System.out.println(monstre.getName() + " vous attaque.");
+				monstre.attaquePhysique(joueur);
+				System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
+				if (joueur.getPvRestant() > 0) {
+					System.out.println("Que voulez vous faire ?");
+					choixAction();
+				}
+				else {
+					this.finished = true;
+				}
+			}
+			else {
+				System.out.println("Que voulez vous faire ? ");
+				choixAction();
+				if (monstre.getPvRestant() > 0) {
+					System.out.println(monstre.getName() + " vous attaque.");
+					monstre.attaquePhysique(joueur);
+					System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
+					
+				}
+				else {
+					this.finished = true;
+				}
+			}
+		
+	
+		}
+		
+		if (joueur.getPvRestant() > 0) {
+			winner = true;
+			System.out.println(monstre.getName() + " est KO.");
+			chooseReward();
+			if (joueur instanceof SorcierSpirituel) {
+				((SorcierSpirituel) joueur).addSouls(1);
+			}
+			
+		}
+		else {
+			System.out.println("Vous êtes KO.");
+			winner = false;
+		}
+	}
+	
+	 /**
+     * Gère les actions du joueur pendant le combat en mode console.
+     */
     public void choixAction() {
         int sizeChoice;
 
@@ -177,6 +277,9 @@ public class CombatNode extends InnerNode {
         }
     }
 
+    /**
+     * Permet au joueur de choisir comment allouer 5 points de compétence après avoir remporté un combat.
+     */
     public void chooseReward() {
         int sizeChoice;
 
@@ -232,73 +335,13 @@ public class CombatNode extends InnerNode {
         System.out.println("Modification effectuée.");
     }
 
-	@Override
-	public void display() {
-		System.out.println(description);
-		System.out.println("Vos statistiques :");
-		if (joueur instanceof Sorcier) {
-			System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant() + "/" + ((Sorcier)joueur).getMagieBase());
-		}
-		System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
-		System.out.println("Votre attaque avec " + joueur.getArme() + " : " + (joueur.getAttaque()/2 + joueur.getArme().getPointsDegats()));
-		System.out.println("Votre vitesse : " + joueur.getVitesse());
-		
-		
-		while (monstre.getPvRestant() > 0 && joueur.getPvRestant() > 0) {
-			System.out.println("PV de " + monstre.getName() + ": " + monstre.getPvRestant() + "/" + monstre.getPvBase()+ "\nVos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
-			if (joueur instanceof Sorcier) {
-				System.out.println("Vos MP : " + ((Sorcier)joueur).getMagieRestant() + "/" + ((Sorcier)joueur).getMagieBase());
-			}
-			
-			if (monstre.getVitesse()>joueur.getVitesse()) {
-				System.out.println(monstre.getName() + " vous attaque.");
-				monstre.attaquePhysique(joueur);
-				System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
-				if (joueur.getPvRestant() > 0) {
-					System.out.println("Que voulez vous faire ?");
-					choixAction();
-				}
-				else {
-					this.finished = true;
-				}
-			}
-			else {
-				System.out.println("Que voulez vous faire ? ");
-				choixAction();
-				if (monstre.getPvRestant() > 0) {
-					System.out.println(monstre.getName() + " vous attaque.");
-					monstre.attaquePhysique(joueur);
-					System.out.println("Vos PV : " + joueur.getPvRestant() + "/" + joueur.getPvBase());
-					
-				}
-				else {
-					this.finished = true;
-				}
-			}
-		
-	
-		}
-		
-		if (joueur.getPvRestant() > 0) {
-			winner = true;
-			System.out.println(monstre.getName() + " est KO.");
-			chooseReward();
-			if (joueur instanceof SorcierSpirituel) {
-				((SorcierSpirituel) joueur).addSouls(1);
-			}
-			
-		}
-		else {
-			System.out.println("Vous êtes KO.");
-			winner = false;
-		}
-	}
-	
-	
 
-    //**----------------------------------------------------** ui version
 
-    
+	/**
+     * Gère l'état du combat et les actions du joueur en utilisant JOptionPane de Swing pour le gameplay en mode interface utilisateur.
+     *
+     * @param frame le FrameComponent où l'interface utilisateur de combat est affichée
+     */
     public void handleCombat(FrameComponent frame) {
     	
         StringBuilder stats = new StringBuilder(description);
@@ -358,6 +401,12 @@ public class CombatNode extends InnerNode {
         }
     }
 
+    
+    /**
+     * Gère les actions du joueur pendant le combat en utilisant JOptionPane de Swing pour le gameplay en mode interface utilisateur.
+     *
+     * @param frame le FrameComponent où l'interface utilisateur de combat est affichée
+     */
     private void choixActionUI(FrameComponent frame) {
         String[] options;
         if (joueur instanceof Sorcier) {
@@ -404,6 +453,11 @@ public class CombatNode extends InnerNode {
     }
 
 
+    /**
+     * Permet au joueur de choisir comment allouer 5 points de compétence après avoir remporté un combat en mode interface utilisateur.
+     *
+     * @param frame le FrameComponent où l'interface utilisateur de récompense est affichée
+     */
     private void chooseRewardUI(FrameComponent frame) {
         String[] options;
         if (joueur instanceof Sorcier) {
@@ -435,12 +489,24 @@ public class CombatNode extends InnerNode {
         }
     }
 
+    /**
+     * Permet au joueur de choisir l'événement ou le nœud suivant en fonction du choix du joueur en mode interface utilisateur.
+     *
+     * @param choice le choix du joueur pour l'événement ou le nœud suivant
+     * @return l'événement ou le nœud suivant en fonction du choix du joueur
+     */
     @Override
     public Event chooseNext(String choice) {
         // Not used
         return null;
     }
 
+    /**
+     * Permet au joueur de choisir l'événement ou le nœud suivant en fonction du choix du joueur en mode interface utilisateur.
+     *
+     * @param choice le choix du joueur pour l'événement ou le nœud suivant
+     * @return l'événement ou le nœud suivant en fonction du choix du joueur
+     */
     public Event chooseNext2(String choice) {
     	if (!winner) {
 			return death;

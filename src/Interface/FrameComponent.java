@@ -35,6 +35,11 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * La classe principale pour l'interface du jeu d'aventure.
+ * Cette classe étend JFrame et implémente GameInterface, Serializable, KeyListener.
+ * Elle gère la configuration du jeu, les entrées utilisateur et la navigation entre les nœuds du jeu.
+ */
 public class FrameComponent extends JFrame implements GameInterface,Serializable, KeyListener {
     private static final long serialVersionUID = 1L;
     private Personnage p = new Personnage();
@@ -49,6 +54,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     private Class<? extends Case> targetCaseClass = null;
     private String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
 
+    
+    /**
+     * Constructeur de la fenêtre principale pour l'interface de jeu.
+     * Initialise les composants et configure la disposition de la fenêtre principale.
+     */
     public FrameComponent() {
         // Initialize graph and currentPlay
         graph = createGraph();
@@ -119,8 +129,10 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     }
 
     
-    
-
+    /**
+     * Gère l'action du bouton "Commencer".
+     * Vérifie si un nom est entré et démarre l'interface du jeu.
+     */
     private void handleStart() {
         String name = nameField.getText();
         if (!name.isEmpty()) {
@@ -131,10 +143,18 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         }
     }
 
+    /**
+     * Gère l'action du bouton "Quitter".
+     * Quitte le jeu lorsque le bouton "Quitter" est pressé.
+     */
     private void handleQuit() {
         System.exit(0);
     }
 
+    /**
+     * Affiche l'interface de jeu après avoir effacé le contenu de la fenêtre principale.
+     * Crée un nouveau PanelComponent avec un Terrain et le définit comme contenu principal.
+     */
     private void showGameInterface() {
         // Clear the current content
         getContentPane().removeAll();
@@ -142,7 +162,6 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         revalidate();
 
         // Create the terrain and panel
-        //panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
         panel = new PanelComponent(new Terrain(baseFolder + "terrain2.txt", p), this);
         // Set up the new game interface
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -154,13 +173,20 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     }
 
     
+    /**
+     * Affiche le nœud de combat en appelant handleCombat sur le CombatNode.
+     * @param cn Le CombatNode à afficher.
+     */
     public void displayCombatNode(CombatNode cn) {
         if (cn != null) {
             cn.handleCombat(this);
         }
     }
     
-    
+    /**
+     * Affiche le nœud actuel en fonction de son type.
+     * Gère les nœuds décorateurs, les nœuds de combat, les nœuds de chance entre autre.
+     */
     public void displayCurrentNode() {
     	
     	if (currentPlay != null) {
@@ -182,10 +208,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
             		
             	}
             }
-    	//if (currentPlay.getTypes().contains(CombatNode.class)) {
-    		//displayCombatNode((CombatNode) currentPlay);
-    	//}
-       	 
+
        	if (currentPlay.getTypes().contains(ChanceNode.class)) {
        		JOptionPane.showMessageDialog(this,	"Vous vous en remettez à la chance.");
        		
@@ -205,6 +228,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     }
     }
 
+    /**
+     * Crée et initialise le graphique de nœuds pour le jeu.
+     * Ajoute des nœuds initiaux et des entités au graphique.
+     * @return L'objet NodesGraph créé.
+     */
 	private NodesGraph createGraph() {
 		
 		NodesGraph graph = new NodesGraph();
@@ -322,7 +350,6 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         // Gagner le combat contre la chimère et décider du sort de la Pierre
         graph.addNode("CombatChimereGagne", new ImageNode(new DecisionNode("CombatChimereGagne", "La Pierre scintille devant vous. Que voulez-vous en faire?"), baseFolder + "pierre.jpeg"));
 
-        //here
         // Décision de détruire la Pierre	
         graph.addNode("DetruirePierre", new ImageNode (new ChanceNode("DetruirePierre", "La Pierre est brisée en mille morceaux à vos pieds. La forêt elle-même semble vous reprocher votre action, semblant plus sombre et menaçante qu'à votre arrivée. Vous quittez la forêt."), baseFolder + "pierre.jpeg"));
 
@@ -484,10 +511,14 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 		// Not used
 	}
 
+	/**
+	 * Écouteur pour la touche enfoncée. Gère les mouvements du joueur et les interactions clés du jeu.
+	 * @param e L'événement KeyEvent généré lorsqu'une touche est enfoncée.
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		 
-		
+		// Vérifie si le joueur est mort au combat
 		if (currentPlay.getDescription().equals("Vous êtes mort bravement au combat.")) {
         	currentPlay.display();
         	return;
@@ -495,20 +526,15 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	
 		
 		if (currentPlay instanceof ChanceNode) {
-			 System.out.println("heelo2");
         	currentPlay = ((ChanceNode)currentPlay).chooseNext3();
-        	 System.out.println("heelo 3   " + this.currentPlay == null);
         	displayCurrentNode();
         	
-        	//System.out.println("test  " +currentPlay.getDescription());
         	return;
         }
 		if (currentPlay instanceof ImageNode) {
 		    ImageNode imageNode = (ImageNode) currentPlay;
 		    if (imageNode.getNode() instanceof ChanceNode) {
-		        System.out.println("heelo2");
 		        currentPlay = ((ChanceNode) imageNode.getNode()).chooseNext3();
-		        System.out.println("heelo 3   " + (this.currentPlay == null));
 		        displayCurrentNode();
 		        return;
 		    }
@@ -556,7 +582,6 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	                int choiceIndex = e.getKeyCode() - KeyEvent.VK_1;
 	                if (choiceIndex >= 0 && choiceIndex < panel.nodeChoices.size()) {
 	                    String choice = panel.nodeChoices.get(choiceIndex);
-	                    //System.out.println(choice);
 	                    panel.setNodeImage(null);
 	                    panel.repaint();
 	                    currentPlay = currentPlay.chooseNext2(choice);
@@ -625,9 +650,6 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 		                    	displayCurrentNode();
 		                    	displayCombatNode((CombatNode) currentPlay);
 		                    	
-		                    	//((CombatNode) currentPlay).display2(this);
-
-		                            //displayCombatNode((CombatNode) currentPlay);
 		                    	}
 	                    	displayCurrentNode();
 		                   
@@ -639,7 +661,6 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	    }
 
 	    panel.repaint();
-	    //panel.setNodeImage(null);
 		}
 	}
 
@@ -657,6 +678,11 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 		// Not used
 	}
 	
+	
+	/**
+     * Méthode pour sauvegarder une partie.
+     * @param playerName Le nom du joueur pour sauvegarder la partie.
+     */
 	@Override
 	public void saveGame(String playerName) {
 	    //String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
@@ -672,17 +698,19 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
 	    }
 	}
 	
+	/**
+     * Méthode pour charger une partie sauvegardée du jeu.
+     * @param playerName Le nom du joueur pour charger la partie.
+     */
 	@Override
 	public  void loadGame(String playerName) {
-	    //String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
-		String fileName = baseFolder + playerName + ".dat";
+	    String fileName = baseFolder + playerName + ".dat";
 	   
 		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
 	        GameSaver gamesaver = (GameSaver) in.readObject();
 	        this.p = gamesaver.getPersonnage();
 	        this.currentPlay = gamesaver.getCurrentPlay();
 	        if (panel == null) {
-	            //panel = new PanelComponent(new Terrain("C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\terrain2.txt", p), this);
 	            panel = new PanelComponent(new Terrain(baseFolder + "terrain2.txt", p), this);
 	        }
 	        this.panel.terrain = gamesaver.getTerrain();

@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Cette classe représente un panneau graphique pour afficher le terrain de jeu, le texte
+ * associé à un nœud et les choix disponibles pour le joueur.
+ */
 public class PanelComponent extends JPanel implements Serializable, KeyListener {
     private static final long serialVersionUID = 1L;
 
@@ -31,6 +35,12 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     private JButton saveButton;
     private String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
 
+    /**
+     * Constructeur de la classe PanelComponent.
+     *
+     * @param terrain le terrain de jeu à afficher
+     * @param fc le composant de fenêtre parent associé pour la gestion des événements
+     */
     public PanelComponent(Terrain terrain, FrameComponent fc) {
         this.terrain = terrain;
         setBackground(Color.white);
@@ -41,7 +51,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         setFocusable(true); 
         addKeyListener(fc);
 
-        // Create and add the save button
+        // Créer et ajouter le bouton de sauvegarde
         saveButton = new JButton("Save Game");
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -61,6 +71,10 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Charge les images nécessaires pour le jeu depuis le dossier spécifié.
+     */
+
     private void loadImages() {
         try {
             wallImage = ImageIO.read(new File(baseFolder + "wall.png"));
@@ -74,11 +88,23 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         }
     }
 
+    /**
+     * Définit le texte à afficher pour le nœud actuel.
+     *
+     * @param text le texte à afficher
+     */
     public void setNodeText(String text) {
         this.nodeText = insertLineBreaks(text,140);
         repaint();
     }
     
+    /**
+     * Insère des sauts de ligne dans le texte pour limiter la largeur.
+     *
+     * @param text le texte à formater
+     * @param maxLength la longueur maximale d'une ligne
+     * @return le texte formaté avec des sauts de ligne
+     */
     public String insertLineBreaks(String text, int maxLength) {
         StringBuilder formattedText = new StringBuilder();
         int length = text.length();
@@ -106,6 +132,11 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         return formattedText.toString();
     }
 
+    /**
+     * Définit l'image à afficher pour le nœud actuel.
+     *
+     * @param imagePath le chemin de l'image à afficher
+     */
     public void setNodeImage(String imagePath) {
         try {
             if (imagePath != null) {
@@ -119,6 +150,11 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         repaint();
     }
 
+    /**
+     * Définit les choix disponibles pour le nœud actuel.
+     *
+     * @param choices la liste des choix à afficher
+     */
     public void setNodeChoices(ArrayList<String> choices) {
         this.nodeChoices = choices;
         repaint();
@@ -128,7 +164,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int textAreaHeight = 150; // Augmenter cette valeur pour agrandir la section de texte
+        int textAreaHeight = 170; // Augmenter cette valeur pour agrandir la section de texte
         int imageHeight = getHeight() - textAreaHeight;
 
         // Dessiner l'image du nœud si elle est définie
@@ -200,6 +236,15 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         }
     }
 
+    /**
+     * Dessine une chaîne de texte sur plusieurs lignes dans le composant graphique.
+     *
+     * @param g l'objet Graphics pour dessiner
+     * @param text le texte à dessiner
+     * @param x la position horizontale de départ
+     * @param y la position verticale de départ
+     * @return la position verticale après le dessin du texte
+     */
     private int drawMultilineString(Graphics g, String text, int x, int y) {
         FontMetrics fm = g.getFontMetrics();
         int lineHeight = fm.getHeight();

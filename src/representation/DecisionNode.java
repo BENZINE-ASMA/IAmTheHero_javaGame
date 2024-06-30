@@ -6,35 +6,67 @@ import java.util.Scanner;
 import entities.Arme;
 import entities.Competence;
 import entities.Humain;
-import entities.Personnage;
 import entities.Potion;
 import entities.Sorcier;
 import entities.SorcierElement;
 import entities.SorcierSpirituel;
 import entities.Sort;
 
+/**
+ * Classe DecisionNode représentant un nœud où le joueur doit choisir parmi plusieurs options pour déterminer le prochain événement.
+ * Étend la classe abstraite InnerNode et implémente la logique de choix par l'entrée utilisateur pour déterminer le prochain nœud à suivre.
+ */
 public class DecisionNode extends InnerNode {
 	private static final long serialVersionUID = 1L;
 
+	/**
+     * Constructeur d'un DecisionNode avec un ensemble de nœuds suivants spécifié.
+     * 
+     * @param nodesSuivant une HashMap contenant les nœuds suivants associés à ce nœud de décision
+     */
 	public DecisionNode(HashMap<String,Event> nodesSuivant) {
 		super(nodesSuivant);
 		
 	}
+	
+	/**
+     * Constructeur d'un DecisionNode avec nom et description spécifiés.
+     * Initialise l'ensemble des nœuds suivants à une nouvelle HashMap.
+     * 
+     * @param nom le nom du nœud de décision
+     * @param description la description associée au nœud de décision
+     */
 	public DecisionNode(String nom, String description) {
 		super(nom, description);
 		
 	}
+	
+	/**
+     * Constructeur d'un DecisionNode avec nom, description et ensemble de nœuds suivants spécifiés.
+     * 
+     * @param nom le nom du nœud de décision
+     * @param description la description associée au nœud de décision
+     * @param nodesSuivant une HashMap contenant les nœuds suivants associés à ce nœud de décision
+     */
 	public DecisionNode(String nom, String description, HashMap<String,Event> nodesSuivant) {
 		super(nom, description, nodesSuivant);
 		
 	}
 	
-	
+	 /**
+     * Affiche la description du nœud de décision en insérant des sauts de ligne pour une meilleure lisibilité.
+     */
 	@Override
 	public void display() {
 		System.out.println(insertLineBreaks(description,150));
 	}
 
+	/**
+     * Permet au joueur de choisir parmi plusieurs options pour déterminer le prochain nœud à suivre.
+     * Affiche les options disponibles, attend une entrée de l'utilisateur et retourne le nœud correspondant au choix.
+     * 
+     * @return l'Event représentant le nœud choisi par l'utilisateur
+     */
 	@Override
 	public Event chooseNext() {
 		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
@@ -64,13 +96,20 @@ public class DecisionNode extends InnerNode {
         return chosenNode;
     }
     
+	
+	/**
+     * Méthode privée pour gérer les cas spéciaux associés au choix effectué par le joueur.
+     * Modifie la description du nœud suivant et effectue des actions spécifiques en fonction du nom du nœud actuel.
+     * 
+     * @param chosenKey la clé correspondant au choix effectué
+     * @param chosenNode le nœud choisi par le joueur
+     * @param nameOfCurrentNode le nom du nœud actuel
+     */
 	private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
 
-        //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
 	if (this.nom.equals("humain")) {
 		chosenNode.setDescription("vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?");
 		try {
-			//this.joueur= new Humain();
           Competence competence = Competence.valueOf(chosenKey.substring(8));
           ((Humain)joueur).setCompetence(competence);
           System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
@@ -81,7 +120,6 @@ public class DecisionNode extends InnerNode {
 }
 //rajouter pour l'affinite du sorcier des éléments
 	if (this.nom.equals("missionClanElement")) {
-		//this.joueur =new SorcierElement();
 		chosenNode.setDescription("Tu as donc une affinité avec " + chosenKey.substring(37) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
 		try {
           String element = chosenKey.substring(37);
@@ -166,6 +204,12 @@ public class DecisionNode extends InnerNode {
     }
 
     
+	/**
+     * Méthode pour choisir le prochain nœud basé sur un choix spécifique.
+     * 
+     * @param choice le choix spécifique pour déterminer le nœud suivant
+     * @return l'Event représentant le nœud choisi par l'utilisateur
+     */
 	@Override
 	public Event chooseNext(String choice) {
 		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
@@ -185,6 +229,13 @@ public class DecisionNode extends InnerNode {
         return chosenNode;
 	}
 	
+	/**
+     * Méthode pour choisir le prochain nœud basé sur un choix spécifique en tant qu'InnerNode.
+     * Gère également les cas spéciaux associés au choix spécifié.
+     * 
+     * @param choice le choix spécifique pour déterminer le nœud suivant
+     * @return l'Event représentant le nœud choisi par le choix spécifié
+     */
 	 public Event chooseNext2(String choice) {
 	        if (this instanceof InnerNode) {
 	        	handleSpecialCases2(choice);
@@ -194,16 +245,21 @@ public class DecisionNode extends InnerNode {
 	        return null;
 	    }
 	 
-public  void handleSpecialCases2(String chosenKey) {
+	 
+	 /**
+	     * Méthode privée pour gérer les cas spéciaux associés au choix effectué par le joueur.
+	     * Modifie la description du nœud suivant et effectue des actions spécifiques en fonction du nom du nœud actuel.
+	     * 
+	     * @param chosenKey la clé correspondant au choix effectué
+	     */
+	 private void handleSpecialCases2(String chosenKey) {
 		 
 		 Event chosenNode = getNodesSuivant().get(chosenKey);
 		 
 		 
-	        //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
      	if (this.nom.equals("humain")) {
      		chosenNode.setDescription("vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?");
      		try {
-     			//this.joueur= new Humain();
                  Competence competence = Competence.valueOf(chosenKey.substring(8));
                  ((Humain)joueur).setCompetence(competence);
                  System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
@@ -214,7 +270,6 @@ public  void handleSpecialCases2(String chosenKey) {
      }
      //rajouter pour l'affinite du sorcier des éléments
      	if (this.nom.equals("missionClanElement")) {
-     		//this.joueur =new SorcierElement();
      		chosenNode.setDescription("Tu as donc une affinité avec " + chosenKey.substring(37) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
      		try {
                  String element = chosenKey.substring(37);

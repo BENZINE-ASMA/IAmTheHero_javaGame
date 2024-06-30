@@ -1,33 +1,15 @@
-
-
-	import java.util.Scanner;
-
-	import Interface.Terrain;
-	import entities.Competence;
-	import entities.EntiteMobile;
-	import entities.Humain;
-	import entities.Personnage;
-	import entities.Potion;
-	import entities.Sorcier;
-	import entities.SorcierElement;
-	import entities.SorcierSpirituel;
-	import entities.Sort;
+import entities.EntiteMobile;
 	import representation.ChanceNode;
 	import representation.CombatNode;
 	import representation.DecisionNode;
-	import representation.Node;
 	import representation.NodesGraph;
 	import representation.TerminalNode;
-	import representation.Event;
-	import representation.ImageNode;
 	import representation.SoundNode;
 
-	/* Divers soucis/améliorations
-	 * Le ChanceNode ne fonctionne pas bien 
-	*/
-
-
 	public class JeuConsole {
+		/**
+		 * Méthode qui crée les noeuds, arcs et ennemis du jeu
+		 */
 		 public static NodesGraph creerJeu() {
 			 NodesGraph graph = new NodesGraph();
 			 String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";

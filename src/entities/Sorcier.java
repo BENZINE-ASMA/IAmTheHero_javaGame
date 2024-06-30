@@ -3,112 +3,187 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sorcier extends Personnage {
-	protected List<Sort> sortsConnus = new ArrayList<Sort>();
-	protected int magieBase;
-	protected int magieRestant;
-	protected int nbSortsConnus = 0;
-	private static final long serialVersionUID = 1L;
-	
-	public Sorcier() {
-		super();
-		attaque = 20;
-		vitesse = 15;
-		magieBase = 40;
-		magieRestant = 40;
-		sac = new ArrayList<Potion>();
-		capaciteMax = 5; 
-		arme = Arme.BATON_MAGIQUE_BOIS;
-		pvBase = 60;
-		pvRestant = 60;
-	}
-	
-	public Sorcier(Direction dir) {
-		super(dir);
-		attaque = 20;
-		vitesse = 15;
-		magieBase = 40;
-		magieRestant = 40;
-		sac = new ArrayList<Potion>();
-		capaciteMax = 5;
-		arme = Arme.BATON_MAGIQUE_BOIS;
-		pvBase = 60;
-		pvRestant = 60;
-	}
-	
-	public void apprendreSort(Sort sort) {
-		sortsConnus.add(sort);
-		nbSortsConnus++;
-	}
-	
-	
-	public List<Sort> getSortsConnus() {
-		return sortsConnus;
-	}
+/**
+ * Classe abstraite représentant un sorcier, un type de personnage avec des capacités magiques.
+ */
+public abstract class Sorcier extends Personnage {
+    private static final long serialVersionUID = 1L;
 
-	public void setSortsConnus(List<Sort> sortsConnus) {
-		this.sortsConnus = sortsConnus;
-	}
-	
-	
-	public void afficherSortsConnus () {
+    /**
+     * Liste des sorts connus par le sorcier.
+     */
+    protected List<Sort> sortsConnus = new ArrayList<Sort>();
+
+    /**
+     * Points de magie de base du sorcier.
+     */
+    protected int magieBase;
+
+    /**
+     * Points de magie restants du sorcier.
+     */
+    protected int magieRestant;
+
+    /**
+     * Nombre de sorts connus par le sorcier.
+     */
+    protected int nbSortsConnus = 0;
+
+    /**
+     * Constructeur par défaut d'un sorcier.
+     */
+    public Sorcier() {
+        super();
+        this.attaque = 20;
+        this.vitesse = 15;
+        this.magieBase = 40;
+        this.magieRestant = 40;
+        this.sac = new ArrayList<Potion>();
+        this.capaciteMax = 5;
+        this.arme = Arme.BATON_MAGIQUE_BOIS;
+        this.pvBase = 60;
+        this.pvRestant = 60;
+    }
+
+    /**
+     * Constructeur d'un sorcier avec une direction spécifique.
+     * 
+     * @param dir la direction initiale du sorcier
+     */
+    public Sorcier(Direction dir) {
+        super(dir);
+        this.attaque = 20;
+        this.vitesse = 15;
+        this.magieBase = 40;
+        this.magieRestant = 40;
+        this.sac = new ArrayList<Potion>();
+        this.capaciteMax = 5;
+        this.arme = Arme.BATON_MAGIQUE_BOIS;
+        this.pvBase = 60;
+        this.pvRestant = 60;
+    }
+
+    /**
+     * Apprend un nouveau sort au sorcier.
+     * 
+     * @param sort le sort à apprendre
+     */
+    public void apprendreSort(Sort sort) {
+        sortsConnus.add(sort);
+        nbSortsConnus++;
+    }
+
+    /**
+     * Obtient la liste des sorts connus par le sorcier.
+     * 
+     * @return la liste des sorts connus
+     */
+    public List<Sort> getSortsConnus() {
+        return sortsConnus;
+    }
+
+    /**
+     * Définit la liste des sorts connus par le sorcier.
+     * 
+     * @param sortsConnus la nouvelle liste des sorts connus
+     */
+    public void setSortsConnus(List<Sort> sortsConnus) {
+        this.sortsConnus = sortsConnus;
+    }
+
+    /**
+     * Affiche les sorts connus par le sorcier.
+     */
+    public void afficherSortsConnus() {
         System.out.println("Sorts connus :");
-        int i=0;
+        int i = 0;
         for (Sort sort : sortsConnus) {
-            System.out.println((i+1) + " "+ sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégats de base : " + sort.getDegats() + ", soin de points de vie: " + sort.getSoin());
+            System.out.println((i + 1) + " " + sort.getNom() + ": coût mana : " + sort.getCoutMana() + ", dégâts de base : " + sort.getDegats() + ", soin de points de vie : " + sort.getSoin());
             i++;
         }
     }
 
-	public int getMagieBase() {
-		return magieBase;
-	}
+    /**
+     * Obtient les points de magie de base du sorcier.
+     * 
+     * @return les points de magie de base
+     */
+    public int getMagieBase() {
+        return magieBase;
+    }
 
-	public void setMagieBase(int magieBase) {
-		this.magieBase = magieBase;
-	}
+    /**
+     * Définit les points de magie de base du sorcier.
+     * 
+     * @param magieBase les nouveaux points de magie de base
+     */
+    public void setMagieBase(int magieBase) {
+        this.magieBase = magieBase;
+    }
 
-	public int getMagieRestant() {
-		return magieRestant;
-	}
+    /**
+     * Obtient les points de magie restants du sorcier.
+     * 
+     * @return les points de magie restants
+     */
+    public int getMagieRestant() {
+        return magieRestant;
+    }
 
-	public void setMagieRestant(int magieRestant) {
-		this.magieRestant = magieRestant;
-	}
+    /**
+     * Définit les points de magie restants du sorcier.
+     * 
+     * @param magieRestant les nouveaux points de magie restants
+     */
+    public void setMagieRestant(int magieRestant) {
+        this.magieRestant = magieRestant;
+    }
 
-	public int getNbSortsConnus() {
-		return nbSortsConnus;
-	}
+    /**
+     * Obtient le nombre de sorts connus par le sorcier.
+     * 
+     * @return le nombre de sorts connus
+     */
+    public int getNbSortsConnus() {
+        return nbSortsConnus;
+    }
 
-	public void baisserMP(int valeur) {
-		this.magieRestant -= valeur;
-	}
-	
-	public void augmenterMPRestant(int valeur) {
-		if (this.magieRestant + valeur > this.magieBase){
-			this.magieRestant = this.magieBase;
-		}
-		else {
-			this.magieRestant += valeur;
-		}
-	}
-	
-	public void augmenterMPBase(int valeur) {
-		this.magieBase += valeur;
-	}
+    /**
+     * Réduit les points de magie restants du sorcier.
+     * 
+     * @param valeur la valeur à réduire
+     */
+    public void baisserMP(int valeur) {
+        this.magieRestant -= valeur;
+    }
 
-	public void lancerSort(EntiteMobile cible, Sort sorc) { 
-		System.out.println("Vous utilisez " + sorc.getNom() + "\n" + sorc.getDescription());
-		if (sorc.getDegats() != 0)	{
-			System.out.println(sorc.getNom() + " fait " + sorc.getDegats() + " points de dégat à votre adversaire");
-		}
-		if (sorc.getSoin() != 0) {
-			System.out.println("Vous regagnez " + sorc.getSoin() + " points de vie.");
-		}
-		
-		baisserMP(sorc.getCoutMana());
-		cible.baisserPV(sorc.getDegats());
-		augmenterPVRestants(sorc.getSoin());
-	}
+    /**
+     * Augmente les points de magie restants du sorcier.
+     * 
+     * @param valeur la valeur à augmenter
+     */
+    public void augmenterMPRestant(int valeur) {
+        if (this.magieRestant + valeur > this.magieBase) {
+            this.magieRestant = this.magieBase;
+        } else {
+            this.magieRestant += valeur;
+        }
+    }
 
+    /**
+     * Augmente les points de magie de base du sorcier.
+     * 
+     * @param valeur la valeur à augmenter
+     */
+    public void augmenterMPBase(int valeur) {
+        this.magieBase += valeur;
+    }
+
+    /**
+     * Lance un sort sur une entité mobile cible.
+     * 
+     * @param cible la cible du sort
+     * @param sorc le sort à lancer
+     */
+    public abstract void lancerSort(EntiteMobile cible, Sort sorc);
 }
