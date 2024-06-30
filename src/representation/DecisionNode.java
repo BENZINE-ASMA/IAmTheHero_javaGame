@@ -6,42 +6,70 @@ import java.util.Scanner;
 import entities.Arme;
 import entities.Competence;
 import entities.Humain;
-import entities.Personnage;
 import entities.Potion;
 import entities.Sorcier;
 import entities.SorcierElement;
 import entities.SorcierSpirituel;
 import entities.Sort;
 
+/**
+ * Classe DecisionNode représentant un nœud où le joueur doit choisir parmi plusieurs options pour déterminer le prochain événement.
+ * Étend la classe abstraite InnerNode et implémente la logique de choix par l'entrée utilisateur pour déterminer le prochain nœud à suivre.
+ */
 public class DecisionNode extends InnerNode {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public DecisionNode(HashMap<String,Node> nodesSuivant) {
+	/**
+     * Constructeur d'un DecisionNode avec un ensemble de nœuds suivants spécifié.
+     * 
+     * @param nodesSuivant une HashMap contenant les nœuds suivants associés à ce nœud de décision
+     */
+	public DecisionNode(HashMap<String,Event> nodesSuivant) {
 		super(nodesSuivant);
 		
 	}
+	
+	/**
+     * Constructeur d'un DecisionNode avec nom et description spécifiés.
+     * Initialise l'ensemble des nœuds suivants à une nouvelle HashMap.
+     * 
+     * @param nom le nom du nœud de décision
+     * @param description la description associée au nœud de décision
+     */
 	public DecisionNode(String nom, String description) {
 		super(nom, description);
 		
 	}
-	public DecisionNode(String nom, String description, HashMap<String,Node> nodesSuivant) {
+	
+	/**
+     * Constructeur d'un DecisionNode avec nom, description et ensemble de nœuds suivants spécifiés.
+     * 
+     * @param nom le nom du nœud de décision
+     * @param description la description associée au nœud de décision
+     * @param nodesSuivant une HashMap contenant les nœuds suivants associés à ce nœud de décision
+     */
+	public DecisionNode(String nom, String description, HashMap<String,Event> nodesSuivant) {
 		super(nom, description, nodesSuivant);
 		
 	}
 	
-	
+	 /**
+     * Affiche la description du nœud de décision en insérant des sauts de ligne pour une meilleure lisibilité.
+     */
 	@Override
 	public void display() {
-		System.out.println(description);
+		System.out.println(insertLineBreaks(description,150));
 	}
 
+	/**
+     * Permet au joueur de choisir parmi plusieurs options pour déterminer le prochain nœud à suivre.
+     * Affiche les options disponibles, attend une entrée de l'utilisateur et retourne le nœud correspondant au choix.
+     * 
+     * @return l'Event représentant le nœud choisi par l'utilisateur
+     */
 	@Override
-	public Node chooseNext() {
-		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+	public Event chooseNext() {
+		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
 		
         Scanner sc = new Scanner(System.in);
@@ -61,39 +89,48 @@ public class DecisionNode extends InnerNode {
         }
         
         String chosenKey = reliqueList.get(choix - 1);
-        Node chosenNode = nodeList.get(choix - 1);
+        Event chosenNode = nodeList.get(choix - 1);
         
         handleSpecialCases(chosenKey, chosenNode,this.getNom());
         
         return chosenNode;
     }
     
-    private void handleSpecialCases(String chosenKey, Node chosenNode, String nameOfCurrentNode) {
-        //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
-        	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("humain")) {
-        		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
-        		try {
-                    Competence competence = Competence.valueOf(chosenKey.substring(8));
-                    ((Humain)joueur).setCompetence(competence);
-                    System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
-                } catch (IllegalArgumentException e) {
-                    System.out.println("La compétence " + chosenKey.substring(8) + " n'existe pas.");
-                }
-        	
-        }
-        //rajouter pour l'affinite du sorcier des éléments
-        	if (chosenNode instanceof DecisionNode && nameOfCurrentNode.equals("missionClanElement")) {
-        		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
-        	
-        		try {
-                    String element = chosenKey.substring(37);
-                    ((SorcierElement)joueur).setElement(element);
-                    System.out.println("Element " + chosenKey.substring(37) + " ajoutée au joueur.");
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Element " + chosenKey.substring(37) + " n'existe pas.");
-                }
-        
-        	}
+	
+	/**
+     * Méthode privée pour gérer les cas spéciaux associés au choix effectué par le joueur.
+     * Modifie la description du nœud suivant et effectue des actions spécifiques en fonction du nom du nœud actuel.
+     * 
+     * @param chosenKey la clé correspondant au choix effectué
+     * @param chosenNode le nœud choisi par le joueur
+     * @param nameOfCurrentNode le nom du nœud actuel
+     */
+	private void handleSpecialCases(String chosenKey, Event chosenNode, String nameOfCurrentNode) {
+
+	if (this.nom.equals("humain")) {
+		chosenNode.setDescription("vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?");
+		try {
+          Competence competence = Competence.valueOf(chosenKey.substring(8));
+          ((Humain)joueur).setCompetence(competence);
+          System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
+      } catch (IllegalArgumentException e) {
+          System.out.println("La compétence " + chosenKey.substring(8) + " n'existe pas.");
+      }
+	
+}
+//rajouter pour l'affinite du sorcier des éléments
+	if (this.nom.equals("missionClanElement")) {
+		chosenNode.setDescription("Tu as donc une affinité avec " + chosenKey.substring(37) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
+		try {
+          String element = chosenKey.substring(37);
+          ((SorcierElement)joueur).setElement(element);
+          System.out.println("Element " + chosenKey.substring(37) + " ajoutée au joueur.");
+      } catch (IllegalArgumentException e) {
+          System.out.println("Element " + chosenKey.substring(37) + " n'existe pas.");
+      }
+	
+	
+	}
         	
         	
         	if (nameOfCurrentNode.equals("GuerisseusePotionAider")) {
@@ -143,15 +180,42 @@ public class DecisionNode extends InnerNode {
         		((Sorcier)joueur).apprendreSort(Sort.EXPLOSION_D_AME); 
         		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
         	}
+        	
+        	if (nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanElement".equals(chosenNode.getNom()))) {
+    			if (joueur instanceof SorcierElement) {
+    				chosenNode.setDescription("Le Maître du Clan est ravi de votre réussite. Le conflit pourrait bientôt éclater, offrant à votre clan un avantage considérable. Vous gagnez en prestige au sein du clan des Éléments et devenez un pilier majeur de la confrérie. FIN");
+    			}
+    			if (joueur instanceof SorcierSpirituel) {
+    				chosenNode.setDescription("Les Enchanteurs sont étonnés de vous voir, mais acceptent la Pierre avec grand plaisir. Ils vous offrent une place au sein de leur communauté, une première pour un Sorcier des Éléments. L'intégration sera difficile, mais c'est là votre choix. FIN");
+    			}
+    	
+    		}
+    		if (nameOfCurrentNode.equals("CombatChimereGagne") && ("PierrePourClanEnchanteur".equals(chosenNode.getNom()))) {
+    			if (joueur instanceof SorcierElement) {
+    				chosenNode.setDescription("Les Sorciers des Éléments vous voient comme un traître aux Enchanteurs ayant fait le bon choix. Ravis de pouvoir enfin prendre le contrôle total du territoire, ils vous acceptent dans leur clan, où vous pourrez poursuivre vos aventures. FIN");
+    				}
+    			if (joueur instanceof SorcierSpirituel) {
+    				chosenNode.setDescription("La Pierre renfermant un grand pouvoir appartient désormais aux Enchanteurs, avec le risque qu'ils l'utilisent à mauvais escient. Quoi qu'il en soit, vous faites désormais pleinement partie du clan et gagnez en prestige au sein de celui-ci. FIN");
+    				
+    			}
+    	
+    		}
         		
     }
+
     
+	/**
+     * Méthode pour choisir le prochain nœud basé sur un choix spécifique.
+     * 
+     * @param choice le choix spécifique pour déterminer le nœud suivant
+     * @return l'Event représentant le nœud choisi par l'utilisateur
+     */
 	@Override
-	public Node chooseNext(String choice) {
-		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
+	public Event chooseNext(String choice) {
+		ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
 		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
 		String chosenKey = null ;
-        Node chosenNode = null;
+        Event chosenNode = null;
         for (int i =0; i< reliqueList.size();i++) {
         	if (reliqueList.get(i).equals(choice)) {
         		chosenKey =  reliqueList.get(i);
@@ -165,7 +229,14 @@ public class DecisionNode extends InnerNode {
         return chosenNode;
 	}
 	
-	 public Node chooseNext2(String choice) {
+	/**
+     * Méthode pour choisir le prochain nœud basé sur un choix spécifique en tant qu'InnerNode.
+     * Gère également les cas spéciaux associés au choix spécifié.
+     * 
+     * @param choice le choix spécifique pour déterminer le nœud suivant
+     * @return l'Event représentant le nœud choisi par le choix spécifié
+     */
+	 public Event chooseNext2(String choice) {
 	        if (this instanceof InnerNode) {
 	        	handleSpecialCases2(choice);
 	            return ((InnerNode) this).getNodesSuivant().get(choice);
@@ -174,16 +245,21 @@ public class DecisionNode extends InnerNode {
 	        return null;
 	    }
 	 
-	 public  void handleSpecialCases2(String chosenKey) {
+	 
+	 /**
+	     * Méthode privée pour gérer les cas spéciaux associés au choix effectué par le joueur.
+	     * Modifie la description du nœud suivant et effectue des actions spécifiques en fonction du nom du nœud actuel.
+	     * 
+	     * @param chosenKey la clé correspondant au choix effectué
+	     */
+	 private void handleSpecialCases2(String chosenKey) {
 		 
-		 Node chosenNode = ((InnerNode) this).getNodesSuivant().get(chosenKey);
+		 Event chosenNode = getNodesSuivant().get(chosenKey);
 		 
 		 
-	        //if (chosenNode instanceof DecisionNode && chosenKey.startsWith("je suis ")) {
-     	if (chosenNode instanceof DecisionNode && this.nom.equals("humain")) {
-     		((DecisionNode) chosenNode).description = "vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?";
+     	if (this.nom.equals("humain")) {
+     		chosenNode.setDescription("vous avez la compétence de " + chosenKey.substring(8) + ", que voulez-vous faire?");
      		try {
-     			//this.joueur= new Humain();
                  Competence competence = Competence.valueOf(chosenKey.substring(8));
                  ((Humain)joueur).setCompetence(competence);
                  System.out.println("Compétence " + chosenKey.substring(8) + " ajoutée au joueur.");
@@ -193,11 +269,8 @@ public class DecisionNode extends InnerNode {
      	
      }
      //rajouter pour l'affinite du sorcier des éléments
-     	if (chosenNode instanceof DecisionNode && this.nom.equals("missionClanElement")) {
-     		//this.joueur =new SorcierElement();
-     		
-     		((DecisionNode) chosenNode).description = "Tu as donc une affinité avec " + chosenKey.substring(34) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.";
-     	
+     	if (this.nom.equals("missionClanElement")) {
+     		chosenNode.setDescription("Tu as donc une affinité avec " + chosenKey.substring(37) + ", très bien. Tes sorts utilisant cet élément auront donc davantage de puissance que les autres, n'hésite pas à les utiliser.");
      		try {
                  String element = chosenKey.substring(37);
                  ((SorcierElement)joueur).setElement(element);
@@ -233,12 +306,10 @@ public class DecisionNode extends InnerNode {
      	if (this.nom.equals("maitreClanElementIntro3")) {
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
-     		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      	}
      	
      	if (this.nom.equals("maitreClanEnchanteurIntro2")) {
      		joueur.ajouterPotion(Potion.ELIXIR_DE_MANA_STANDARD);
-     		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      		joueur.ajouterPotion(Potion.POTION_SANTE_STANDARD);
      	}
      	
@@ -256,7 +327,28 @@ public class DecisionNode extends InnerNode {
      		((Sorcier)joueur).apprendreSort(Sort.EXPLOSION_D_AME); 
      		((Sorcier)joueur).apprendreSort(Sort.LUMIERE_CURATIVE);
      	}
+     	
+     	if ("PierrePourClanElement".equals(chosenNode.getNom())) {
+			if (joueur instanceof SorcierElement) {
+				chosenNode.setDescription("Le Maître du Clan est ravi de votre réussite. Le conflit pourrait bientôt éclater, offrant à votre clan un avantage considérable. Vous gagnez en prestige au sein du clan des Éléments et devenez un pilier majeur de la confrérie. FIN");
+			}
+			if (joueur instanceof SorcierSpirituel) {
+				chosenNode.setDescription("Les Enchanteurs sont étonnés de vous voir, mais acceptent la Pierre avec grand plaisir. Ils vous offrent une place au sein de leur communauté, une première pour un Sorcier des Éléments. L'intégration sera difficile, mais c'est là votre choix. FIN");
+			}
+	
+		}
+		if ("PierrePourClanEnchanteur".equals(chosenNode.getNom())) {
+			if (joueur instanceof SorcierElement) {
+				chosenNode.setDescription("Les Sorciers des Éléments vous voient comme un traître aux Enchanteurs ayant fait le bon choix. Ravis de pouvoir enfin prendre le contrôle total du territoire, ils vous acceptent dans leur clan, où vous pourrez poursuivre vos aventures. FIN");
+				}
+			if (joueur instanceof SorcierSpirituel) {
+				chosenNode.setDescription("La Pierre renfermant un grand pouvoir appartient désormais aux Enchanteurs, avec le risque qu'ils l'utilisent à mauvais escient. Quoi qu'il en soit, vous faites désormais pleinement partie du clan et gagnez en prestige au sein de celui-ci. FIN");
+				
+			}
+	
+		}
      		
  }
- 
+
+	
 }

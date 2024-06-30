@@ -1,15 +1,36 @@
 package entities;
 
+/**
+ * Classe abstraite représentant une entité avec un nom.
+ */
 public abstract class Entite {
-	public String name;
-	
-	public abstract String toString();
+    /**
+     * Le nom de l'entité.
+     */
+    public String name;
+    
+    /**
+     * Retourne une représentation sous forme de chaîne de caractères de l'entité.
+     * 
+     * @return une chaîne de caractères représentant l'entité
+     */
+    public abstract String toString();
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * Obtient le nom de l'entité.
+     * 
+     * @return le nom de l'entité
+     */
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * Définit le nom de l'entité.
+     * 
+     * @param name le nouveau nom de l'entité
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }

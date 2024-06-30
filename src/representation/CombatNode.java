@@ -12,38 +12,71 @@ import entities.Sorcier;
 import entities.SorcierSpirituel;
 import entities.Sort;
 
+/**
+ * Représente un nœud dans l'arborescence de décision du jeu où se déroule un combat entre le personnage du joueur
+ * et une entité mobile (monstre). Ce nœud permet au joueur de s'engager dans le combat, de faire des choix
+ * pendant le combat et de gérer les résultats du combat.
+ */
 public class CombatNode extends InnerNode {
     private static final long serialVersionUID = 1L;
-	private EntiteMobile monstre;
+    private EntiteMobile monstre;
     private boolean finished = false;
     private boolean winner;
     private TerminalNode death; // noeud spécifique terminal pour la mort au combat
+    transient Scanner sc;
 
-    public CombatNode(HashMap<String, Node> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
+    /**
+     * Constructeur d'un CombatNode avec les paramètres donnés.
+     *
+     * @param nodesSuivant un HashMap des événements suivants où les résultats du combat mènent à des nœuds subséquents
+     * @param death        nœud terminal spécifique pour la mort au combat
+     * @param monstre      l'entité mobile adversaire dans le combat
+     */
+    public CombatNode(HashMap<String, Event> nodesSuivant, TerminalNode death, EntiteMobile monstre) {
         super(nodesSuivant);
         this.death = death;
         this.monstre = monstre;
+        this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Constructeur d'un CombatNode avec les paramètres donnés.
+     *
+     * @param nom        nom du nœud de combat
+     * @param description description du nœud de combat
+     * @param death      nœud terminal spécifique pour la mort au combat
+     * @param monstre    l'entité mobile adversaire dans le combat
+     */
     public CombatNode(String nom, String description, TerminalNode death, EntiteMobile monstre) {
         super(nom, description);
         this.death = death;
         this.monstre = monstre;
+        this.sc = new Scanner(System.in);
+    }
+
+    /**
+     * Obtient l'état de victoire du combat.
+     *
+     * @return true si le joueur gagne, false sinon
+     */
+    public boolean getWinner() {
+    	return this.winner;
     }
     
-    
-    //---------------------------------------- console version
-
+    /**
+     * Permet au joueur de choisir l'événement suivant ou le nœud suivant en fonction du résultat du combat.
+     *
+     * @return l'événement ou le nœud suivant en fonction du choix du joueur ou du résultat par défaut
+     */
     @Override
-	public Node chooseNext() {
-		if (!winner) {
-			return death;
-		}
-		
-		ArrayList<Node> nodeList = new ArrayList<>(nodesSuivant.values());
-		ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
-		
-        Scanner sc = new Scanner(System.in);
+    public Event chooseNext() {
+        if (!winner) {
+            return death;
+        }
+
+        ArrayList<Event> nodeList = new ArrayList<>(nodesSuivant.values());
+        ArrayList<String> reliqueList = new ArrayList<>(nodesSuivant.keySet());
+
         for (int i = 0; i < nodeList.size(); i++) {
             System.out.println((i + 1) + ": " + reliqueList.get(i));
         }
@@ -51,170 +84,27 @@ public class CombatNode extends InnerNode {
         int choix;
         while (true) {
             System.out.print("Choisissez une option : ");
-            choix = sc.nextInt();
-            if (choix > 0 && choix <= nodeList.size()) {
-                break;
+            if (sc.hasNextInt()) {
+                choix = sc.nextInt();
+                if (choix > 0 && choix <= nodeList.size()) {
+                    break;
+                } else {
+                    System.out.println("Choix invalide, veuillez réessayer.");
+                }
             } else {
-                System.out.println("Choix invalide, veuillez réessayer.");
+                System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                sc.next(); // Clear the invalid input
             }
         }
-        
-        //String chosenKey = reliqueList.get(choix - 1);
-        Node chosenNode = nodeList.get(choix - 1);
-        sc.close();
+
+        Event chosenNode = nodeList.get(choix - 1);
         return chosenNode;
+    }
 
-	}
-	
-	public void choixAction() {
-		try (Scanner sc = new Scanner(System.in)) {
-			int sizeChoice;
-			
-			if (joueur instanceof Sorcier) {
-				sizeChoice = 4;
-			}
-			else {
-				sizeChoice = 3;
-			}
-			
-
-			while (true) {  // permet de revenir en arrière sur ses choix si pas d'objet adapté ou de sort avec assez de mana
-				
-				System.out.println("1: Regarder dans le sac");
-				System.out.println("2: Attaquer à mains nues");
-				System.out.println("3: Attaquer avec " + joueur.getArme());
-				if (joueur instanceof Sorcier){
-					System.out.println("4: Lancer un sort");
-				}
-				
-				int choix;
-			    while (true) {
-			        System.out.print("Choisissez une option : ");
-			        choix = sc.nextInt();
-			        if (choix > 0 && choix <= sizeChoice) {
-			            break;
-			        } else {
-			            System.out.println("Choix invalide, veuillez réessayer.");
-			        }
-			    }
-			    
-			    int choix2;
-			    if (choix == 1) {
-			    	System.out.println("0 : choisir une autre action");
-			    	joueur.afficherPotions();
-			    	while (true) {
-			            System.out.print("Choisissez une option : ");
-			            choix2 = sc.nextInt();
-			            if (choix2 >= 0 && choix2 <= joueur.getCapaciteMax()) {
-			                break;
-			            } else {
-			                System.out.println("Choix invalide, veuillez réessayer.");
-			            }
-			        }
-			    	
-			    	if (choix2 == 0) {
-			    		continue;
-			    	}
-			    	else {
-			    		joueur.utiliserPotion(joueur.getSac().get(choix2-1));
-			    		break;
-			    	}
-			    	
-			    }
-			    else if (choix == 2){
-			    	joueur.attaquePhysique(monstre);
-			    	break;
-			    }
-			    else if (choix == 3) {
-			    	joueur.attaqueArmee(monstre);
-			    	break;
-			    }
-			    else {
-			    	//choisir le sort à utiliser ; ne pas l'utiliser si pas assez de mana
-			    	List<Sort> lsort = ((Sorcier)joueur).getSortsConnus();
-			    	int nbSorts = ((Sorcier)joueur).getNbSortsConnus();
-			    	
-			    	
-			    	while (true) {
-			            System.out.println("0 : choisir une autre action");
-			        	((Sorcier)joueur).afficherSortsConnus();
-			        	System.out.print("Choisissez une option : ");
-			            choix2 = sc.nextInt();
-			            if (choix2 >= 0 && choix2 <= nbSorts) {
-			                if (choix2 > 0) {
-			                	System.out.println(lsort.get(choix2-1).getCoutMana() + " " + ((Sorcier)joueur).getMagieRestant());
-			                	if (lsort.get(choix2-1).getCoutMana()<= ((Sorcier)joueur).getMagieRestant()) {
-			                		break;
-			                	}
-			                	else {
-			                		System.out.println("Pas assez de mana, veuillez réessayer.");
-			                		continue;
-			                	}
-			                }
-			                break;
-			            } 
-			            
-			            else {
-			                System.out.println("Choix invalide, veuillez réessayer.");
-			            }
-			        }
-			    	
-			    	if (choix2 == 0) {
-			    		continue;
-			    	}
-			    	else {
-			    		((Sorcier)joueur).lancerSort(monstre, lsort.get(choix2-1));
-			    		break;
-			    	}
-			    	
-			    }
-			}
-		}
-		
-        
-	}
-	
-	
-	public void chooseReward() {
-		Scanner sc = new Scanner(System.in);
-        int sizeChoice;
-		
-		if (joueur instanceof Sorcier) {
-			sizeChoice = 4;
-		}
-		else {
-			sizeChoice = 3;
-		}
-		
-		System.out.println("Vous gagnez 5 points de compétence, dans quoi voulez-vous les mettre ?");
-		System.out.println("1: Points de vie");
-		System.out.println("2: Attaque");
-		System.out.println("3: Vitesse");
-		if (joueur instanceof Sorcier){
-			System.out.println("4: Points de magie");
-		}
-    	
-    	int choix;
-        while (true) {
-            System.out.print("Choisissez une option : ");
-            choix = sc.nextInt();
-            if (choix > 0 && choix <= sizeChoice) {
-                break;
-            } else {
-                System.out.println("Choix invalide, veuillez réessayer.");
-            }
-        }
-        
-        switch(choix) {
-        case 1: joueur.augmenterPVBases(5); joueur.augmenterPVRestants(5); break;
-        case 2: joueur.augmenterAttaque(5); break;
-        case 3: joueur.augmenterVitesse(5); break;
-        case 4: ((Sorcier)joueur).augmenterMPBase(5); ((Sorcier)joueur).augmenterMPRestant(5); break;
-        }
-        
-        System.out.println("Modification effectuée.");
-	}
-
+  
+    /**
+     * Affiche l'état du combat et les choix du joueur lors du gameplay en mode console.
+     */
 	@Override
 	public void display() {
 		System.out.println(description);
@@ -277,13 +167,186 @@ public class CombatNode extends InnerNode {
 		}
 	}
 	
-	
+	 /**
+     * Gère les actions du joueur pendant le combat en mode console.
+     */
+    public void choixAction() {
+        int sizeChoice;
 
-    //**----------------------------------------------------** ui version
+        if (joueur instanceof Sorcier) {
+            sizeChoice = 4;
+        } else {
+            sizeChoice = 3;
+        }
 
-    
+        while (true) {
+            System.out.println("1: Regarder dans le sac");
+            System.out.println("2: Attaquer à mains nues");
+            System.out.println("3: Attaquer avec " + joueur.getArme());
+            if (joueur instanceof Sorcier) {
+                System.out.println("4: Lancer un sort");
+            }
+
+            int choix;
+            while (true) {
+                System.out.print("Choisissez une option : ");
+                if (sc.hasNextInt()) {
+                    choix = sc.nextInt();
+                    if (choix > 0 && choix <= sizeChoice) {
+                        break;
+                    } else {
+                        System.out.println("Choix invalide, veuillez réessayer.");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                    sc.next(); // Clear the invalid input
+                }
+            }
+
+            int choix2;
+            if (choix == 1) {
+                System.out.println("0 : choisir une autre action");
+                joueur.afficherPotions();
+                while (true) {
+                    System.out.print("Choisissez une option : ");
+                    if (sc.hasNextInt()) {
+                        choix2 = sc.nextInt();
+                        if (choix2 >= 0 && choix2 <= joueur.getCapaciteMax()) {
+                            break;
+                        } else {
+                            System.out.println("Choix invalide, veuillez réessayer.");
+                        }
+                    } else {
+                        System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                        sc.next(); // Clear the invalid input
+                    }
+                }
+
+                if (choix2 == 0) {
+                    continue;
+                } else {
+                    joueur.utiliserPotion(joueur.getSac().get(choix2 - 1));
+                    break;
+                }
+
+            } else if (choix == 2) {
+                joueur.attaquePhysique(monstre);
+                break;
+            } else if (choix == 3) {
+                joueur.attaqueArmee(monstre);
+                break;
+            } else {
+                // choisir le sort à utiliser ; ne pas l'utiliser si pas assez de mana
+                List<Sort> lsort = ((Sorcier) joueur).getSortsConnus();
+                int nbSorts = ((Sorcier) joueur).getNbSortsConnus();
+
+                while (true) {
+                    System.out.println("0 : choisir une autre action");
+                    ((Sorcier) joueur).afficherSortsConnus();
+                    System.out.print("Choisissez une option : ");
+                    if (sc.hasNextInt()) {
+                        choix2 = sc.nextInt();
+                        if (choix2 >= 0 && choix2 <= nbSorts) {
+                            if (choix2 > 0) {
+                                System.out.println(lsort.get(choix2 - 1).getCoutMana() + " " + ((Sorcier) joueur).getMagieRestant());
+                                if (lsort.get(choix2 - 1).getCoutMana() <= ((Sorcier) joueur).getMagieRestant()) {
+                                    break;
+                                } else {
+                                    System.out.println("Pas assez de mana, veuillez réessayer.");
+                                    continue;
+                                }
+                            }
+                            break;
+                        } else {
+                            System.out.println("Choix invalide, veuillez réessayer.");
+                        }
+                    } else {
+                        System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                        sc.next(); // Clear the invalid input
+                    }
+                }
+
+                if (choix2 == 0) {
+                    continue;
+                } else {
+                    ((Sorcier) joueur).lancerSort(monstre, lsort.get(choix2 - 1));
+                    break;
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Permet au joueur de choisir comment allouer 5 points de compétence après avoir remporté un combat.
+     */
+    public void chooseReward() {
+        int sizeChoice;
+
+        if (joueur instanceof Sorcier) {
+            sizeChoice = 4;
+        } else {
+            sizeChoice = 3;
+        }
+
+        System.out.println("Vous gagnez 5 points de compétence, dans quoi voulez-vous les mettre ?");
+        System.out.println("1: Points de vie");
+        System.out.println("2: Attaque");
+        System.out.println("3: Vitesse");
+        if (joueur instanceof Sorcier) {
+            System.out.println("4: Points de magie");
+        }
+
+        int choix;
+        while (true) {
+            System.out.print("Choisissez une option : ");
+            if (sc.hasNextInt()) {
+                choix = sc.nextInt();
+                if (choix > 0 && choix <= sizeChoice) {
+                    break;
+                } else {
+                    System.out.println("Choix invalide, veuillez réessayer.");
+                }
+            } else {
+                System.out.println("Entrée invalide, veuillez entrer un nombre.");
+                sc.next(); // Clear the invalid input
+            }
+        }
+
+        switch (choix) {
+            case 1:
+                joueur.augmenterPVBases(5);
+                joueur.augmenterPVRestants(5);
+                break;
+            case 2:
+                joueur.augmenterAttaque(5);
+                break;
+            case 3:
+                joueur.augmenterVitesse(5);
+                break;
+            case 4:
+                if (joueur instanceof Sorcier) {
+                    ((Sorcier) joueur).augmenterMPBase(5);
+                    ((Sorcier) joueur).augmenterMPRestant(5);
+                }
+                break;
+        }
+
+        System.out.println("Modification effectuée.");
+    }
+
+
+
+	/**
+     * Gère l'état du combat et les actions du joueur en utilisant JOptionPane de Swing pour le gameplay en mode interface utilisateur.
+     *
+     * @param frame le FrameComponent où l'interface utilisateur de combat est affichée
+     */
     public void handleCombat(FrameComponent frame) {
+    	
         StringBuilder stats = new StringBuilder(description);
+        List<Sort> sorts = ((Sorcier)joueur).getSortsConnus();
+        
         stats.append("\nVos statistiques :");
         if (joueur instanceof Sorcier) {
             stats.append("\nVos MP : ").append(((Sorcier)joueur).getMagieRestant()).append("/").append(((Sorcier)joueur).getMagieBase());
@@ -291,7 +354,10 @@ public class CombatNode extends InnerNode {
         stats.append("\nVos PV : ").append(joueur.getPvRestant()).append("/").append(joueur.getPvBase());
         stats.append("\nVotre attaque avec ").append(joueur.getArme()).append(" : ").append(joueur.getAttaque()/2 + joueur.getArme().getPointsDegats());
         stats.append("\nVotre vitesse : ").append(joueur.getVitesse());
-
+        for (int i=0; i<sorts.size(); i++) {
+        	stats.append("\n" + sorts.get(i).getNom() + ": coût mana : " + sorts.get(i).getCoutMana() + ", dégats de base : " + sorts.get(i).getDegats() + ", soin de points de vie: " + sorts.get(i).getSoin());
+        }
+        
         JOptionPane.showMessageDialog(frame, stats.toString());
 
         while (monstre.getPvRestant() > 0 && joueur.getPvRestant() > 0) {
@@ -335,6 +401,12 @@ public class CombatNode extends InnerNode {
         }
     }
 
+    
+    /**
+     * Gère les actions du joueur pendant le combat en utilisant JOptionPane de Swing pour le gameplay en mode interface utilisateur.
+     *
+     * @param frame le FrameComponent où l'interface utilisateur de combat est affichée
+     */
     private void choixActionUI(FrameComponent frame) {
         String[] options;
         if (joueur instanceof Sorcier) {
@@ -377,9 +449,15 @@ public class CombatNode extends InnerNode {
                 }
                 break;
         }
+        
     }
 
 
+    /**
+     * Permet au joueur de choisir comment allouer 5 points de compétence après avoir remporté un combat en mode interface utilisateur.
+     *
+     * @param frame le FrameComponent où l'interface utilisateur de récompense est affichée
+     */
     private void chooseRewardUI(FrameComponent frame) {
         String[] options;
         if (joueur instanceof Sorcier) {
@@ -411,17 +489,29 @@ public class CombatNode extends InnerNode {
         }
     }
 
+    /**
+     * Permet au joueur de choisir l'événement ou le nœud suivant en fonction du choix du joueur en mode interface utilisateur.
+     *
+     * @param choice le choix du joueur pour l'événement ou le nœud suivant
+     * @return l'événement ou le nœud suivant en fonction du choix du joueur
+     */
     @Override
-    public Node chooseNext(String choice) {
+    public Event chooseNext(String choice) {
         // Not used
         return null;
     }
 
-    public Node chooseNext2(String choice) {
-        if (this instanceof InnerNode) {
-            return ((InnerNode) this).getNodesSuivant().get(choice);
-        }
-        return null;
+    /**
+     * Permet au joueur de choisir l'événement ou le nœud suivant en fonction du choix du joueur en mode interface utilisateur.
+     *
+     * @param choice le choix du joueur pour l'événement ou le nœud suivant
+     * @return l'événement ou le nœud suivant en fonction du choix du joueur
+     */
+    public Event chooseNext2(String choice) {
+    	if (!winner) {
+			return death;
+		}
+        return this.getNodesSuivant().get(choice);
     }
 
 	
