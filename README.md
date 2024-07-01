@@ -4,7 +4,7 @@
 - [Explication du projet](https://github.com/BENZINE-ASMA/IAmTheHero_javaGame/blob/main/Prototype/ProjetJava_2324.pdf)
   
 ## Description
-Bienvenue dans notre jeu interactif "Vous êtes le héros". Dans ce jeu, vous plongez dans une histoire où chaque décision que vous prenez influence le déroulement et la fin de l'aventure. Vous évoluez dans un univers fantastique où deux clans puissants, les Sorciers des Éléments et les Sorciers Enchanteurs, se disputent le contrôle du territoire.
+"Vous êtes le héros" est un jeu interactif où le joueur plonge dans une aventure narrative médiéval-fantasy. Structuré en graphes acycliques orientés, le jeu présente des situations et transitions variées. Le joueur, incarnant un Sorcier ou un Humain, fait des choix influençant l'histoire et les fins possibles. Dans un monde de magie et de monstres, le joueur part en quête d'un objet magique puissant, affrontant divers défis et ennemis pour devenir le clan le plus puissant de la région.
 
 ## Prototype
 ![Node with ImageNode Design Patern Decorateur)](https://github.com/BENZINE-ASMA/IAmTheHero_javaGame/blob/main/Prototype/first.png)
@@ -23,7 +23,7 @@ Bienvenue dans notre jeu interactif "Vous êtes le héros". Dans ce jeu, vous pl
 
 ## Exécution du jeu
 
-1. **Cloner le dépôt** :
+1. **Cloner le dépôt** 
 
 2. **Télécharger le JAR et exécuter le jeu en version console**
     ```bash
