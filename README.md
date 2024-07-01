@@ -23,8 +23,6 @@ Bienvenue dans notre jeu interactif "Vous êtes le héros". Dans ce jeu, vous pl
 
 ## Exécution du jeu
 
-### Cloner le dépôt
-
 1. **Cloner le dépôt** :
 
 2. **Télécharger le JAR et exécuter le jeu en version console**
