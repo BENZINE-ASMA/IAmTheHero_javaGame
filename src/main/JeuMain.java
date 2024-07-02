@@ -1,3 +1,4 @@
+package main;
 import entities.Personnage;
 import entities.SorcierElement;
 import entities.SorcierSpirituel;

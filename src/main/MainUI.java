@@ -1,6 +1,8 @@
-package Interface;
+package main;
 
 import javax.swing.SwingUtilities;
+
+import Interface.FrameComponent;
 
 /**
  * Classe principale qui démarre l'interface graphique Swing.

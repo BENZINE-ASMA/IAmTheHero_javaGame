@@ -1,3 +1,4 @@
+package main;
 import entities.EntiteMobile;
 	import representation.ChanceNode;
 	import representation.CombatNode;
