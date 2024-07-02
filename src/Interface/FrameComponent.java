@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
     private boolean waitForPlayerMove = false;
     private Class<? extends Case> targetCaseClass = null;
     private String baseFolder = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\";
+    private static String saveFolderPath;
+
 
     
     /**
@@ -60,6 +63,7 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
      * Initialise les composants et configure la disposition de la fenêtre principale.
      */
     public FrameComponent() {
+    	initializeSaveFolderPath();
         // Initialize graph and currentPlay
         graph = createGraph();
         currentPlay = graph.getGraph().get("introduction");
@@ -128,7 +132,17 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
         setFocusTraversalKeysEnabled(false);
     }
 
-    
+    private void initializeSaveFolderPath() {
+        try {
+            File saveFolder = new File("src/saveFolder");
+            if (!saveFolder.exists()) {
+                saveFolder.mkdirs();
+            }
+            saveFolderPath = saveFolder.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Gère l'action du bouton "Commencer".
      * Vérifie si un nom est entré et démarre l'interface du jeu.
@@ -693,43 +707,40 @@ public class FrameComponent extends JFrame implements GameInterface,Serializable
      * @param playerName Le nom du joueur pour sauvegarder la partie.
      */
 	@Override
+
 	public void saveGame(String playerName) {
-	    //String fileName = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\" + playerName + ".dat";
-		String fileName = baseFolder + playerName + ".dat";
-	    
-		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
-	        GameSaver gamesaver = new GameSaver(this.p, this.currentPlay, this.panel.terrain);
-	        out.writeObject(gamesaver);
-	        JOptionPane.showMessageDialog(this, "Game saved successfully as " + playerName + ".dat");
-	    } catch (IOException e) {
-	        JOptionPane.showMessageDialog(this, "Error saving game: " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
-	
-	/**
+        String fileName = saveFolderPath + File.separator + playerName + ".dat";
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            GameSaver gamesaver = new GameSaver(this.p, this.currentPlay, this.panel.terrain);
+            out.writeObject(gamesaver);
+            JOptionPane.showMessageDialog(this, "Game saved successfully as " + playerName + ".dat");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving game: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Méthode pour charger une partie sauvegardée du jeu.
      * @param playerName Le nom du joueur pour charger la partie.
      */
-	@Override
-	public  void loadGame(String playerName) {
-	    String fileName = baseFolder + playerName + ".dat";
-	   
-		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
-	        GameSaver gamesaver = (GameSaver) in.readObject();
-	        this.p = gamesaver.getPersonnage();
-	        this.currentPlay = gamesaver.getCurrentPlay();
-	        if (panel == null) {
-	            panel = new PanelComponent(new Terrain("ressource/terrain2.txt", p), this);
-	        }
-	        this.panel.terrain = gamesaver.getTerrain();
-	        JOptionPane.showMessageDialog(this, "Game loaded successfully from " + playerName + ".dat");
-	        showGameInterface();
-	    } catch (IOException | ClassNotFoundException e) {
-	        JOptionPane.showMessageDialog(this, "Error loading game: " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
+    public void loadGame(String playerName) {
+        String fileName = saveFolderPath + File.separator + playerName + ".dat";
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
+            GameSaver gamesaver = (GameSaver) in.readObject();
+            this.p = gamesaver.getPersonnage();
+            this.currentPlay = gamesaver.getCurrentPlay();
+            if (panel == null) {
+                panel = new PanelComponent(new Terrain("ressource/terrain2.txt", p), this);
+            }
+            this.panel.terrain = gamesaver.getTerrain();
+            JOptionPane.showMessageDialog(this, "Game loaded successfully from " + playerName + ".dat");
+            showGameInterface();
+        } catch (IOException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Error loading game: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 	@Override
 	public Event chooseNextNode(String choice) {
