@@ -25,16 +25,14 @@
 
 1. **Cloner le dépôt** 
 
-2. **Changer les adresses des médias utilisés** : Dans JeuConsole, PanelComponent et FrameComponent, changer la valeur de l'attribut baseFolder par le chemin absolu correspondant dans votre ordinateur : "C:\\xxxxxx\\IAmTheHero_javaGame\\src\\";
-
-3. **Télécharger le JAR et exécuter le jeu en version console**
+2. **Télécharger le JAR et exécuter le jeu en version console**
     ```bash
     jar cvfe IAmTheHero.jar JeuMain -C bin .
     java -jar IAmTheHero.jar
 
    ```
    
-4. **Télécharger le JAR et exécuter le jeu en version interface graphique avec SWING**
+3. **Télécharger le JAR et exécuter le jeu en version interface graphique avec SWING**
     ```bash
     jar cvfe IAmTheHero.jar Interface.MainUI -C bin .
     java -jar IAmTheHero.jar
