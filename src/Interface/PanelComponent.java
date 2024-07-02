@@ -7,8 +7,8 @@ import entities.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,8 +23,6 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     private final int tailleCase = 24;
     private BufferedImage wallImage;
     private BufferedImage riverImage;
-   // private BufferedImage clanAImage;
-    //private BufferedImage clanBImage;
     private BufferedImage personnageImage;
     private BufferedImage guerisseuseImage;
     private BufferedImage historienImage;
@@ -33,7 +31,6 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     private BufferedImage nodeImage; // Nouvelle propriété pour l'image du nœud
     ArrayList<String> nodeChoices;
     private JButton saveButton;
-    private String baseFolder = "C:\\Users\\lenovo\\eclipse-workspaces\\IAmTheHero_javaGame\\src\\";
 
     /**
      * Constructeur de la classe PanelComponent.
@@ -48,7 +45,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         loadImages();
         this.nodeText = "";
         this.nodeChoices = new ArrayList<>();
-        setFocusable(true); 
+        setFocusable(true);
         addKeyListener(fc);
 
         // Créer et ajouter le bouton de sauvegarde
@@ -71,18 +68,25 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    private BufferedImage loadImage(String path) throws IOException {
+        InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
+        if (stream == null) {
+            throw new IOException("Resource not found: " + path);
+        }
+        return ImageIO.read(stream);
+    }
+
     /**
      * Charge les images nécessaires pour le jeu depuis le dossier spécifié.
      */
-
     private void loadImages() {
         try {
-            wallImage = ImageIO.read(new File(baseFolder + "wall.png"));
-            riverImage = ImageIO.read(new File(baseFolder + "river.png"));
-            personnageImage = ImageIO.read(new File(baseFolder + "personnage.png"));
-            guerisseuseImage = ImageIO.read(new File(baseFolder + "guerisseuse.png"));
-            historienImage = ImageIO.read(new File(baseFolder + "historien.png"));
-            aubergisteImage = ImageIO.read(new File(baseFolder + "aubergiste.png"));
+            wallImage = loadImage("ressource/wall.png");
+            riverImage = loadImage("ressource/river.png");
+            personnageImage = loadImage("ressource/personnage.png");
+            guerisseuseImage = loadImage("ressource/guerisseuse.png");
+            historienImage = loadImage("ressource/historien.png");
+            aubergisteImage = loadImage("ressource/aubergiste.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,10 +98,10 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
      * @param text le texte à afficher
      */
     public void setNodeText(String text) {
-        this.nodeText = insertLineBreaks(text,140);
+        this.nodeText = insertLineBreaks(text, 140);
         repaint();
     }
-    
+
     /**
      * Insère des sauts de ligne dans le texte pour limiter la largeur.
      *
@@ -109,24 +113,20 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
         StringBuilder formattedText = new StringBuilder();
         int length = text.length();
         int start = 0;
-        
 
         while (start < length) {
             int end = Math.min(start + maxLength, length);
             if (end < length) {
-                // Si nous ne sommes pas à la fin du texte, trouvons le dernier espace avant la limite
                 int lastSpace = text.lastIndexOf(' ', end);
                 if (lastSpace > start) {
                     end = lastSpace;
                 }
             }
-            // Ajouter le segment de texte au résultat
             formattedText.append(text, start, end);
-            // Ajouter un saut de ligne s'il ne s'agit pas de la fin du texte
             if (end < length) {
                 formattedText.append("\n");
             }
-            start = end + 1; // Recommencer après l'espace (ou après la limite si aucun espace trouvé)
+            start = end + 1;
         }
 
         return formattedText.toString();
@@ -140,7 +140,7 @@ public class PanelComponent extends JPanel implements Serializable, KeyListener 
     public void setNodeImage(String imagePath) {
         try {
             if (imagePath != null) {
-                this.nodeImage = ImageIO.read(new File(imagePath));
+                this.nodeImage = loadImage(imagePath);
             } else {
                 this.nodeImage = null;
             }

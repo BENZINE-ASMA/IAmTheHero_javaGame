@@ -1,17 +1,14 @@
 package representation;
 
 import java.awt.Image;
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import Interface.PanelComponent;
-
-import java.util.HashMap;
-import entities.Personnage;
 
 /**
  * Classe ImageNode qui étend NodeDecorator pour ajouter la fonctionnalité d'affichage d'image à un nœud.
@@ -32,11 +29,11 @@ public class ImageNode extends NodeDecorator {
         this.imagePath = imagePath;
         this.frame = new JFrame();
     }
-    
+
     /**
      * Joue l'image associée et appelle la méthode playDecorator() du nœud décoré.
      *
-     * @return un entier permettant de savoir si la methode affiche une image (version interface seulement)
+     * @return un entier permettant de savoir si la méthode affiche une image (version interface seulement)
      */
     @Override
     public int playDecorator() {
@@ -51,8 +48,8 @@ public class ImageNode extends NodeDecorator {
      * Joue l'image associée et appelle la méthode playDecorator() du nœud décoré avec interaction graphique.
      *
      * @param panel le composant de panneau à utiliser pour l'interaction
-     * @param cpt   un compteur ou indice nécessaire pour l'action
-     * @return un entier permettant de savoir si la methode affiche une image
+     * @param cpt un compteur ou indice nécessaire pour l'action
+     * @return un entier permettant de savoir si la méthode affiche une image
      */
     @Override
     public int playDecorator(PanelComponent panel, int cpt) {
@@ -69,15 +66,17 @@ public class ImageNode extends NodeDecorator {
      */
     public void displayImage() {
         try {
-            Image image = ImageIO.read(new File(this.imagePath));
-            ImageIcon icon = new ImageIcon(image);
-            JLabel label = new JLabel(icon);
-            JPanel panel = new JPanel();
-            panel.add(label);
-            frame.getContentPane().add(panel);
-            frame.pack();
-            frame.setVisible(true);
-        } catch (Exception e) {
+            Image image = loadImage(this.imagePath);
+            if (image != null) {
+                ImageIcon icon = new ImageIcon(image);
+                JLabel label = new JLabel(icon);
+                JPanel panel = new JPanel();
+                panel.add(label);
+                frame.getContentPane().add(panel);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        } catch (IOException e) {
             System.out.println("Erreur lors de l'affichage de l'image : " + e.getMessage());
         }
     }
@@ -173,5 +172,20 @@ public class ImageNode extends NodeDecorator {
      */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    /**
+     * Charge une image à partir du chemin spécifié en utilisant le ClassLoader.
+     *
+     * @param path le chemin relatif de l'image à charger
+     * @return l'image chargée
+     * @throws IOException si l'image ne peut pas être chargée
+     */
+    private Image loadImage(String path) throws IOException {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+        if (inputStream == null) {
+            throw new IOException("Resource not found: " + path);
+        }
+        return ImageIO.read(inputStream);
     }
 }

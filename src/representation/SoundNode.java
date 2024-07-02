@@ -3,11 +3,9 @@ package representation;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
+import java.io.IOException;
+import java.io.InputStream;
 import Interface.PanelComponent;
-
-import java.io.File;
-import java.util.HashMap;
 
 /**
  * Classe SoundNode qui étend NodeDecorator pour ajouter la fonctionnalité de lecture audio à un nœud.
@@ -33,8 +31,11 @@ public class SoundNode extends NodeDecorator {
      */
     public void playAudio() {
         try {
-            File musicFile = new File(this.musicPath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(this.musicPath);
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + this.musicPath);
+            }
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(inputStream);
 
             clip = AudioSystem.getClip();
             clip.open(audioStream);
@@ -73,7 +74,7 @@ public class SoundNode extends NodeDecorator {
      * Joue l'audio associé et appelle la méthode playDecorator() du nœud décoré avec interaction graphique.
      *
      * @param panel le composant de panneau à utiliser pour l'interaction
-     * @param cpt   un compteur ou indice nécessaire pour l'action
+     * @param cpt un compteur ou indice nécessaire pour l'action
      * @return un entier représentant si le noeud passera par le type image dans l'interface
      */
     @Override

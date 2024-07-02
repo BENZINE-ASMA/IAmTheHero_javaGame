@@ -2,6 +2,7 @@ package Interface;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -42,12 +43,16 @@ public class Terrain implements Serializable {
     public Terrain(String file, Personnage joueur) {
         Terrain.joueur = joueur;
         try {
-            Scanner sc = new Scanner(new FileInputStream(file));
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(file);
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + file);
+            }
+            Scanner sc = new Scanner(inputStream);
             this.largeur = sc.nextInt();
             this.hauteur = sc.nextInt();
             sc.nextLine();
             this.carte = new Case[hauteur][largeur];
-
+            
             for (int h = 0; h < hauteur; h++) {
                 String line = sc.nextLine();
                 for (int l = 0; l < largeur; l++) {
