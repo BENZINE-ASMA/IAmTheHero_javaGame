@@ -27,13 +27,13 @@
 
 2. **Télécharger le JAR et exécuter le jeu en version console**
     ```bash
-    jar cvfe IAmTheHero.jar JeuMain -C bin .
+    jar cvfe IAmTheHero.jar main.JeuMain -C bin .
     java -jar IAmTheHero.jar
 
    ```
    
 3. **Télécharger le JAR et exécuter le jeu en version interface graphique avec SWING**
     ```bash
-    jar cvfe IAmTheHero.jar Interface.MainUI -C bin .
+    jar cvfe IAmTheHero.jar main.MainUI -C bin .
     java -jar IAmTheHero.jar
    ```
