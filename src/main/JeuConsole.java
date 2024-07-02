@@ -13,7 +13,6 @@ import entities.EntiteMobile;
 		 */
 		 public static NodesGraph creerJeu() {
 			 NodesGraph graph = new NodesGraph();
-			 String baseFolder = "C:\\Users\\marie\\eclipse-workspace\\IAmTheHero_javaGame\\src\\";
 
 		        
 		        EntiteMobile gobelin1 = new EntiteMobile(50,50,10,14);
@@ -32,7 +31,7 @@ import entities.EntiteMobile;
 		        TerminalNode death = new TerminalNode("mortCombat", "Vous êtes mort bravement au combat.");
 		        graph.addNode("mortCombat", death);
 	        
-		        graph.addNode("introduction", new SoundNode(new DecisionNode("introduction", "Vous arrivez dans l'auberge du village. L'aubergiste vous accueille et vous propose de rejoindre un des clans présentes sur le territoire."), baseFolder + "musique1.wav"));
+		        graph.addNode("introduction", new SoundNode(new DecisionNode("introduction", "Vous arrivez dans l'auberge du village. L'aubergiste vous accueille et vous propose de rejoindre un des clans présentes sur le territoire."), "ressource/musique1.wav"));
 
 		        graph.addNode("explication", new DecisionNode("explication", "Dans la région, deux puissants clans se disputent depuis des années : les sorciers des éléments manipulent feu, eau, terre, tandis que les sorciers Enchanteurs maîtrisent l'énergie et les âmes. Une lutte de pouvoir constante menace d'éclater en conflit ouvert."));
 
@@ -87,8 +86,8 @@ import entities.EntiteMobile;
 		        graph.addNode("BibliothequePostIntro", new DecisionNode("BibliothequePostIntro", "Vous entrez dans une petite bibliothèque renfermant des livres poussiéreux. L'historien vous accueille et vous demande la raison de votre visite."));
 		        graph.addNode("BibliothequePierreElem", new DecisionNode("BibliothequePierreElem", "Historien : La Pierre Élémentaire est une relique ancienne. Elle amplifie les pouvoirs de ceux qui la possèdent. Après avoir effectué mes recherches, je pense qu'elle se trouve dans le Sanctuaire au nord-est du village. Cependant, il est rempli de créatures dangereuses, et je n'ai pas la force nécessaire pour m'y aventurer. Peut-être y parviendrez-vous?"));
 
-		        graph.addNode("CarteCombat1", new SoundNode(new CombatNode("CarteCombat1", "En vous promenant, vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", death, gobelin1), baseFolder + "combat.wav"));
-		        graph.addNode("CarteCombat2", new SoundNode(new CombatNode("CarteCombat2", "En voici un deuxième ! Préparez-vous au combat.", death, gobelin3), baseFolder + "combat.wav"));
+		        graph.addNode("CarteCombat1", new SoundNode(new CombatNode("CarteCombat1", "En vous promenant, vous tombez sur un monstre dangereux, un gobelin ! Il vous attaque.", death, gobelin1), "ressource/combat.wav"));
+		        graph.addNode("CarteCombat2", new SoundNode(new CombatNode("CarteCombat2", "En voici un deuxième ! Préparez-vous au combat.", death, gobelin3), "ressource/combat.wav"));
 
 		        graph.addNode("Foret", new DecisionNode("Foret", "En entrant dans le Sanctuaire, l'atmosphère s'alourdit. Une étendue d'arbres à perte de vue semble chuchoter des secrets anciens à chaque souffle de vent."));
 		        graph.addNode("ForetChemin", new ChanceNode("ForetChemin", "Est-ce que le chemin choisi sera le bon?"));
