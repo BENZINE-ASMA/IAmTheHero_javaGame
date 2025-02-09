@@ -7,10 +7,10 @@
 "Vous êtes le héros" est un jeu interactif où le joueur plonge dans une aventure narrative médiéval-fantasy. Structuré en graphes acycliques orientés, le jeu présente des situations et transitions variées. Le joueur, incarnant un Sorcier ou un Humain, fait des choix influençant l'histoire et les fins possibles. Dans un monde de magie et de monstres, le joueur part en quête d'un objet magique puissant, affrontant divers défis et ennemis pour devenir le clan le plus puissant de la région.
 
 ## Prototype
-![Node with ImageNode Design Patern Decorateur)](https://github.com/BENZINE-ASMA/IAmTheHero_javaGame/blob/main/Prototype/first.png)
+![Client Interface](https://github.com/BENZINE-ASMA/IAmTheHero_javaGame/blob/main/Prototype/first.png)
 
 
-![Terrain Interactif](https://github.com/BENZINE-ASMA/IAmTheHero_javaGame/blob/main/Prototype/second.png)
+![Admin Interface](https://github.com/BENZINE-ASMA/jewelleryShop/blob/main/Enonc%C3%A9/Admin-interface.png)
 
 
 ## Fonctionnalités
